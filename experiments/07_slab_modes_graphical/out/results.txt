@@ -1,0 +1,9 @@
+07_slab_modes_graphical  (lambda 1310.0 nm, 2d 220 nm, n1 3.5, n2 1.45)
+V = 1.6807  ->  2 guided TE modes (TE_m needs V > m*pi/2)
+TE0: n_eff 2.98795  beta 14.3312 rad/um  1/gamma 79.8 nm  lambda_g 438.4 nm  theta 58.62 deg  Gamma 0.862
+TE1: n_eff 1.48532  beta 7.1241 rad/um  1/gamma 647.5 nm  lambda_g 882.0 nm  theta 25.11 deg  Gamma 0.154
+Meep TE0: n_eff 2.98675 (-0.040 %)  n_g 3.6306 (-0.047 %)
+Meep TE1: n_eff 1.48512 (-0.014 %)  n_g 2.4632 (-0.167 %)
+TE1 cutoff thickness at 1310 nm: 205.6 nm; TE1 cutoff wavelength at 220 nm: 1401.6 nm
+thermo-optic TE0: Gamma_F 0.8623, Gamma_E 0.9733; dn_eff/dn1 1.01013 = (n_g/n1) Gamma_E = (n1/n_eff) Gamma_F; dn_eff/dT 1.886e-04 /K -> dlambda/dT 68.0 pm/K = lambda[Gamma_E dn1/dT/n1 + (1-Gamma_E) dn2/dT/n2] = 67.8 + 0.2 pm/K (n_g cancels); REF 50 pm/K needs Gamma_E = 0.676
+runtime 18.9 s

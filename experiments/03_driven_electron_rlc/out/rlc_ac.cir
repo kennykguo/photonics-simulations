@@ -1,0 +1,16 @@
+* series RLC: AC sweep of capacitor voltage (charge) and loop current
+* Lorentz map: m<->L, m*gamma<->R, m*w0^2<->1/C, -qE<->V, x<->q_C=C*v(cap)
+V1 in 0 dc 0 ac 1.0 sin(0 1.0 1000)
+L1 in n1 0.1
+R1 n1 cap 62.8319
+C1 cap 0 2.53303e-07
+.control
+set filetype=ascii
+set wr_vecnames
+set wr_singlescale
+ac dec 1000 10 100k
+let i_loop = -i(v1)
+wrdata /Users/kennyg/photonics-simulations/experiments/03_driven_electron_rlc/out/rlc_ac.txt v(cap) i_loop
+quit
+.endc
+.end

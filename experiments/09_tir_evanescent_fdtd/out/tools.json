@@ -1,0 +1,34 @@
+[
+  {
+    "tool": "Meep (pymeep) 2-D FDTD with GaussianBeamSource, DFT field monitors and flux monitors",
+    "version": "1.34.0",
+    "what_it_is": "MIT's open-source finite-difference time-domain solver: it steps Maxwell's curl equations on a Yee grid in time, so any geometry and any source can be simulated without assuming a mode or a plane wave. Normally used for photonic-crystal, waveguide and resonator design.",
+    "used_for": "A 2-D s-polarised (E_z) Gaussian beam launched inside silicon at a chosen angle onto a flat silicon/silica interface (and a silicon | silica gap | silicon sandwich for frustrated TIR). A narrow-band pulse with DFT monitors gives the steady-state phasors E_z, H_x, H_y at 1310 nm; flux monitors give the power crossing into the silica; a continuous-wave run gives the video frames. 61 Meep runs in total: 7 showcase phasor, 24 angle-sweep, 12 flux-only resolution checks at [30, 40, 80] px/um, 12 frustrated-TIR, 6 continuous-wave.",
+    "result": "15 deg: T_fdtd = 0.7516 vs beam-averaged Fresnel 0.7484 (+0.4 %); transmitted Poynting direction 39.0 deg vs Snell 38.7 deg. Resolution check (flux only): 24.5 deg T_fdtd vs beam average 30 px/um +6.7 %, 40 px/um +4.2 %, 50 px/um +3.0 %, 60 px/um +2.4 %, 80 px/um +1.8 %; 45.5847 deg, gap 200nm T_fdtd vs beam average 30 px/um +6.6 %, 40 px/um +3.9 %, 50 px/um +2.7 %, 80 px/um +1.3 % (monotone grid convergence). 40 deg: decay length 123 nm vs 1/gamma = 121 nm (+1.9 %), net normal/parallel power in silica 2.0e-04. FTIR at 45.6 deg: tunnelling slope 18.6/um vs 2 gamma = 19.5/um (-4.8 %).",
+    "how_to_observe": "cd experiments/09_tir_evanescent_fdtd && ../../.meep/bin/python run.py  (about 5 min on this laptop; runtime_s in out/results.json). Fields: out/fields_three_angles.png, out/poynting_three_angles.png, out/ftir_field.png; videos out/tir_beams.mp4, out/ftir.mp4. Change SHOW_ANGLES, SWEEP_ANGLES, FTIR_GAPS, RES_SHOW or LAM_NM (the one wavelength, passed to every Meep run) in run.py, or W0 / SRC_X in fdtd.py, and re-run."
+  },
+  {
+    "tool": "numpy + scipy (analytic angular-spectrum model, Fresnel/FTIR formulas, fits)",
+    "version": "numpy 2.5.3, scipy 1.18.1",
+    "what_it_is": "The array and scientific-computing libraries of Python; used here for the closed-form physics the FDTD is compared with.",
+    "used_for": "analytic.py: s-polarisation Fresnel coefficients, the frustrated-TIR transfer formula through a gap, the decay constant gamma = k0 sqrt(n1^2 sin^2 theta - n2^2), a 2-D Gaussian-beam angular spectrum (so the finite beam's transmission and decay can be predicted, not just the plane wave's), the time-averaged Poynting vector from the phasors, and log-linear least-squares fits of decay lengths and tunnelling slopes.",
+    "result": "theta_c = 24.47 deg; 1/gamma at 40 deg = 121.2 nm, finite-beam prediction over the same fit window 123.3 nm; beam-averaged T at the critical angle = 0.198 vs FDTD 0.203.",
+    "how_to_observe": "All numbers are in out/results.json (keys showcase, angle_sweep, ftir, capstone). analytic.py is importable on its own (../../.venv/bin/python -c 'import analytic') to play with GaussianBeamSpectrum(n1, n2, k0, theta, w0)."
+  },
+  {
+    "tool": "matplotlib (imshow, quiver, FuncAnimation + FFMpegWriter)",
+    "version": "3.11.2",
+    "what_it_is": "The standard Python plotting library; its animation module redraws a figure frame by frame and pipes the frames to ffmpeg.",
+    "used_for": "Signed-field maps (RdBu_r centred on zero), log-scale |S| maps with direction arrows (quiver), decay/transmission/tunnelling plots, the two videos and their contact sheets.",
+    "result": "out/fields_three_angles.png, out/poynting_three_angles.png, out/poynting_profiles.png, out/evanescent_decay.png, out/transmission_vs_angle.png, out/ftir_field.png, out/ftir_vs_gap.png, out/tir_beams.mp4 (+_frames.png), out/ftir.mp4 (+_frames.png).",
+    "how_to_observe": "Open the PNGs; play the mp4s in QuickTime/VLC. In poynting_three_angles.png look at the orange arrows on the silica side: tilted at Snell's angle for 15 deg, grazing for 24.5 deg, parallel for 40 deg."
+  },
+  {
+    "tool": "ffmpeg",
+    "version": "9.0.1 (/opt/homebrew/bin/ffmpeg)",
+    "what_it_is": "The universal command-line video encoder; matplotlib calls it to turn frame sequences into H.264 mp4 files.",
+    "used_for": "Encoding out/tir_beams.mp4 and out/ftir.mp4 at 30 fps.",
+    "result": "Two mp4 files of about 6 s each (180 frames at 30 fps, 0.25 Meep time units = 0.83 fs between frames).",
+    "how_to_observe": "/opt/homebrew/bin/ffprobe out/tir_beams.mp4 prints the duration and frame size."
+  }
+]

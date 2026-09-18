@@ -1,0 +1,34 @@
+[
+  {
+    "tool": "python-control",
+    "version": "0.10.2",
+    "what_it_is": "The Python control-systems library (a MATLAB Control Toolbox work-alike): transfer functions and state space, series/feedback interconnection, Bode and Nyquist plots, gain/phase margins, step and forced responses, Pade delay approximations. Normally used to design and analyse feedback loops before they are coded.",
+    "used_for": "Building the linearised ring-lock loop L(s) = C(s)·e^(−sT_d)·G_th(s)·(50 pm/K)·(dI/dδ) with the two-pole thermal plant and a Pade(3) delay, computing the PI gains by pole cancellation and |L(jω_c)| = 1 at ω_c = 1/(2T_d), the margins with margin(), the sensitivity S = 1/(1+L), the ambient-to-error transfer −50·P_n(s)·S(s), and linear step/forced responses that are overlaid on the nonlinear simulation.",
+    "result": "Crossover 7958 Hz (target 7958, 100.00 %), phase margin 60.1° (hand estimate 60.1°, exact-delay check 60.1°), gain margin 9.9 dB, M_s = 1.60, K_v = 65827 1/s which predicts the 800 K/s ramp error 0.608 pm (simulated 0.608 pm, 100.00 %). Linear 5 K step peak -139 pm vs nonlinear -128 pm.",
+    "how_to_observe": "cd experiments/13_capstone_ring_lock && ../../.venv/bin/python run.py ; look at out/bode_loop.png (loop gain, margins, tuning A vs B), out/sensitivity.png, out/linear_step.png, and the 'design' block of out/results.json. Change T_D, the crossover (design_pi(..., wc=...)) or tau_i in run.py / ringlock.design_pi and re-run; the notebook has sliders for the same."
+  },
+  {
+    "tool": "numpy + scipy",
+    "version": "numpy 2.4.6, scipy 1.18.1",
+    "what_it_is": "numpy is the array library underneath all scientific Python; scipy adds numerical algorithms. Used here for the plant integration and all the static numbers.",
+    "used_for": "ringlock.simulate: an exact (matrix-exponential per state) discretisation of the two thermal states per ring at 1 µs, the Lorentzian sensor, the discrete PI with clamping anti-windup, acquisition sweep and optional DAC quantisation, and the 4-ring crosstalk matrix K; np.linalg.solve for the K⁻¹ heater equilibrium; the survival map (77 simulations); the OMA/penalty numbers; shot-noise and resolution arithmetic.",
+    "result": "δ_opt (numeric argmax of dT/dδ) = 108.0 pm vs 108; sensor gain 0.386 µA/pm = 19.3 µA/K; 5 K step: peak error -128 pm (34 % FWHM), back within 5 pm in 87 µs, steady-state 1.9e-03 pm; ramp error 0.608 pm; 4 rings: ring 2's mean error -2.54 pm while ring 3 sweeps in (quasi-static prediction -2.54 pm, 99.9 %; peak -10.0 pm at capture), final heaters match K⁻¹·P0·1 to 100.00 %; the lock survives instantaneous steps up to 6 K and steps up to 15 K (the largest tested) with a ≥ 100 µs rise; heater saturated 1.57 mW short gives 690 pm of error (expected 690.0).",
+    "how_to_observe": "out/scenario_a_step.png, out/step_survival.png, out/scenario_b_ramp.png, out/scenario_c_four_rings.png, out/scenario_d_antiwindup.png, out/quantisation_noise.png and the scenario_* blocks of out/results.json. Edit STEP_K, RAMP, the crosstalk numbers (rl.crosstalk_matrix), sweep_rate, dac_bits or P_MAX in run.py and re-run."
+  },
+  {
+    "tool": "matplotlib (+ ffmpeg)",
+    "version": "matplotlib 3.11.2, ffmpeg 9.0.1",
+    "what_it_is": "The standard Python plotting library; FuncAnimation + FFMpegWriter feed frames to the ffmpeg encoder to produce mp4 videos.",
+    "used_for": "13 figures plus 2 video contact sheets (15 PNGs: block diagram, sensor curve, OMA vs bias, thermal step, Bode, sensitivity, linear steps, five scenario figures, quantisation/noise) and two videos: notch_lock.mp4 (the notch sliding under the fixed laser after a 5 K step, lock on vs off) and four_ring_lock.mp4 (ring 3 sweeping in while its neighbours hold), each with a contact sheet.",
+    "result": "out/notch_lock.mp4 (300 frames, 10 s; 1 s of video = 60 µs) and out/four_ring_lock.mp4 (360 frames, 12 s; 1 s = 0.33 ms) plus out/notch_lock_frames.png and out/four_ring_lock_frames.png.",
+    "how_to_observe": "open out/notch_lock.mp4: the grey notch drifts 250 pm to the red and stays; the blue one dips past the laser (δ crosses 0 for ~30 µs) and is pulled back to −108 pm by the heater trace below. Change V1_T1 / V1_N or the frame lambda in run.py to re-time the video."
+  },
+  {
+    "tool": "Jupyter notebook + ipywidgets",
+    "version": "nbformat 5.11.1, ipywidgets 8.1.9, kernel photonics-sims",
+    "what_it_is": "Jupyter notebooks mix code, output and prose; ipywidgets adds sliders that re-run a function when moved. Used for interactive exploration where a script would need a re-run per parameter.",
+    "used_for": "explore.ipynb (built by make_notebook.py with nbformat, executed headless with nbconvert): sliders for the sensor (FWHM, T_min, P_in, tap), the loop design (T_d, crossover fraction ω_c·T_d, PI zero placement, slow share) with live Bode + margins + step, the ambient step scenario (size, rise time, lock on/off, T_d), the 4-ring crosstalk scenario (K_nearest, K_next, sweep rate) and the DAC/noise study; it re-imports ringlock.py so the numbers are the same as run.py's and asserts K_p against out/results.json.",
+    "result": "Each section first calls its plot function once (a static figure for the default slider values, saved as an ordinary cell output so it is visible without a live kernel) and then builds the live widget; the printed numbers are identical to run.py's (the K_p assertion guarantees it). Raising ω_c·T_d from 0.5 to 1.0 drops the phase margin from 60° to 32° and raises M_s from 1.60 to 3.16 (the step response rings); moving the PI zero to the slow pole cuts K_v 13× (ramp error 8.2 pm instead of 0.6 pm); a 5 K step with a 200 µs rise peaks at about 16 pm instead of 128 pm; an 8-bit heater DAC dithers ±10 pm.",
+    "how_to_observe": "cd experiments/13_capstone_ring_lock && ../../.venv/bin/jupyter lab explore.ipynb and drag the sliders; to rebuild headless: ../../.venv/bin/python make_notebook.py && ../../.venv/bin/jupyter nbconvert --to notebook --execute --inplace explore.ipynb"
+  }
+]

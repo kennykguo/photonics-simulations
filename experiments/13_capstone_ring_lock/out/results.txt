@@ -1,0 +1,106 @@
+==============================================================================
+13_capstone_ring_lock
+==============================================================================
+
+[1] Sensor and bias point
+  P_in = 2.512 mW (4 dBm), tap 5 %, R = 0.9 A/W -> I_fs = 113.03 µA
+  δ_opt: numeric argmax of dT/dδ = 107.97 pm, analytic FWHM/(2√3) = 107.96 pm, REF 108.0
+  T(δ_opt) = 0.2620 (expected 0.25 + 0.75 T_min = 0.2620); I_set = 29.62 µA
+  sensor gain dI/dδ = 0.3863 µA/pm (finite difference 0.3863); = 19.32 µA/K; 0.1 K -> 1.93 µA
+  mean I with 65 pm NRZ modulation on = 29.657 µA vs CW 29.615 µA (inflection point: curvature ~0)
+  OMA(δ_opt) = 0.545 mW with 65 pm swing (ER 3.82 dB); finite-swing optimum bias 111.2 pm (max OMA 0.546 mW)
+  OMA penalty: ±5 pm (0.1 K) -> 0.002/-0.016 dB; ±50 pm (1 K) -> -0.45/-1.10 dB; ±108 pm -> -1.74/-32.49 dB
+  heater efficiency R_th·dλ/dT = 440 pm/mW (REF 0.44 nm/mW); one FSR = 206 K; 10..125 C = 5.75 nm = 13.1 mW of heater
+  heater bias: 13.57 mW at 10 C, 7.89 mW at 60 C, 0.50 mW at 125 C (0.5 mW margin rule)
+  0.1 K = 5 pm = 1.34 % of FWHM; 1 K = 13.4 % of FWHM; 50 pm/K = 8.73 GHz/K
+  shot noise at I_set in B = 1/(2T_s) = 50 kHz: 0.69 nA rms -> 0.0018 pm rms; a 1 % P_in error reads as 0.77 pm
+
+[2] PI design (python-control)
+  tuning A (zero cancels τ_f = 10 µs): K_p = 0.00387 mW/µA, K_i = 387.2 mW/(µA·s), K_v = 65827 1/s
+     K_p in pm-per-pm terms (heater pm per pm of error) = 0.658
+     crossover: target 7958 Hz, python-control (Pade 3) 7958 Hz, exact delay 7958 Hz
+     phase margin: Pade 60.14°, exact delay 60.14°, hand estimate 60.14° (delay costs 28.6°)
+     gain margin: Pade 9.92 dB at 25 kHz, exact 9.92 dB; M_s = 1.60 at 18.0 kHz; closed-loop −3 dB 17.9 kHz
+  tuning B (zero at τ_s = 300 µs, same crossover): K_p = 0.00864, K_i = 28.80, K_v = 4896 1/s, PM 119.8°, GM 6.1 dB
+  linear closed loop (A): setpoint step overshoot 5.9 %, 2 % settle 75 µs (the 25 % slow tail);
+     1 K ambient step -> peak error -27.8 pm, back within 0.5 pm after 54 µs;  tuning B peak -26.2 pm
+
+[3a] 5 K ambient step at t = 100 µs (through the ring's own thermal filter)
+  peak error -128.4 pm (-34 % of FWHM), notch bottom passes to δ_min = -20.4 pm; linear model predicts -138.8 pm
+  same step landing halfway between controller ticks: -134.8 pm (worst phase); 0.1 K step × 50 = -126.2 pm (so the sensor nonlinearity costs only -2.2 pm; the rest is sampled-vs-continuous delay)
+  back inside ±5 pm (0.1 K) after 87 µs; steady-state error 0.0019 pm; heater -0.568 mW (expected −5/8.8 = -0.568)
+  OMA penalty at the peak -4.98 dB, at steady state 0.0000 dB; lock off: error -249 pm -> -0.2 dB
+
+[3a2] Survival map: how big and how fast an ambient step can the lock take?
+  largest step that stays locked, by extra rise time: 0us: 6 K, 20us: 8 K, 50us: 12 K, 100us: 15 K, 200us: 15 K, 500us: 15 K, 1000us: 15 K
+  a 5 K step with a 200 µs rise peaks at -15.6 pm (vs -128.4 pm through the ring filter alone)
+  7 K instantaneous step: lock lost, heater pinned at 20 mW, final δ = -5572 pm, i.e. the notch ends 5.57 nm to the red of the laser (error -5679.6 pm vs −[(P_max − P0)·η + ΔT·50] = -5680.0 pm)
+
+[3b] Ambient ramp 800 K/s for 10 ms (8 K total)
+  ramp = 40 pm/ms; tracking error A: sim 0.608 pm vs K_v prediction 0.608 pm (0.16 % FWHM, OMA penalty -0.00120 dB)
+  tuning B: sim 8.18 pm vs prediction 8.17 pm; heater ends -0.909 mW (expected -0.909)
+
+[3f] 'Experiments to try' 1 and 2: crossover pushed to ω_c·T_d = 1, and a slow controller with T_d = T_s = 50 µs
+  baseline (ω_c·T_d = 0.5): PM 60.1°, M_s 1.60, setpoint overshoot 6 %, 1 K step crosses zero 1 time(s)
+  1. ω_c·T_d = 1.0: crossover 15.92 kHz, PM 32.1° (hand 32.1°), GM 3.9 dB, M_s 3.16 at 22 kHz, K_v 131814 1/s (2.00× A), ramp error sim 0.303 pm (K_v: 0.303), setpoint overshoot 52 %, 1 K step crosses zero 11 times
+  2. T_d = 50 µs: crossover 1.59 kHz (1/(4πT_d) = 1.59), PM 56.1°, K_v 12725 1/s (5.2× less), ramp error sim 3.14 pm (K_v: 3.14); instantaneous steps: 0.5 K ok (-20 pm), 1 K ok (-39 pm), 1.5 K ok (-59 pm), 2 K ok (-78 pm), 3 K ok (-117 pm), 4 K ok (-157 pm), 6 K LOST (-5630 pm)
+
+[3c] Four rings on one bus, thermal crosstalk K (10 % / 3 %); ring 3 turns on and acquires lock
+  initial heaters (mW): [7.193, 6.937, 0.0, 7.678];  final sim [7.063, 6.335, 6.335, 7.063] vs K⁻¹ solution [7.063, 6.335, 6.335, 7.063]
+  ring 3 captured at 1.56 ms (sweep 4 mW/ms = 1.76 nm/ms), locked within 5 pm after 1.79 ms
+  crosstalk heating from ring 3's 6.33 mW: ring1 1.67 K = 84 pm, ring2 5.57 K = 279 pm, ring4 5.57 K = 279 pm
+  neighbour mean error during the sweep (pm): ring1 -0.55, ring2 -2.54, ring4 -2.60;  first-order K_v prediction: nearest −2.67 pm, next −0.80 pm
+  with the neighbours' own back-off included (K_SS⁻¹·K_S3·rate): ring1 -0.55, ring2 -2.54, ring4 -2.60  (ring 1 is cooled by ring 2 backing off)
+  neighbour peak errors (pm): ring1 -2.64 at 1.58 ms, ring2 -10.03 at 1.59 ms, ring4 -10.17 at 1.59 ms  (ring 3's post-capture heater transient, not the sweep)
+
+[3d] Heater ceiling: ambient 10 C needs 13.6 mW; with a 12 mW heater the lock saturates, then ambient rises to 30 C
+  saturated error 690.0 pm (expected (13.57 − 12) mW × 440 = 690.0 pm)
+  recovery to ±5 pm after the ambient rise: anti-windup 270 µs; plain integrator: LOCK LOST (heater pinned at 12.0 mW, δ = -202 pm: wrong side of the notch); final heater 11.30 mW (needs 11.30)
+
+[3e] Steady-state jitter from heater-DAC resolution and photocurrent noise
+  DAC 8 bit: LSB = 34.51 pm, error mean -0.029 pm, rms 5.888 pm, pk-pk 20.79 pm
+  DAC 10 bit: LSB = 8.60 pm, error mean -0.003 pm, rms 1.552 pm, pk-pk 5.46 pm
+  DAC 12 bit: LSB = 2.15 pm, error mean +0.003 pm, rms 0.305 pm, pk-pk 1.04 pm
+  DAC 14 bit: LSB = 0.54 pm, error mean -0.000 pm, rms 0.070 pm, pk-pk 0.26 pm
+  DAC None bit: LSB = 0.00 pm, error mean +0.000 pm, rms 0.000 pm, pk-pk 0.00 pm
+  50 nA rms TIA noise per 10 µs sample (70× shot noise): δ rms 0.068 pm (input-referred 0.129 pm)
+
+[4] Videos
+  out/notch_lock.mp4: 300 frames, 10 s, sim −50..550 µs around the 5 K step
+  out/four_ring_lock.mp4: 360 frames, 12 s, sim 0..4 ms
+
+HEADLINE NUMBERS
+  i_fs_ua                                  =     113.0349 µA     expected     112.5000   agreement   99.52 %
+  delta_opt_numeric_pm                     =     107.9650 pm     expected     108.0000   agreement   99.97 %
+  T_at_delta_opt                           =       0.2620        expected       0.2620   agreement  100.00 %
+  sensor_gain_ua_per_pm                    =       0.3863 µA/pm  expected       0.3863   agreement  100.00 %
+  sensor_gain_ua_per_K                     =      19.3165 µA/K   expected      19.3165   agreement  100.00 %
+  i_mean_with_modulation_ua                =      29.6570 µA     expected      29.6151   agreement   99.86 %
+  oma_finite_swing_optimum_bias_pm         =     111.2000 pm     expected     107.9645   agreement   97.00 %
+  heater_pm_per_mw                         =     440.0000 pm/mW  expected     440.0000   agreement  100.00 %
+  one_fsr_K                                =     206.0000 K      expected     206.0000   agreement  100.00 %
+  crossover_hz_pade                        =    7957.7472 Hz     expected    7957.7472   agreement  100.00 %
+  phase_margin_deg_pade                    =      60.1421 deg    expected      60.1421   agreement  100.00 %
+  phase_margin_deg_exact_delay             =      60.1421 deg    expected      60.1421   agreement  100.00 %
+  gain_margin_db_exact_delay               =       9.9181 dB     expected       9.9193   agreement   99.99 %
+  ramp_tracking_error_pm                   =       0.6077 pm     expected       0.6077   agreement  100.00 %
+  ramp_tracking_error_pm_tuningB           =       8.1827 pm     expected       8.1707   agreement   99.85 %
+  step5K_peak_error_pm                     =    -128.4082 pm     expected    -138.7928   agreement   92.52 %
+  step5K_heater_change_mw                  =      -0.5682 mW     expected      -0.5682   agreement   99.99 %
+  step5K_steady_state_error_pm             =       0.0019 pm     expected       0.0000   agreement   99.96 %
+  four_rings_final_heater_ring2_mw         =       6.3347 mW     expected       6.3347   agreement  100.00 %
+  four_rings_final_heater_ring3_mw         =       6.3347 mW     expected       6.3347   agreement  100.00 %
+  four_rings_ring2_mean_error_during_sweep_pm =      -2.5428 pm     expected      -2.5410   agreement   99.93 %
+  four_rings_ring1_mean_error_during_sweep_pm =      -0.5482 pm     expected      -0.5480   agreement   99.97 %
+  saturated_error_pm                       =     690.0000 pm     expected     690.0000   agreement  100.00 %
+  shot_noise_delta_pm_rms                  =       0.0018 pm     expected       0.0018   agreement  100.00 %
+  lock_lost_7K_step_final_error_pm         =   -5679.6399 pm     expected   -5680.0000   agreement   99.99 %
+  push_crossover_phase_margin_deg          =      32.0965 deg    expected      32.0965   agreement  100.00 %
+  push_crossover_ramp_error_pm             =       0.3035 pm     expected       0.3035   agreement  100.00 %
+  slow_controller_crossover_hz             =    1591.5495 Hz     expected    1591.5494   agreement  100.00 %
+  slow_controller_ramp_error_pm            =       3.1440 pm     expected       3.1434   agreement   99.98 %
+
+[5] Notebook
+  explore.ipynb built and executed in 5 s
+
+run.py finished in 128.3 s

@@ -1,0 +1,943 @@
+{
+  "p_in_mw": 2.51188643150958,
+  "i_fs_ua": 113.03488941793113,
+  "fwhm_pm": 374.0,
+  "t_min": 0.016,
+  "delta_opt_analytic_pm": 107.96450033846003,
+  "delta_opt_numeric_pm": 107.965,
+  "T_at_delta_opt": 0.2620000000000001,
+  "T_at_delta_opt_expected_0.25+0.75Tmin": 0.262,
+  "i_set_ua": 29.61514102749797,
+  "sensor_gain_ua_per_pm": 0.3863295255797922,
+  "sensor_gain_ua_per_pm_finite_difference": 0.38632952557371425,
+  "dT_ddelta_max_analytic_per_pm": 0.0034177900962188003,
+  "dT_ddelta_at_delta_opt_per_pm": 0.0034177900962188,
+  "sensor_gain_ua_per_K": 19.31647627898961,
+  "sensor_gain_ua_per_0p1K": 1.9316476278989612,
+  "i_mean_with_modulation_ua": 29.656982967468288,
+  "i_cw_ua": 29.61514102749797,
+  "modulation_swing_pm": 65.0,
+  "oma_at_delta_opt_mw": 0.5453962349520416,
+  "oma_finite_swing_optimum_bias_pm": 111.2,
+  "oma_max_mw": 0.5457603079196826,
+  "er_db_at_delta_opt": 3.8231939580781313,
+  "oma_penalty_db_5pm": 0.0020802069571398867,
+  "oma_penalty_db_m5pm": -0.01635576243179692,
+  "oma_penalty_db_50pm": -0.4538631891139209,
+  "oma_penalty_db_m50pm": -1.0960032638332022,
+  "oma_penalty_db_108pm": -1.736535334625485,
+  "oma_penalty_db_m108pm": -32.490802945300175,
+  "heater_pm_per_mw": 440.00000000000006,
+  "heater_pm_per_mw_ref": 440.0,
+  "one_fsr_K": 206.0,
+  "ambient_range_K": 115.0,
+  "ambient_range_pm": 5750.0,
+  "heater_for_ambient_range_mw": 13.068181818181817,
+  "heater_bias_at_60C_mw": 7.886363636363636,
+  "heater_at_10C_mw": 13.568181818181817,
+  "heater_at_125C_mw": 0.5,
+  "pm_per_0p1K": 5.0,
+  "fraction_fwhm_0p1K": 0.013368983957219251,
+  "fraction_fwhm_1K": 0.13368983957219252,
+  "ghz_per_K": 8.734702464891322,
+  "fwhm_ghz": 65.33557443738708,
+  "noise_bandwidth_hz": 49999.99999999999,
+  "shot_noise_na_rms": 0.6888300731448358,
+  "shot_noise_limited_delta_pm_rms": 0.0017830117232460023,
+  "delta_error_pm_per_percent_pin": 0.7665772110752451,
+  "design": {
+    "kp_mw_per_ua": 0.0038724914106620673,
+    "ki_mw_per_ua_s": 387.2491410662068,
+    "tau_i_s": 9.999999999999999e-06,
+    "wc_target_rad_s": 49999.99999999999,
+    "t_d_s": 1e-05,
+    "K_I_ua_per_pm": 0.3863295255797922,
+    "K_lambda_pm_per_K": 50.0,
+    "Kv_per_s": 65826.54185768748,
+    "plant_zero_s": 0.0002275,
+    "kp_pm_per_pm": 0.6582654185768747
+  },
+  "designB_zero_at_slow_pole": {
+    "kp_mw_per_ua": 0.008639975377238226,
+    "ki_mw_per_ua_s": 28.799917924127424,
+    "tau_i_s": 0.0003,
+    "Kv_per_s": 4895.553796480646,
+    "pm_deg_pade": 119.76298820552103,
+    "gm_db_pade": 6.091643652299796,
+    "crossover_hz_pade": 7957.747154594766
+  },
+  "crossover_hz_target": 7957.747154594766,
+  "crossover_hz_pade": 7957.747154594771,
+  "crossover_hz_exact_delay": 7957.747170871292,
+  "phase_margin_deg_pade": 60.142114216889354,
+  "phase_margin_deg_exact_delay": 60.142109011299695,
+  "phase_margin_deg_hand": 60.14210981920965,
+  "gain_margin_db_pade": 9.919253144149856,
+  "gain_margin_db_exact_delay": 9.918093832633598,
+  "phase_crossover_hz_pade": 24895.267363677438,
+  "sensitivity_peak_Ms": 1.5962549694311947,
+  "sensitivity_peak_hz": 18016.168652347133,
+  "closed_loop_bandwidth_hz": 17947.150065989863,
+  "delay_phase_at_crossover_deg": 28.647889756541158,
+  "linear_setpoint_step_overshoot_percent": 5.938241443190462,
+  "linear_setpoint_step_settle_2pct_us": 75.0,
+  "linear_1K_step_peak_error_pm": -27.75632458422112,
+  "linear_1K_step_settle_to_0p5pm_us": 54.5,
+  "linear_1K_step_peak_error_pm_tuningB": -26.200356411944153,
+  "scenario_a_step": {
+    "step_K": 5.0,
+    "step_pm": 250.0,
+    "peak_pm": -128.4082016579552,
+    "peak_frac_fwhm": -0.3433374375881155,
+    "min_delta_pm": -20.443701319495176,
+    "final_pm": 0.001905953205662172,
+    "rms_last_pm": 0.0004922275245571332,
+    "settle_to_5pm_us": 87.00000000000001,
+    "linear_model_peak_error_pm": -138.792754937953,
+    "peak_error_pm_step_between_ticks": -134.818021687696,
+    "peak_error_pm_0p1K_step_times_50": -126.19069943260399,
+    "heater_change_mw": -0.5682208252046452,
+    "heater_change_expected_mw": -0.5681818181818181,
+    "oma_penalty_db_at_peak": -4.981860209668245,
+    "oma_penalty_db_final": 3.4324499853969526e-06,
+    "lock_off_final_error_pm": -249.41423315458786,
+    "lock_off_oma_penalty_db": -0.20527162305281774
+  },
+  "survival_map": {
+    "step_K": [
+      1.0,
+      2.0,
+      3.0,
+      4.0,
+      5.0,
+      6.0,
+      7.0,
+      8.0,
+      10.0,
+      12.0,
+      15.0
+    ],
+    "extra_rise_time_s": [
+      0.0,
+      2e-05,
+      5e-05,
+      0.0001,
+      0.0002,
+      0.0005,
+      0.001
+    ],
+    "peak_error_pm": [
+      [
+        -25.238204393230433,
+        -15.38154818159154,
+        -8.93633823385943,
+        -5.4747871951828415,
+        -3.1102722953325497,
+        -1.4000903395760247,
+        -0.7399217523395123
+      ],
+      [
+        -50.47680823113268,
+        -30.883416503936303,
+        -17.892448686180785,
+        -10.957871600797887,
+        -6.222938403054911,
+        -2.8004634464297737,
+        -1.479888131884934
+      ],
+      [
+        -75.71623437621582,
+        -46.645695553052235,
+        -26.969096078899554,
+        -16.458153045756433,
+        -9.34050552266325,
+        -4.201408707213602,
+        -2.2199443204078193
+      ],
+      [
+        -100.95693089406876,
+        -62.826471611283694,
+        -36.21446075154853,
+        -21.985201764424062,
+        -12.465610459802235,
+        -5.603223136133863,
+        -2.9601361280348897
+      ],
+      [
+        -128.4082016579552,
+        -79.59485655464431,
+        -45.69884757147355,
+        -27.549268102221674,
+        -15.601026504933714,
+        -7.006211848424925,
+        -3.7005100198531977
+      ],
+      [
+        -161.7492251169021,
+        -97.12073597280022,
+        -55.499538916779045,
+        -33.16128609730657,
+        -18.74967072140197,
+        -8.410688564272903,
+        -4.441113143550126
+      ],
+      [
+        -5679.746240359355,
+        -115.56205653336036,
+        -65.70019546480916,
+        -38.83286961841094,
+        -21.914611632140065,
+        -9.81697614499734,
+        -5.18199335814387
+      ],
+      [
+        -5729.793588498132,
+        -141.3208492589594,
+        -76.38975634320212,
+        -44.57629959994773,
+        -25.09907728424031,
+        -11.225407163426723,
+        -5.923199263839422
+      ],
+      [
+        -5829.806586887095,
+        -5829.80934355927,
+        -100.37321600257172,
+        -56.82119831372137,
+        -31.540343377117267,
+        -14.050082040187306,
+        -7.406786442803593
+      ],
+      [
+        -5929.810607726468,
+        -5929.8254046101565,
+        -138.2707680440182,
+        -70.13627632927063,
+        -38.19126640805342,
+        -16.887592036083504,
+        -8.892279517047143
+      ],
+      [
+        -6079.812517035828,
+        -6079.832129271866,
+        -6079.853179348232,
+        -93.93776614918778,
+        -48.613603822786615,
+        -21.17471484599554,
+        -11.125012957263777
+      ]
+    ],
+    "final_error_pm": [
+      [
+        3.168764214933617e-07,
+        2.650053852448764e-07,
+        2.07160671834572e-07,
+        1.4854603477942874e-07,
+        -1.8981213543156626e-08,
+        -0.00029063284594940344,
+        -0.0023462486934454317
+      ],
+      [
+        6.52128835554322e-07,
+        5.347117553355929e-07,
+        4.153605868850718e-07,
+        2.9728794061156803e-07,
+        -3.7943716506561034e-08,
+        -0.0005812656918556059,
+        -0.004692497388775791
+      ],
+      [
+        1.0350072625442408e-06,
+        8.155101113516139e-07,
+        6.258293410610349e-07,
+        4.4644016497841224e-07,
+        -5.686860276910011e-08,
+        -0.0008718985373980104,
+        -0.007038746087582695
+      ],
+      [
+        1.5202055624286003e-06,
+        1.1171433379786323e-06,
+        8.40106754367298e-07,
+        5.962419322713686e-07,
+        -7.573597940790932e-08,
+        -0.0011625313824742988,
+        -0.009384994791546433
+      ],
+      [
+        2.2363909533851255e-06,
+        1.4562325031874935e-06,
+        1.0602225688671751e-06,
+        7.46970322325069e-07,
+        -9.452434369450203e-08,
+        -0.0014531642269093937,
+        -0.011731243502329108
+      ],
+      [
+        3.646195671080932e-06,
+        1.8653725987860526e-06,
+        1.2890131847598242e-06,
+        8.989473963083583e-07,
+        -1.1321010788378772e-07,
+        -0.0017437970703167594,
+        -0.014077492221347257
+      ],
+      [
+        -5679.639855933061,
+        2.422268746613554e-06,
+        1.5307108401430013e-06,
+        1.0525603715905162e-06,
+        -1.3176878837839468e-07,
+        -0.0020344299131693335,
+        -0.016423740950824595
+      ],
+      [
+        -5729.707053976122,
+        3.3881790454870496e-06,
+        1.7921496282724547e-06,
+        1.208285350458027e-06,
+        -1.501737142461934e-07,
+        -0.00232506275492824,
+        -0.01876998969203896
+      ],
+      [
+        -5829.72550171928,
+        -5829.729414079517,
+        2.4357614870496037e-06,
+        1.5286836423911154e-06,
+        -1.8640189182406174e-07,
+        -0.0029063284340259087,
+        -0.023462487217504987
+      ],
+      [
+        -5929.731208227363,
+        -5929.7522084536295,
+        3.7392262129287703e-06,
+        1.8679240770325122e-06,
+        -2.2161955484989448e-07,
+        -0.003487594106952656,
+        -0.02815498481099894
+      ],
+      [
+        -6079.733917982286,
+        -6079.761752315709,
+        -6079.7916272796465,
+        2.4550968464609466e-06,
+        -2.7176226694791696e-07,
+        -0.004359492600792691,
+        -0.03519373135888373
+      ]
+    ],
+    "survived": [
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true
+      ]
+    ],
+    "largest_surviving_step_K_by_rise_time": {
+      "0us": 6.0,
+      "20us": 8.0,
+      "50us": 12.0,
+      "100us": 15.0,
+      "200us": 15.0,
+      "500us": 15.0,
+      "1000us": 15.0
+    },
+    "peak_error_pm_5K_200us_rise": -15.601026504933714,
+    "smallest_lost_instantaneous_step": {
+      "step_K": 7.0,
+      "rise_s": 0.0,
+      "final_error_pm": -5679.639855933061,
+      "final_delta_pm": -5571.675355594601,
+      "notch_red_of_laser_nm": 5.571675355594601,
+      "expected_error_pm_heater_at_rail": -5680.000000000001
+    }
+  },
+  "scenario_b_ramp": {
+    "ramp_K_per_s": 800.0,
+    "ramp_pm_per_s": 40000.0,
+    "duration_ms": 10.0,
+    "total_K": 8.0,
+    "tracking_error_pm_sim": 0.6076624551027838,
+    "tracking_error_pm_predicted_Kv": 0.6076576236752234,
+    "tracking_error_frac_fwhm": 0.0016247659227347161,
+    "tracking_error_pm_sim_tuningB": 8.182742950495793,
+    "tracking_error_pm_predicted_tuningB": 8.170679286326198,
+    "peak_error_pm": -0.6400906856089819,
+    "heater_change_mw": -0.9090910707068804,
+    "heater_change_expected_mw": -0.9090909090909091,
+    "oma_penalty_db_tracking": -0.0012004017965203428
+  },
+  "experiments_to_try": {
+    "baseline_tuning_A": {
+      "t_d_s": 1e-05,
+      "wc_times_td": 0.49999999999999994,
+      "crossover_hz_target": 7957.747154594766,
+      "crossover_hz_exact_delay": 7957.747170871292,
+      "phase_margin_deg_exact_delay": 60.142109011299695,
+      "phase_margin_deg_hand": 60.14210981920965,
+      "gain_margin_db_exact_delay": 9.918093832633598,
+      "sensitivity_peak_Ms": 1.5962549694311947,
+      "sensitivity_peak_hz": 18016.168652347133,
+      "kp_mw_per_ua": 0.0038724914106620673,
+      "ki_mw_per_ua_s": 387.2491410662068,
+      "Kv_per_s": 65826.54185768748,
+      "ramp_error_pm_predicted_Kv": 0.6076576236752234,
+      "setpoint_step_overshoot_percent": 5.938241443190462,
+      "linear_1K_step_peak_error_pm": -27.75632458422112,
+      "linear_1K_step_zero_crossings": 1
+    },
+    "1_push_crossover_wc_td_1": {
+      "t_d_s": 1e-05,
+      "wc_times_td": 0.9999999999999999,
+      "crossover_hz_target": 15915.494309189531,
+      "crossover_hz_exact_delay": 15915.494320657657,
+      "phase_margin_deg_exact_delay": 32.096496689058455,
+      "phase_margin_deg_hand": 32.09649726297453,
+      "gain_margin_db_exact_delay": 3.8868778050776815,
+      "sensitivity_peak_Ms": 3.160285502434675,
+      "sensitivity_peak_hz": 21869.71560455357,
+      "kp_mw_per_ua": 0.007754454722681302,
+      "ki_mw_per_ua_s": 775.4454722681303,
+      "Kv_per_s": 131814.0918223117,
+      "ramp_error_pm_predicted_Kv": 0.30345769141224205,
+      "setpoint_step_overshoot_percent": 51.634537736130895,
+      "linear_1K_step_peak_error_pm": -26.190891066455332,
+      "linear_1K_step_zero_crossings": 11,
+      "ramp_error_pm_sim": 0.30345829431713667
+    },
+    "2_slow_controller_td_50us": {
+      "t_d_s": 5e-05,
+      "wc_times_td": 0.5,
+      "crossover_hz_target": 1591.5494309189535,
+      "crossover_hz_exact_delay": 1591.5494914767596,
+      "phase_margin_deg_exact_delay": 56.058665088065354,
+      "phase_margin_deg_hand": 56.05866799042833,
+      "gain_margin_db_exact_delay": 10.02526136307013,
+      "sensitivity_peak_Ms": 1.6036819149371817,
+      "sensitivity_peak_hz": 3399.1870024506447,
+      "kp_mw_per_ua": 0.0007485985204648842,
+      "ki_mw_per_ua_s": 74.85985204648843,
+      "Kv_per_s": 12725.051295481058,
+      "ramp_error_pm_predicted_Kv": 3.14340579626621,
+      "setpoint_step_overshoot_percent": 10.68592686715033,
+      "linear_1K_step_peak_error_pm": -39.23722931941352,
+      "linear_1K_step_zero_crossings": 1,
+      "ramp_error_pm_sim": 3.1440149834723825,
+      "instantaneous_step_K": [
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        4.0,
+        6.0
+      ],
+      "peak_error_pm": [
+        -19.583152713196057,
+        -39.16630542639649,
+        -58.74945813960056,
+        -78.33261085280282,
+        -117.49891627920505,
+        -156.66522170560773,
+        -5629.998917427817
+      ],
+      "survived": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false
+      ],
+      "largest_surviving_instantaneous_step_K": 4.0
+    }
+  },
+  "scenario_c_four_rings": {
+    "crosstalk_matrix": [
+      [
+        1.0,
+        0.1,
+        0.03,
+        0.0
+      ],
+      [
+        0.1,
+        1.0,
+        0.1,
+        0.03
+      ],
+      [
+        0.03,
+        0.1,
+        1.0,
+        0.1
+      ],
+      [
+        0.0,
+        0.03,
+        0.1,
+        1.0
+      ]
+    ],
+    "acquiring_ring": 3,
+    "sweep_rate_mw_per_s": 4000.0,
+    "capture_delta_pm": 300.0,
+    "initial_heaters_mw": [
+      7.192688945873659,
+      6.936746904899772,
+      0.0,
+      7.678261229216641
+    ],
+    "final_heaters_mw_sim": [
+      7.062849898962533,
+      6.334721038262639,
+      6.334721131708754,
+      7.062849893867993
+    ],
+    "final_heaters_mw_expected_Kinv": [
+      7.062849900538017,
+      6.334721044812449,
+      6.334721044812448,
+      7.062849900538017
+    ],
+    "capture_time_ms": 1.5600000000000003,
+    "ring3_locked_within_5pm_after_ms": 1.7910000000000004,
+    "neighbour_peak_error_pm": {
+      "ring1": -2.6442702987298503,
+      "ring2": -10.029514169415677,
+      "ring4": -10.16996083909197
+    },
+    "neighbour_peak_time_ms": {
+      "ring1": 1.5800000000000003,
+      "ring2": 1.5900000000000003,
+      "ring4": 1.5900000000000003
+    },
+    "neighbour_mean_error_during_sweep_pm": {
+      "ring1": -0.5481834914651491,
+      "ring2": -2.542839576844071,
+      "ring4": -2.5994166195834105
+    },
+    "crosstalk_heating_K_from_ring3": {
+      "ring1": 1.6723663558304864,
+      "ring2": 5.574554519434955,
+      "ring4": 5.574554519434955
+    },
+    "crosstalk_ramp_error_predicted_pm_nearest_first_order": -2.673693544170983,
+    "crosstalk_ramp_error_predicted_pm_next_first_order": -0.8021080632512949,
+    "neighbour_error_during_sweep_predicted_pm_Kinv": {
+      "ring1": -0.5480112144472585,
+      "ring2": -2.5409684880403645,
+      "ring4": -2.5974644895297723
+    },
+    "errors": {
+      "ring1": {
+        "peak_pm": -2.6442702987298503,
+        "peak_frac_fwhm": -0.007070241440454145,
+        "min_delta_pm": 105.32023003973018,
+        "final_pm": 7.912758519523777e-08,
+        "rms_last_pm": 2.077690108282531e-08
+      },
+      "ring2": {
+        "peak_pm": -10.029514169415677,
+        "peak_frac_fwhm": -0.02681688280592427,
+        "min_delta_pm": 97.93498616904435,
+        "final_pm": 3.3590107022973826e-07,
+        "rms_last_pm": 8.936298508147765e-08
+      },
+      "ring3": {
+        "peak_pm": 2730.7253596820597,
+        "peak_frac_fwhm": 7.301404705032245,
+        "min_delta_pm": 99.97453376773774,
+        "final_pm": -4.252282508332428e-06,
+        "rms_last_pm": 1.099196910003932e-06
+      },
+      "ring4": {
+        "peak_pm": -10.16996083909197,
+        "peak_frac_fwhm": -0.02719240866067372,
+        "min_delta_pm": 97.79453949936806,
+        "final_pm": 3.4234658642162684e-07,
+        "rms_last_pm": 9.112337037327239e-08
+      }
+    },
+    "isolated_heater_mw": 7.886363636363636
+  },
+  "scenario_d_antiwindup": {
+    "p_max_mw": 12.0,
+    "heater_needed_at_10C_mw": 13.568181818181817,
+    "heater_needed_at_30C_mw": 11.295454545454545,
+    "saturated_error_pm": 689.9999999999993,
+    "saturated_error_expected_pm": 689.9999999999994,
+    "recovery_to_5pm_us_antiwindup": 270.0000000000003,
+    "recovery_to_5pm_us_no_antiwindup": null,
+    "lock_lost_without_antiwindup": true,
+    "final_delta_pm_no_antiwindup": -202.03549914797077,
+    "final_heater_mw_no_antiwindup": 12.0,
+    "integrator_estimate_mw_no_antiwindup_at_2ms": 72.12383472326326,
+    "final_heater_mw": 11.295454545455593
+  },
+  "quantisation": {
+    "8": {
+      "lsb_pm": 34.50980392156863,
+      "rms_error_pm": 5.8878682547635135,
+      "mean_error_pm": -0.0288840554598753,
+      "pk_pk_pm": 20.79319981492381
+    },
+    "10": {
+      "lsb_pm": 8.60215053763441,
+      "rms_error_pm": 1.551648570814497,
+      "mean_error_pm": -0.002551780466220862,
+      "pk_pk_pm": 5.4628213023515855
+    },
+    "12": {
+      "lsb_pm": 2.1489621489621493,
+      "rms_error_pm": 0.3051547499325973,
+      "mean_error_pm": 0.00327073300708912,
+      "pk_pk_pm": 1.0364136079183481
+    },
+    "14": {
+      "lsb_pm": 0.537142159555637,
+      "rms_error_pm": 0.06967226142037458,
+      "mean_error_pm": -0.00010324155839430205,
+      "pk_pk_pm": 0.2590488137552711
+    },
+    "None": {
+      "lsb_pm": 0.0,
+      "rms_error_pm": 1.5688675520333095e-12,
+      "mean_error_pm": 1.0595613275654615e-13,
+      "pk_pk_pm": 3.637978807091713e-12
+    }
+  },
+  "noise_50nA": {
+    "i_noise_ua_rms_per_sample": 0.05,
+    "rms_error_pm": 0.0680211251108117,
+    "equivalent_input_pm_rms": 0.12942319105680944
+  },
+  "headline": {
+    "i_fs_ua": {
+      "value": 113.03488941793113,
+      "expected": 112.5,
+      "agreement_percent": 99.52,
+      "source": "brief: 0.9 A/W × 2.5 mW × 5 % = 112.5 µA (code uses 4 dBm = 2.512 mW)",
+      "unit": "µA"
+    },
+    "delta_opt_numeric_pm": {
+      "value": 107.965,
+      "expected": 108.0,
+      "agreement_percent": 99.97,
+      "source": "REF.delta_opt_pm = FWHM/(2√3)",
+      "unit": "pm"
+    },
+    "T_at_delta_opt": {
+      "value": 0.2620000000000001,
+      "expected": 0.262,
+      "agreement_percent": 100.0,
+      "source": "Lorentzian at u = 1/√3: 1 − 0.75(1−T_min)",
+      "unit": ""
+    },
+    "sensor_gain_ua_per_pm": {
+      "value": 0.3863295255797922,
+      "expected": 0.38632952557371425,
+      "agreement_percent": 100.0,
+      "source": "central finite difference of I(δ)",
+      "unit": "µA/pm"
+    },
+    "sensor_gain_ua_per_K": {
+      "value": 19.31647627898961,
+      "expected": 19.316476278989615,
+      "agreement_percent": 100.0,
+      "source": "(1−T_min)·3√3/(4·FWHM) · I_fs · 50 pm/K",
+      "unit": "µA/K"
+    },
+    "i_mean_with_modulation_ua": {
+      "value": 29.656982967468288,
+      "expected": 29.61514102749797,
+      "agreement_percent": 99.86,
+      "source": "CW value (inflection point ⇒ mean unchanged)",
+      "unit": "µA"
+    },
+    "oma_finite_swing_optimum_bias_pm": {
+      "value": 111.2,
+      "expected": 107.96450033846003,
+      "agreement_percent": 97.0,
+      "source": "small-signal δ_opt",
+      "unit": "pm"
+    },
+    "heater_pm_per_mw": {
+      "value": 440.00000000000006,
+      "expected": 440.0,
+      "agreement_percent": 100.0,
+      "source": "REF.heater_nm_per_mw = 0.44 nm/mW",
+      "unit": "pm/mW"
+    },
+    "one_fsr_K": {
+      "value": 206.0,
+      "expected": 206.0,
+      "agreement_percent": 100.0,
+      "source": "brief: one FSR = 206 K",
+      "unit": "K"
+    },
+    "crossover_hz_pade": {
+      "value": 7957.747154594771,
+      "expected": 7957.747154594766,
+      "agreement_percent": 100.0,
+      "source": "design target ω_c = 1/(2T_d)",
+      "unit": "Hz"
+    },
+    "phase_margin_deg_pade": {
+      "value": 60.142114216889354,
+      "expected": 60.14210981920965,
+      "agreement_percent": 100.0,
+      "source": "hand estimate: 90 + atan(ω_c·227.5µs) − atan(ω_c·300µs) − ω_c·T_d",
+      "unit": "deg"
+    },
+    "phase_margin_deg_exact_delay": {
+      "value": 60.142109011299695,
+      "expected": 60.142114216889354,
+      "agreement_percent": 100.0,
+      "source": "python-control margin() with Pade(3)",
+      "unit": "deg"
+    },
+    "gain_margin_db_exact_delay": {
+      "value": 9.918093832633598,
+      "expected": 9.919253144149856,
+      "agreement_percent": 99.99,
+      "source": "python-control margin() with Pade(3)",
+      "unit": "dB"
+    },
+    "ramp_tracking_error_pm": {
+      "value": 0.6076624551027838,
+      "expected": 0.6076576236752234,
+      "agreement_percent": 100.0,
+      "source": "ramp rate (pm/s) / K_v",
+      "unit": "pm"
+    },
+    "ramp_tracking_error_pm_tuningB": {
+      "value": 8.182742950495793,
+      "expected": 8.170679286326198,
+      "agreement_percent": 99.85,
+      "source": "ramp rate / K_v (tuning B)",
+      "unit": "pm"
+    },
+    "step5K_peak_error_pm": {
+      "value": -128.4082016579552,
+      "expected": -138.792754937953,
+      "agreement_percent": 92.52,
+      "source": "linear model (python-control forced_response); the sampled loop is slightly faster than its continuous e^(−sT_d) model (see Checks), the sensor nonlinearity is worth only ~2 pm",
+      "unit": "pm"
+    },
+    "step5K_heater_change_mw": {
+      "value": -0.5682208252046452,
+      "expected": -0.5681818181818181,
+      "agreement_percent": 99.99,
+      "source": "−ΔT_amb / R_th",
+      "unit": "mW"
+    },
+    "step5K_steady_state_error_pm": {
+      "value": 0.001905953205662172,
+      "expected": 0.0,
+      "agreement_percent": 99.96,
+      "source": "type-1 loop: zero steady-state error to a step; agreement measured against the 5 pm (0.1 K) resolution scale",
+      "unit": "pm",
+      "agreement_scale": 5.0
+    },
+    "four_rings_final_heater_ring2_mw": {
+      "value": 6.334721038262639,
+      "expected": 6.334721044812449,
+      "agreement_percent": 100.0,
+      "source": "K⁻¹ · P0·1 (crosstalk equilibrium)",
+      "unit": "mW"
+    },
+    "four_rings_final_heater_ring3_mw": {
+      "value": 6.334721131708754,
+      "expected": 6.334721044812448,
+      "agreement_percent": 100.0,
+      "source": "K⁻¹ · P0·1",
+      "unit": "mW"
+    },
+    "four_rings_ring2_mean_error_during_sweep_pm": {
+      "value": -2.542839576844071,
+      "expected": -2.5409684880403645,
+      "agreement_percent": 99.93,
+      "source": "quasi-static: −(K_SS⁻¹·K_S3·sweep rate)·η / K_v (first order: 10 % of the sweep ramp / K_v = −2.67 pm)",
+      "unit": "pm"
+    },
+    "four_rings_ring1_mean_error_during_sweep_pm": {
+      "value": -0.5481834914651491,
+      "expected": -0.5480112144472585,
+      "agreement_percent": 99.97,
+      "source": "quasi-static: −(K_SS⁻¹·K_S3·sweep rate)·η / K_v (first order 3 % would give −0.80 pm; ring 2's back-off cools ring 1)",
+      "unit": "pm"
+    },
+    "saturated_error_pm": {
+      "value": 689.9999999999993,
+      "expected": 689.9999999999994,
+      "agreement_percent": 100.0,
+      "source": "(P_needed − P_max) × 440 pm/mW",
+      "unit": "pm"
+    },
+    "shot_noise_delta_pm_rms": {
+      "value": 0.0017830117232460023,
+      "expected": 0.001783011723246002,
+      "agreement_percent": 100.0,
+      "source": "√(2qIB)/(dI/dδ)",
+      "unit": "pm"
+    },
+    "lock_lost_7K_step_final_error_pm": {
+      "value": -5679.639855933061,
+      "expected": -5680.000000000001,
+      "agreement_percent": 99.99,
+      "source": "heater pinned at P_max = 20 mW: −[(P_max − P0)·η + 7 K × 50 pm/K]",
+      "unit": "pm"
+    },
+    "push_crossover_phase_margin_deg": {
+      "value": 32.096496689058455,
+      "expected": 32.09649726297453,
+      "agreement_percent": 100.0,
+      "source": "ω_c·T_d = 1: hand estimate 90 + atan(ω_c·227.5µs) − atan(ω_c·300µs) − ω_c·T_d",
+      "unit": "deg"
+    },
+    "push_crossover_ramp_error_pm": {
+      "value": 0.30345829431713667,
+      "expected": 0.30345769141224205,
+      "agreement_percent": 100.0,
+      "source": "ω_c·T_d = 1: ramp rate / K_v",
+      "unit": "pm"
+    },
+    "slow_controller_crossover_hz": {
+      "value": 1591.5494914767596,
+      "expected": 1591.5494309189535,
+      "agreement_percent": 100.0,
+      "source": "T_d = 50 µs: 1/(4πT_d)",
+      "unit": "Hz"
+    },
+    "slow_controller_ramp_error_pm": {
+      "value": 3.1440149834723825,
+      "expected": 3.14340579626621,
+      "agreement_percent": 99.98,
+      "source": "T_d = 50 µs: ramp rate / K_v",
+      "unit": "pm"
+    }
+  },
+  "assumptions": {
+    "controller": "discrete PI at T_s = 10 µs; measurement = mean photocurrent over the previous T_s (averages the 53 Gbaud data); heater updated at the tick and held; the continuous design uses e^(−s·T_d) with T_d = T_s (T_s/2 averaging + T_s/2 hold)",
+    "heater": "0 ≤ P_h ≤ 20.0 mW (ceiling assumed); heater bias set so that 0.5 mW remains at 125 C; scenarios at 60 C ambient (P0 = 7.89 mW)",
+    "ambient": "ambient temperature deviations enter the ring through the same two-pole thermal filter as the heater (a ring cannot jump in temperature); an instantaneous ambient step is therefore a pessimistic test",
+    "crosstalk": "K_ij scales heater power before the shared thermal dynamics (cross-heating assumed as fast as self-heating; in reality it is slower and more diffusive)",
+    "optics": "Lorentzian through-port notch with T_min = 0.016, FWHM = 374 pm (Q = 3500); laser wavelength and power fixed; self-heating by absorbed light ignored (it is an offset the integrator absorbs); no RIN; data modulation 50 pm/V × 1.3 Vpp = 65 pm around the bias",
+    "sensor": "0.9 A/W, 5 % tap of the 4 dBm (2.512 mW) input; I_set calibrated to I(δ_opt) = 0.262·I_fs; a single photocurrent cannot tell the two sides of the notch apart (capture only from the blue side, i.e. δ > 0)",
+    "thermal": "R_th = 8.8 K/mW, 75 % with τ = 10 µs and 25 % with τ = 300 µs, dλ_r/dT = 50 pm/K (η = 440 pm/mW = REF 0.44 nm/mW); temperature independent (no thermal runaway, no R_th(T))"
+  },
+  "runtime_seconds_before_notebook": 122.21256923675537,
+  "versions": {
+    "python": "3.12.13",
+    "python-control": "0.10.2",
+    "numpy": "2.4.6",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "ffmpeg": "9.0.1",
+    "ipywidgets": "8.1.9",
+    "nbformat": "5.11.1"
+  },
+  "notebook": {
+    "executed": true,
+    "seconds": 4.57135796546936
+  },
+  "runtime_seconds": 128.28298330307007
+}

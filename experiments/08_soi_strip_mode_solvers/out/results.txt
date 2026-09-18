@@ -1,0 +1,95 @@
+Inputs: 500 x 220 nm Si strip (n=3.5) in SiO2 (n=1.45) at 1310 nm
+k0 = 4.7963 rad/um; textbook REF: n_eff=2.5, n_g=4.2, Gamma=0.85
+
+--- A. reference strip, both solvers
+Tidy3D: 4 guided modes in 6.5 s
+femwell: 4 guided modes in 5.9 s (5674 triangles)
+  tidy3d   TE0: n_eff=2.71343 TE=0.993 Gamma_P=0.8530 Gamma_E=0.9522 S_Si=1.0783 S_SiO2=0.1308 n_g,wg=3.9636
+  tidy3d   TM0: n_eff=2.18773 TE=0.041 Gamma_P=0.7525 Gamma_E=0.7810 S_Si=0.9978 S_SiO2=0.6753 n_g,wg=4.4715
+  tidy3d   TE1: n_eff=1.82036 TE=0.870 Gamma_P=0.5957 Gamma_E=0.7989 S_Si=1.0183 S_SiO2=0.6188 n_g,wg=4.4612
+  tidy3d   TM1: n_eff=1.60127 TE=0.272 Gamma_P=0.4332 Gamma_E=0.6870 S_Si=0.8002 S_SiO2=0.8799 n_g,wg=4.0765
+  femwell  TE0: n_eff=2.71185 TE=0.993 Gamma_P=0.8518 Gamma_E=0.9511 S_Si=1.0769 S_SiO2=0.1336
+  femwell  TM0: n_eff=2.16624 TE=0.038 Gamma_P=0.7487 Gamma_E=0.7809 S_Si=0.9991 S_SiO2=0.6765
+  femwell  TE1: n_eff=1.81517 TE=0.871 Gamma_P=0.5916 Gamma_E=0.7928 S_Si=1.0115 S_SiO2=0.6380
+  femwell  TM1: n_eff=1.58416 TE=0.272 Gamma_P=0.4160 Gamma_E=0.6814 S_Si=0.7772 S_SiO2=0.8772
+TE0 n_eff: Tidy3D 2.7134, femwell 2.7119 (solver spread +0.06 %); textbook 2.5 is -7.8 % lower
+lambda_g = lambda/n_eff = 482.9 nm; evanescent decay length 1/gamma = 90.9 nm
+|E|^2 tail fit along x: Tidy3D 82.5 nm, femwell 82.2 nm vs 1/gamma 90.9 nm
+peak |E_z| / peak |E_x| of TE0: Tidy3D 0.405, femwell 0.405
+E_x outside/inside the sidewall, 10 nm either side (grid-limited): Tidy3D 1.70, femwell 2.90; femwell 0.1 nm either side: 5.77; eps ratio (n_Si/n_SiO2)^2 = 5.83 (-1.0 %)
+
+--- B. group index: waveguide dispersion vs material dispersion
+bulk: n_Si=3.5005, n_g,Si=3.6772; n_SiO2=1.4468, n_g,SiO2=1.4616
+n_g (fixed materials = waveguide dispersion only): Tidy3D 3.9636, femwell 3.9628
+n_g (Sellmeier materials, brute-force d/dlambda): Tidy3D 4.1575, femwell 4.1567
+n_g predicted = n_g,wg + S_Si (n_g,Si - n_Si) + S_SiO2 (n_g,SiO2 - n_SiO2): Tidy3D 4.1561, femwell 4.1551
+   waveguide-dispersion part n_g,wg - n_eff = +1.251, material part = +0.192
+REF n_g = 4.2: solver mean 4.157 (-1.0 %)
+FSR = lambda^2/(n_g L): 10.42 nm / 1.821 THz with solver n_g (REF 10.3 nm / 1.8 THz)
+(B took 9.2 s)
+
+--- C. width sweep 300-700 nm (fixed REF indices)
+  w= 300 nm: TE0 2.2394/2.2362  TM0 1.9496/1.9270  TE1 nan/nan  n_g,wg 4.423/4.424  Gamma_P 0.771/0.768
+  w= 320 nm: TE0 2.3260/2.3232  TM0 1.9854/1.9627  TE1 1.4512/nan  n_g,wg 4.369/4.370  Gamma_P 0.796/0.793
+  w= 340 nm: TE0 2.3994/2.3968  TM0 2.0178/1.9952  TE1 1.4640/1.4572  n_g,wg 4.307/4.308  Gamma_P 0.813/0.810
+  w= 360 nm: TE0 2.4617/2.4593  TM0 2.0470/2.0245  TE1 1.4805/1.4735  n_g,wg 4.247/4.247  Gamma_P 0.824/0.822
+  w= 380 nm: TE0 2.5148/2.5126  TM0 2.0735/2.0511  TE1 1.5020/1.4951  n_g,wg 4.191/4.191  Gamma_P 0.832/0.831
+  w= 400 nm: TE0 2.5604/2.5584  TM0 2.0974/2.0752  TE1 1.5306/1.5238  n_g,wg 4.141/4.141  Gamma_P 0.838/0.837
+  w= 420 nm: TE0 2.5998/2.5979  TM0 2.1191/2.0970  TE1 1.5682/1.5617  n_g,wg 4.097/4.096  Gamma_P 0.843/0.842
+  w= 440 nm: TE0 2.6340/2.6322  TM0 2.1387/2.1168  TE1 1.6168/1.6105  n_g,wg 4.057/4.057  Gamma_P 0.846/0.845
+  w= 460 nm: TE0 2.6639/2.6622  TM0 2.1566/2.1348  TE1 1.6767/1.6707  n_g,wg 4.022/4.022  Gamma_P 0.849/0.848
+  w= 480 nm: TE0 2.6902/2.6886  TM0 2.1729/2.1513  TE1 1.7459/1.7403  n_g,wg 3.991/3.990  Gamma_P 0.851/0.850
+  w= 500 nm: TE0 2.7134/2.7119  TM0 2.1877/2.1663  TE1 1.8204/1.8152  n_g,wg 3.964/3.963  Gamma_P 0.853/0.852
+  w= 520 nm: TE0 2.7340/2.7325  TM0 2.2013/2.1800  TE1 1.8959/1.8913  n_g,wg 3.939/3.938  Gamma_P 0.854/0.853
+  w= 540 nm: TE0 2.7524/2.7510  TM0 2.2138/2.1926  TE1 1.9692/1.9650  n_g,wg 3.917/3.916  Gamma_P 0.856/0.854
+  w= 560 nm: TE0 2.7689/2.7674  TM0 2.2252/2.2041  TE1 2.0383/2.0345  n_g,wg 3.897/3.896  Gamma_P 0.857/0.855
+  w= 580 nm: TE0 2.7837/2.7823  TM0 2.2357/2.2147  TE1 2.1024/2.0990  n_g,wg 3.880/3.879  Gamma_P 0.857/0.856
+  w= 600 nm: TE0 2.7970/2.7956  TM0 2.2454/2.2245  TE1 2.1613/2.1581  n_g,wg 3.864/3.863  Gamma_P 0.858/0.857
+  w= 620 nm: TE0 2.8091/2.8077  TM0 2.2544/2.2336  TE1 2.2151/2.2122  n_g,wg 3.849/3.848  Gamma_P 0.859/0.858
+  w= 640 nm: TE0 2.8201/2.8187  TM0 2.2626/2.2419  TE1 2.2642/2.2615  n_g,wg 3.836/3.835  Gamma_P 0.859/0.858
+  w= 660 nm: TE0 2.8301/2.8288  TM0 2.2703/2.2497  TE1 2.3090/2.3065  n_g,wg 3.824/3.823  Gamma_P 0.859/0.858
+  w= 680 nm: TE0 2.8392/2.8379  TM0 2.2774/2.2569  TE1 2.3499/2.3475  n_g,wg 3.813/3.812  Gamma_P 0.860/0.859
+  w= 700 nm: TE0 2.8476/2.8463  TM0 2.2841/2.2636  TE1 2.3873/2.3850  n_g,wg 3.803/3.802  Gamma_P 0.860/0.859
+femwell TE0 n_eff crosses the textbook 2.5 at w = 375 nm; total n_g crosses 4.2 at w = 470 nm
+TE1 cutoff width (n_eff = n_SiO2 + 0.003): Tidy3D 323 nm, femwell 328 nm
+dn_eff/dw at 500 nm: Tidy3D 1.10e-03/nm, femwell 1.10e-03/nm -> dlambda_r/dw = lambda (dn_eff/dw)/n_g = 346 pm per nm of width; 10 nm width error = 3.46 nm = 0.33 FSR
+(C took 161.7 s)
+
+--- D. wavelength sweep 1260-1360 nm (Sellmeier n_Si(lambda), n_SiO2(lambda))
+  lam=1260 nm: n_eff 2.7688/2.7673  n_g,wg 3.948  n_g,total 4.169  Gamma_P 0.866/0.865
+  lam=1270 nm: n_eff 2.7578/2.7562  n_g,wg 3.951  n_g,total 4.165  Gamma_P 0.863/0.862
+  lam=1280 nm: n_eff 2.7467/2.7451  n_g,wg 3.955  n_g,total 4.162  Gamma_P 0.861/0.860
+  lam=1290 nm: n_eff 2.7356/2.7341  n_g,wg 3.958  n_g,total 4.160  Gamma_P 0.858/0.857
+  lam=1300 nm: n_eff 2.7246/2.7230  n_g,wg 3.962  n_g,total 4.159  Gamma_P 0.856/0.855
+  lam=1310 nm: n_eff 2.7136/2.7120  n_g,wg 3.965  n_g,total 4.158  Gamma_P 0.853/0.852
+  lam=1320 nm: n_eff 2.7026/2.7010  n_g,wg 3.969  n_g,total 4.157  Gamma_P 0.851/0.850
+  lam=1330 nm: n_eff 2.6915/2.6900  n_g,wg 3.972  n_g,total 4.157  Gamma_P 0.848/0.847
+  lam=1340 nm: n_eff 2.6805/2.6789  n_g,wg 3.976  n_g,total 4.157  Gamma_P 0.846/0.844
+  lam=1350 nm: n_eff 2.6695/2.6679  n_g,wg 3.980  n_g,total 4.157  Gamma_P 0.843/0.842
+  lam=1360 nm: n_eff 2.6585/2.6569  n_g,wg 3.983  n_g,total 4.157  Gamma_P 0.840/0.839
+femwell n_g,total from the sweep's own d n_eff/d lambda at 1310: 4.1567 (brute force above: 4.1567)
+(D took 42.8 s)
+
+--- E. thermo-optic perturbation (the capstone number)
+  tidy3d: n_eff(0)=2.713431, +10 K -> 2.715448; dn_eff/dT = 2.0172e-04 /K; direct S_Si = 1.0774, S_SiO2 = 0.1330
+  femwell: n_eff(0)=2.711855, +10 K -> 2.713871; dn_eff/dT = 2.0165e-04 /K; direct S_Si = 1.0770, S_SiO2 = 0.1336
+  femwell n_eff(dT) over 0-115 K: slope 2.0173e-04 /K, max deviation from linear 1.3e-06
+  d lambda_r/dT [pm/K]: textbook Gamma-weighted (0.85 x 1.86e-4, n_g 4.2) = 49.3; REF = 50.0
+     tidy3d: 63.6 pm/K with solver n_g, 62.9 pm/K with REF n_g 4.2
+     femwell: 63.6 pm/K with solver n_g, 62.9 pm/K with REF n_g 4.2
+  solver mean 63.6 pm/K = +27 % vs REF 50 pm/K; perturbation formula (S_Si dn_Si/dT + S_SiO2 dn_SiO2/dT) lambda/n_g,REF = 62.9 pm/K
+  thermal expansion of the ring (alpha_L = 2.6e-06/K): n_eff alpha_L = 7.05e-06/K = 3.5 % of dn_eff/dT -> +2.2 pm/K; total d lambda_r/dT = 65.8 pm/K (+32 % vs REF); the widening of the cross-section adds only 1.4e-06/K (0.7 %), ignored
+  1 K = 64 pm = 17 % of the 374 pm FWHM (REF: 13 %); 0.1 K = 6.4 pm; delta_opt = 108.0 pm = 1.7 K
+  ambient span 115 K -> 7.31 nm of drift = 0.70 FSR (REF: 5.75 nm = 0.56 FSR); channel spacing 1.15 nm = 18 K of drift; one FSR = 164 K
+(E took 17.9 s)
+
+--- F. which ring numbers depend on n_eff and which on n_g
+  textbook n_eff 2.5, n_g 4.2: resonances at [1295.43 1305.6  1315.93 1326.43] nm, FSR 10.33 nm
+  solver n_eff 2.713, n_g 4.2: resonances at [1299.77 1310.01 1320.41] nm, FSR 10.32 nm
+  solver n_eff 2.713, solver n_g 4.157: resonances at [1299.66 1310.01 1320.51] nm, FSR 10.43 nm
+  mode order m = n_eff L/lambda: textbook 75.6, solver 82.0 (nearest integer resonances differ; FSR does not)
+
+--- G. video of the TE0 mode morphing with width
+(G took 33.2 s)
+
+Total runtime 279 s

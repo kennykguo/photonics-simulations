@@ -1,0 +1,36 @@
+Series RLC: L = 100.0 mH, R = 62.832 ohm, C = 253.30 nF
+  -> w0 = 1/sqrt(LC) = 6283.19 rad/s  (f0 = 1000.00 Hz), gamma = R/L = 628.32 1/s, Gamma = gamma/w0 = 0.100 (Q = 10.0)
+Running ngspice ...
+  ngspice rlc_ac.cir: 0.04 s
+  ngspice rlc_tran_low.cir: 0.02 s
+  ngspice rlc_tran_res.cir: 0.04 s
+  ngspice rlc_tran_high.cir: 0.09 s
+AC sweep (4001 points): max |chi| relative error SPICE vs analytic = 0.00014 %, max phase error = 0.00010 deg
+  |q| peak: SPICE 997.49 Hz, analytic f0*sqrt(1-Gamma^2/2) = 997.50 Hz (-0.000 %)
+  phase lag at f0: SPICE 90.000 deg (expect 90)
+  absorbed-power half-power points: SPICE 951.24 / 1051.26 Hz, analytic 951.25 / 1051.25 Hz
+  absorbed-power FWHM: SPICE 100.022 Hz, analytic gamma/2pi = 100.000 Hz (+0.022 %)
+  static response |chi_hat|: SPICE 1.00010 at 10 Hz, analytic 1.00010 (quasi-static limit chi -> A/w0^2, i.e. chi_hat -> 1)
+  ngspice rlc_ac_Q2.cir: 0.02 s
+  AC sweep at Q = 2 (R = 314.16 ohm): SPICE peak |chi_hat| = 2.0656, analytic 1/(Gamma sqrt(1-Gamma^2/4)) = 2.0656 (+0.0001 %); max |chi| error 0.00007 %
+  ngspice rlc_ac_Q50.cir: 0.02 s
+  AC sweep at Q = 50 (R = 12.57 ohm): SPICE peak |chi_hat| = 49.9999, analytic 1/(Gamma sqrt(1-Gamma^2/4)) = 50.0025 (-0.0053 %); max |chi| error 0.00054 %
+  AC sweep at Q = 10: SPICE peak |chi_hat| = 10.0124, analytic 10.0125
+Transient Ω=0.1 (100 Hz, 2633 SPICE points): q lags V by 0.579° (analytic 0.579°); i leads V by +89.42° (analytic +89.42°); |q| = 0.2558 µC (analytic 0.2558, -0.00 %); <P_R> = 0.0008 mW, <P_src> = 0.0008 mW, analytic 0.0008 mW (+0.06 %)
+Transient Ω=1 (1000 Hz, 11797 SPICE points): q lags V by 90.018° (analytic 90.000°); i leads V by -0.02° (analytic +0.00°); |q| = 2.5324 µC (analytic 2.5330, -0.02 %); <P_R> = 7.9505 mW, <P_src> = 7.9520 mW, analytic 7.9577 mW (-0.09 %)
+Transient Ω=3 (3000 Hz, 32174 SPICE points): q lags V by 177.848° (analytic 177.852°); i leads V by -87.85° (analytic -87.85°); |q| = 0.0316 µC (analytic 0.0316, +0.00 %); <P_R> = 0.0112 mW, <P_src> = 0.0114 mW, analytic 0.0112 mW (+0.01 %)
+Silica effective UV oscillator: B_u = 1.1041, lambda_u = 89.1 nm, w_u = 2.114e+16 rad/s
+  1310 nm: w = 1.438e+15 rad/s -> Omega = 0.0680  ->  circuit frequency 68.0 Hz
+  n(1310) single effective UV oscillator: 1.4523; 3-oscillator Lorentz sum: 1.4468; Malitson Sellmeier: 1.4468  (textbook 1.4468)
+  at 1310 nm the UV oscillator's response is 1.0046 x its static value (notes 8: quasi-static but not zero)
+  dn/dlambda at 1310 nm: Sellmeier -1.1325e-02 /um = UV terms -2.7287e-03 + IR term -8.5962e-03 (IR share 76 %); single UV oscillator alone -2.7111e-03 /um
+  group index n_g = n - lambda dn/dlambda: Sellmeier 1.4616, single UV oscillator 1.4559
+  silica n'' at 1310 nm from 0.3 dB/km: 7.20e-12; if silica had the circuit's Gamma = 0.1: n'' = 2.61e-03 (= 1087 dB/cm)
+  phase lag of the UV oscillator at 1310 nm: 0.392 deg with the circuit's Gamma = 0.1; with the damping that reproduces silica's n'' (Gamma = 2.8e-10) it is 1.1e-09 deg
+Video frequency_sweep.mp4: 360 frames at 30 fps (12 s), rendered in 41.3 s
+Capstone: Drude dn for 1e+17 cm^-3 electrons at 1310 nm = -8.458e-05 (Soref-Bennett -6.200e-05, ratio 1.36); Drude dalpha = 0.028 /cm vs Soref-Bennett 0.60 /cm (Drude with tau = 2e-13 s underestimates FCA 21x)
+  uniform 1e+17 cm^-3 in the whole mode would shift the ring by -16.4 pm (= -0.33 K of thermal drift)
+  modulator swing 65 pm -> dn_eff = 2.08e-04 -> equivalent uniform dN ~ 4.0e+17 cm^-3; the same 65 pm is 1.3 K of thermal drift
+  thermo-optic: dn/dT = 1.86e-04/K needs d(w0)/w0 = -5.79e-05 per K (bandgap-like Varshni shift of a 3.4 eV transition: -7.94e-05 per K)
+explore.ipynb executed in 4.6 s
+Total runtime 49.5 s

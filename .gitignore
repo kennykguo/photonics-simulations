@@ -1,0 +1,11 @@
+.venv/
+.meep/
+.mamba/
+.smoke/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+.DS_Store
+experiments/*/out/*.h5
+experiments/*/out/partial_movie_files/
+experiments/*/media/

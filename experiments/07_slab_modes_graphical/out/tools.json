@@ -1,0 +1,34 @@
+[
+  {
+    "tool": "numpy + scipy.optimize.brentq (slab_te.py)",
+    "version": "numpy 2.5.3, scipy 1.18.1",
+    "what_it_is": "NumPy is the array library every Python simulation is built on; SciPy adds numerical routines, here the bracketed root finder brentq (Brent's method, guaranteed convergence when the function changes sign on the bracket).",
+    "used_for": "Solving the transcendental TE eigenvalue equations h tan(hd) = \u03b3 and \u2212h cot(hd) = \u03b3 on the circle (hd)\u00b2 + (\u03b3d)\u00b2 = V\u00b2 (notes 19), one root per branch; building F(x), F\u2032(x), H_x, H_z (notes 18); closed-form confinement \u0393_F (|F|\u00b2 fraction) and energy fraction \u0393_E (n\u00b2|F|\u00b2 fraction); n_g from a centred finite difference of n_eff(\u03bb) (notes 22); thickness and wavelength sweeps for the cutoffs; the thermo-optic partials \u2202n_eff/\u2202n\u2081, \u2202n_eff/\u2202n\u2082 by finite differences of the exact root, checked against the perturbation identities.",
+    "result": "220 nm slab at 1310 nm: V = 1.681, two TE modes. TE0: n_eff = 2.9879, \u03b2 = 14.331 rad/\u00b5m, 1/\u03b3 = 79.8 nm (notes 23 quotes 80 nm: -0.2 %), \u03bb_g = 438 nm, \u0393_F = 0.862, \u0393_E = 0.973. TE1: n_eff = 1.4853, 1/\u03b3 = 647 nm (barely guided). TE1 cutoff thickness 206 nm, cutoff wavelength 1402 nm. Thermo-optic: \u2202n_eff/\u2202n\u2081 = 1.0101 = (n_g/n\u2081)\u0393_E = (n\u2081/n_eff)\u0393_F to 1e-4, dn_eff/dT = 1.886e-04 /K, d\u03bb_r/dT = 68.0 pm/K = \u03bb[\u0393_E dn\u2081/dT/n\u2081 + (1 \u2212 \u0393_E) dn\u2082/dT/n\u2082] (n_g cancels) vs REF 50 pm/K, which needs \u0393_E = 0.68.",
+    "how_to_observe": "cd experiments/07_slab_modes_graphical && ../../.meep/bin/python run.py ; look at out/07_graphical_construction.png (roots = dots where the circle meets a branch), out/07_mode_profiles.png, out/07_sweep_thickness.png, out/07_sweep_wavelength.png; numbers in out/results.json. Change THICK / LAM / N1 / N2 at the top of run.py, or call slab_te.solve_te_modes(d, lam, n1, n2) directly."
+  },
+  {
+    "tool": "Meep (pymeep) get_eigenmode = MPB eigenmode solver",
+    "version": "meep 1.34.0",
+    "what_it_is": "Meep is the open-source FDTD electromagnetic simulator; its get_eigenmode routine calls the MPB plane-wave frequency-domain eigensolver on a cross-section of the FDTD cell to find the guided modes and their propagation constants. It is normally used to build mode sources and to decompose FDTD fields into modes.",
+    "used_for": "An independent check of \u03b2: a 2-D cell holding the 220 nm slab (thickness along Meep y, propagation along Meep x, invariant z; the notes' E_y is Meep's Ez, parity ODD_Z), with get_eigenmode on the 1-D line across the slab for EVEN_Y (TE0) and ODD_Y (TE1); the same at six thicknesses; and a resolution-convergence check.",
+    "result": "TE0 n_eff = 2.98675 vs analytic 2.98795 (-0.040 %); TE1 n_eff = 1.48512 vs 1.48532 (-0.014 %); Meep n_g(TE0) = 3.6306 vs finite-difference 3.6323 (-0.047 %); max |\u0394n_eff| over the thickness sweep 0.073 %. Field profiles overlay the analytic F and F\u2032 (out/07_meep_validation.png).",
+    "how_to_observe": "Same run.py (needs the .meep interpreter, hence the .uses_meep marker); out/07_meep_validation.png and the 'meep' block of out/results.json. Change res in meep_modes(...) to see the discretisation error shrink (table te0_resolution_convergence)."
+  },
+  {
+    "tool": "matplotlib + FFMpegWriter (ffmpeg)",
+    "version": "matplotlib 3.11.2, ffmpeg 9.0.1 (/opt/homebrew/bin/ffmpeg)",
+    "what_it_is": "matplotlib is the standard Python plotting library; its animation module renders a FuncAnimation frame by frame and pipes the frames to ffmpeg, which encodes the mp4.",
+    "used_for": "All figures, plus the video of the two-plane-wave decomposition of TE0 (notes 21): each panel is an imshow of \u00bdcos(\u03c9t \u2212 \u03b2z \u2213 hx) inside the core (k = (\u00b1h, \u03b2)) and of the full F(x)cos(\u03c9t \u2212 \u03b2z) with its evanescent tails, animated over two optical periods.",
+    "result": "out/07_plane_wave_decomposition.mp4 (4 s, 120 frames) and its contact sheet; the k-vectors of the two waves are tilted \u00b158.6\u00b0 from the boundary normal (>24.5\u00b0 critical), \u221a(h\u00b2 + \u03b2\u00b2)/(n\u2081k\u2080) = 1.000000 (notes 4), and a crest-tracking check confirms wave 1 drifts toward +x (+33 nm per 0.2 fs) and wave 2 toward \u2212x (-33 nm), matching the k = (+h, \u03b2) / (\u2212h, \u03b2) labels.",
+    "how_to_observe": "open out/07_plane_wave_decomposition.mp4; watch the top two panels slide diagonally (wave 1 up and to the right, wave 2 down and to the right) while the bottom one keeps a fixed x-shape and slides along z; stills in out/07_plane_wave_decomposition_frames.png. Change N_FR or the time span in run.py."
+  },
+  {
+    "tool": "Jupyter notebook (nbformat / nbconvert, ipywidgets)",
+    "version": "see explore.ipynb metadata (kernel photonics-sims)",
+    "what_it_is": "Jupyter notebooks mix code, output and text; ipywidgets adds sliders that re-run a function; nbconvert executes a notebook headlessly and stores the outputs.",
+    "used_for": "explore.ipynb (generated by build_notebook.py with nbformat): sliders for thickness (50\u2013800 nm), wavelength (1000\u20132000 nm) and the two indices that redraw the graphical construction, the mode list and the profiles; a cutoff map N_TE(2d, \u03bb); and an n_eff-vs-n_g cell that recomputes the ring FSR with the slab n_g and with REF n_g = 4.2 (uses slab_te.py, no Meep).",
+    "result": "Executed with the default (220 nm, 1310 nm) values so the saved outputs show the same numbers as run.py: 2 TE modes, TE0 n_eff 2.988, slab n_g 3.63 -> FSR 11.9 nm versus 10.3 nm with n_g 4.2.",
+    "how_to_observe": "cd experiments/07_slab_modes_graphical && ../../.venv/bin/jupyter lab explore.ipynb ; drag the sliders. Rebuild with ../../.venv/bin/python build_notebook.py and re-execute headlessly with ../../.venv/bin/jupyter nbconvert --to notebook --execute --inplace explore.ipynb"
+  }
+]

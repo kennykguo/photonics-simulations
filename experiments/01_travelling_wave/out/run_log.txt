@@ -1,0 +1,20 @@
+lambda0 = 1310 nm  f = 228.85 THz  omega = 1.4379e+15 rad/s  T = 4.370 fs
+k0 = 4.7963 rad/um; bulk Si (n=3.5): lambda = 374.3 nm
+mode n_eff = 2.5: beta = 11.991 rad/um, lambda_g = 524.0 nm, v_p = 1.1992e+08 m/s
+max |Re{E~(z) e^(jwt)} - E0 cos(wt - bz)| over a (301, 601) grid = 1.86e-15  (NOTES 3)
+crest tracking: forward  v = 1.19917e+08 m/s vs w/b = 1.19917e+08 (100.0000 %)
+crest tracking: backward v = -1.19917e+08 m/s vs -w/b = -1.19917e+08 (100.0000 %)
+crest spacing in a snapshot = 524.00 nm vs lambda0/n_eff = 524.00 nm (100.000 %)
+round trip L = 39.6 um: beta L = 474.84 rad = 75.573 x 2pi  (m is the mode order)
+resonance spacing with n_eff frozen: 17.33 nm (numeric 17.37); with n_g: 10.32 nm (numeric 10.33) vs REF FSR 10.3 nm (99.7 %)
+resonances bracketing 1310 nm (n_eff(lambda) model): m = 76 at 1305.60 nm (0.4275 turn to the blue), m = 75 at 1315.93 nm (0.5725 turn to the red); nearest is m = 76 at 1305.60 nm (scan: 1305.60 nm, 100.000 %), +4.40 nm = 0.425 FSR from the laser
+dn_eff/dT = 1.596e-04/K -> round-trip phase drift 0.0303 rad/K = 1.74 deg/K
+dlambda_r/dT = (lambda/n_g) dn_eff/dT = 49.8 pm/K (Si-only 49.3) vs REF 50.0 (99.6 %)
+one FSR of phase (2pi) = 207 K; FSR/(50 pm/K) = 206 K; ambient 10..125 C moves the resonance 5.72 nm = 0.56 FSR (REF x REF: 5.75 nm, 99.6 %)
+$ /Users/kennyg/photonics-simulations/.venv/bin/manim -qm --disable_caching --media_dir /Users/kennyg/photonics-simulations/experiments/01_travelling_wave/media -o travelling_wave.mp4 scene.py TravellingWaveScene
+rendered travelling_wave.mp4: 13.3 s of video in 40 s
+$ /Users/kennyg/photonics-simulations/.venv/bin/manim -qm --disable_caching --media_dir /Users/kennyg/photonics-simulations/experiments/01_travelling_wave/media -o sign_convention.mp4 scene.py SignConventionScene
+rendered sign_convention.mp4: 9.0 s of video in 17 s
+$ /Users/kennyg/photonics-simulations/.venv/bin/jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.kernel_name=photonics-sims --ExecutePreprocessor.timeout=60 /Users/kennyg/photonics-simulations/experiments/01_travelling_wave/explore.ipynb
+executed explore.ipynb in 4 s
+done in 66 s

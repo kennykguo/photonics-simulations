@@ -1,0 +1,34 @@
+[
+  {
+    "tool": "numpy",
+    "version": "2.4.6",
+    "what_it_is": "The array library under all of scientific Python: vectorised arithmetic on grids, complex numbers, FFTs, linear algebra.",
+    "used_for": "Evaluating E = Re{exp(j(\u03c9t \u2212 k_x x \u2212 k_z z))} on a 2-D grid with k_x either real or purely imaginary (k_x = \u2212j\u03b3), measuring wavelengths along z, x and k from zero crossings, checking the identity Re{e^{j(\u03c9t \u2212 k_x x \u2212 \u03b2z)}} = e^{\u2212\u03b3x}cos(\u03c9t \u2212 \u03b2z) to machine precision, drawing the transverse factor e^{\u2212jk_x x} in the complex plane, and building the E and H phasors (Faraday's law) to evaluate the time-averaged Poynting vector \u27e8S\u27e9 = \u00bdRe{E\u00d7H*} numerically.",
+    "result": "\u03bb in silica 903.4 nm (\u03bb0/n2 = 903.4); at \u03b8 = 30\u00b0 measured 2\u03c0/k_z = 1043.2 nm vs 1043.2 analytic and 2\u03c0/k_x = 1806.9 vs 1806.9; identity check max difference 1.1e-16; k_x\u00b2 + k_z\u00b2 = 2.1025 k0\u00b2 = n2\u00b2 exactly; \u27e8S\u27e9 of the tilted wave at 30.00\u00b0 (\u03b8 = 30\u00b0) with |\u27e8S\u27e9| = n2/2\u03b70 to 100.0 %; evanescent \u27e8S_x\u27e9/\u27e8S_z\u27e9 = 7e-17 (expected 0), reactive part \u03b3/\u03b2 = 0.815.",
+    "how_to_observe": "cd experiments/02_wavevector_evanescent && ../../.venv/bin/python run.py ; numbers print to the terminal and go to out/results.json. Change theta_deg (Part A) or neff_ref / n2 in run.py and re-run."
+  },
+  {
+    "tool": "scipy",
+    "version": "1.18.1",
+    "what_it_is": "Scientific algorithms on top of numpy: optimisation, curve fitting, integration, signal processing, special functions.",
+    "used_for": "scipy.optimize.curve_fit fits A\u00b7e^{\u2212x/L} to the envelope of the computed evanescent field to recover the decay length from the field itself, independently of the formula 1/\u03b3.",
+    "result": "Fitted 1/\u03b3 = 102.38 nm vs analytic 102.38 nm (100.000 %).",
+    "how_to_observe": "out/results.json keys decay_length_fitted_from_field_nm and decay_length_nm_neff2p5_silica; the envelope is the dashed curve in the lower-right panel of out/evanescent_sweep.mp4."
+  },
+  {
+    "tool": "matplotlib (FuncAnimation + FFMpegWriter)",
+    "version": "3.11.2",
+    "what_it_is": "The standard Python plotting library; its animation module re-draws a figure frame by frame and pipes the frames to ffmpeg to make a video.",
+    "used_for": "Signed-field colour maps (RdBu_r centred on zero) of the plane wave and of the evanescent field; the two videos plane_wave_tilted.mp4 (time running, crest tracking) and evanescent_sweep.mp4 (k_z swept through n2\u00b7k0 while the k_x\u00b2 parabola and the x-profile update); the five static figures (including the phasor-plane and quiver plot of \u27e8S\u27e9) and two contact sheets.",
+    "result": "out/plane_wave_tilted.png/.mp4/_frames.png, out/evanescent_sweep.mp4/_frames.png, out/transverse_phasor_and_power.png, out/decay_length_vs_neff.png, out/tail_log_scale.png, out/capstone_gap_sensitivity.png.",
+    "how_to_observe": "Open the mp4s in QuickTime/VLC. In plane_wave_tilted.mp4 watch the circle (crest along k) and the square (same crest on the z axis): the square is faster. In evanescent_sweep.mp4 watch the dot on the parabola cross zero at n_eff = 1.45 while the field pattern stops oscillating in x. Edit neff_path or n_frames_A in run.py to change the sweep range or the duration."
+  },
+  {
+    "tool": "ffmpeg",
+    "version": "9.0.1 (/opt/homebrew/bin/ffmpeg)",
+    "what_it_is": "The universal command-line video encoder/decoder; matplotlib calls it to turn a sequence of frames into an H.264 mp4.",
+    "used_for": "Encoding both animations at 30 fps with libx264 and yuv420p pixel format so they play in any viewer.",
+    "result": "out/plane_wave_tilted.mp4 (90 frames, 3 s) and out/evanescent_sweep.mp4 (260 frames, 8.7 s).",
+    "how_to_observe": "/opt/homebrew/bin/ffprobe out/evanescent_sweep.mp4 prints duration, resolution and codec."
+  }
+]

@@ -1,0 +1,168 @@
+{
+  "fd_check_ng_max_abs_diff": 1.0637470904129032e-09,
+  "fd_check_D_max_abs_diff_ps_nm_km": 0.000397285111617407,
+  "n_silica_1310": 1.4468043175527276,
+  "ng_silica_1310": 1.461639991743378,
+  "dn_dlam_silica_1310_per_um": -0.011324942130267473,
+  "D_silica_1310_ps_nm_km": 3.581817528292037,
+  "beta2_silica_1310_ps2_km": -3.263213413234248,
+  "n_silica_1550": 1.4440236217032607,
+  "ng_silica_1550": 1.4625964838941496,
+  "dn_dlam_silica_1550_per_um": -0.011982491736057433,
+  "D_silica_1550_ps_nm_km": 21.91180021945923,
+  "beta2_silica_1550_ps2_km": -27.94736613760328,
+  "n_silicon_1310": 3.5005287119841753,
+  "ng_silicon_1310": 3.6772225164554446,
+  "dn_dlam_silicon_1310_per_um": -0.1348807667719614,
+  "D_silicon_1310_ps_nm_km": -1842.4101373870035,
+  "beta2_silicon_1310_ps2_km": 1678.5270119181328,
+  "n_silicon_1550": 3.47640956821813,
+  "ng_silicon_1550": 3.593891344485516,
+  "dn_dlam_silicon_1550_per_um": -0.07579469436605539,
+  "D_silicon_1550_ps_nm_km": -794.3682192451528,
+  "beta2_silicon_1550_ps2_km": 1013.1755149722745,
+  "zdw_silica_um": 1.272753932775132,
+  "zdw_silica_um_finite_difference": 1.272755068538711,
+  "dispersion_slope_at_zdw_ps_nm2_km": 0.09996958798160685,
+  "D_silica_1310_omega_route_ps_nm_km": 3.5818542970335834,
+  "D_silica_1550_omega_route_ps_nm_km": 21.911847988718744,
+  "dispersion_curvature_at_zdw_ps_nm3_km": -0.00021521985358315118,
+  "D_silica_1310_linear_estimate_ps_nm_km": 3.7234739944052904,
+  "D_silica_1310_taylor2_estimate_ps_nm_km": 3.574190022517663,
+  "D_silica_1310_linearisation_error_percent": 3.95487667906973,
+  "zdw_decomposition_per_um2": {
+    "uv_terms_S''/2n": 0.0070703116652982515,
+    "ir_term_S''/2n": -0.006987726422111285,
+    "-S'^2/4n^3": -8.837683966426772e-05,
+    "total": -5.791596477301022e-06
+  },
+  "small_change_ghz_per_nm_1310": 174.69404929782647,
+  "small_change_exact_1nm_step_ghz_1310": 174.5607967811875,
+  "small_change_common_units_helper_ghz": 174.69404929782644,
+  "small_change_ghz_per_nm_1550": 124.78354131113423,
+  "capstone_conversions": {
+    "fsr_10.3nm_in_thz": 1.7993487077676125,
+    "thermal_50pm_per_K_in_ghz_per_K": 8.734702464891322,
+    "fwhm_374pm_in_ghz": 65.33557443738708,
+    "channel_spacing_200ghz_in_nm": 1.1448586875390976,
+    "delta_opt_108pm_in_ghz": 18.866957324165252,
+    "one_pm_in_mhz": 174.69404929782644
+  },
+  "fsr_by_index": {
+    "n_eff textbook 2.5": {
+      "index": 2.5,
+      "fsr_thz": 3.0282066464646467,
+      "fsr_nm": 17.334343434343438
+    },
+    "n_eff solver ~2.7": {
+      "index": 2.7,
+      "fsr_thz": 2.80389504302282,
+      "fsr_nm": 16.05031799476244
+    },
+    "bulk-Si n_g (this run)": {
+      "index": 3.6772225164554446,
+      "fsr_thz": 2.058759452897891,
+      "fsr_nm": 11.784943226016951
+    },
+    "waveguide n_g 4.2 (REF)": {
+      "index": 4.2,
+      "fsr_thz": 1.802503956228956,
+      "fsr_nm": 10.31806156806157
+    }
+  },
+  "fsr_thz_ng42": 1.802503956228956,
+  "fsr_nm_ng42": 10.31806156806157,
+  "ng_waveguide_minus_bulk_si": 0.5227774835445556,
+  "ng_minus_n_bulk_si_1310": 0.17669380447126937,
+  "dlambda_dT_pm_per_K_from_ng": 49.78,
+  "dlambda_dT_pm_per_K_if_neff_used": 83.63040000000001,
+  "signal_band_two_sided_ghz": 79.6875,
+  "spread_2km_1310_ps": 3.2677253224483236,
+  "spread_2km_1310_ps_one_sided_baud": 2.1784835482988827,
+  "spread_2km_1550_ps": 27.986007796243815,
+  "spread_2km_1550_ps_one_sided_baud": 18.65733853082921,
+  "bit_period_ps": 18.823529411764707,
+  "headline": {
+    "n_silica_1310": {
+      "value": 1.4468043175527276,
+      "expected": 1.4468,
+      "agreement_percent": 100.0,
+      "source": "Malitson value quoted in the brief"
+    },
+    "ng_silica_1310": {
+      "value": 1.461639991743378,
+      "expected": 1.462,
+      "agreement_percent": 99.98,
+      "source": "bulk silica group index tables (refractiveindex.info, Malitson)"
+    },
+    "zdw_silica_um": {
+      "value": 1.272753932775132,
+      "expected": 1.27,
+      "agreement_percent": 99.78,
+      "source": "brief / notes \u00a710-11 (\u22481.27 \u00b5m bulk silica)"
+    },
+    "D_silica_1310_ps_nm_km": {
+      "value": 3.581817528292037,
+      "expected": 3.5819,
+      "agreement_percent": 100.0,
+      "source": "independent \u03c9-route: \u03b2\u2082 = d\u00b2\u03b2/d\u03c9\u00b2 by finite differences in \u03c9, D = \u22122\u03c0c \u03b2\u2082/\u03bb\u00b2 (no \u03bb-derivatives of n); bulk silica \u2248 +3.5 ps/(nm\u00b7km), which G.652 fibre's waveguide dispersion cancels to put its ZDW near 1310 nm. Linear extrapolation from the ZDW (3.72) is a cross-check only: its 4 % excess is the curvature of D(\u03bb)."
+    },
+    "D_silica_1550_ps_nm_km": {
+      "value": 21.91180021945923,
+      "expected": 21.0,
+      "agreement_percent": 95.66,
+      "source": "brief: bulk silica 20-22 ps/(nm\u00b7km); fibre 17 includes waveguide dispersion"
+    },
+    "small_change_ghz_per_nm_1310": {
+      "value": 174.69404929782647,
+      "expected": 174.7,
+      "agreement_percent": 100.0,
+      "source": "brief / small-change rule"
+    },
+    "fsr_thz_ng42": {
+      "value": 1.802503956228956,
+      "expected": 1.8,
+      "agreement_percent": 99.86,
+      "source": "REF.fsr_thz (Lightmatter)"
+    },
+    "fsr_nm_ng42": {
+      "value": 10.31806156806157,
+      "expected": 10.3,
+      "agreement_percent": 99.82,
+      "source": "REF.fsr_nm"
+    },
+    "n_silicon_1310": {
+      "value": 3.5005287119841753,
+      "expected": 3.5,
+      "agreement_percent": 99.98,
+      "source": "REF.n_si (rounded 3.50)"
+    },
+    "ng_silicon_1310": {
+      "value": 3.6772225164554446,
+      "expected": 3.7,
+      "agreement_percent": 99.38,
+      "source": "bulk crystalline silicon group index \u2248 3.7 at 1.31 \u00b5m (Li 1980 / refractiveindex.info)"
+    },
+    "dlambda_dT_pm_per_K_from_ng": {
+      "value": 49.78,
+      "expected": 50.0,
+      "agreement_percent": 99.56,
+      "source": "REF.dlambda_dT_pm_per_K"
+    }
+  },
+  "runtime_seconds": 48.965073108673096,
+  "versions": {
+    "python": "3.12.13",
+    "sympy": "1.14.0",
+    "numpy": "2.4.6",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "ffmpeg": "9.0.1",
+    "ipywidgets": "8.1.9",
+    "nbformat": "5.11.1"
+  },
+  "notebook_status": "executed on attempt 1 of 3 (all cells)",
+  "notebook_widget_cells_executed": true,
+  "notebook_seconds": 32.45401215553284,
+  "runtime_seconds_total_with_notebook": 82.18530917167664
+}

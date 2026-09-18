@@ -1,0 +1,34 @@
+[
+ {
+  "tool": "Tidy3D local mode solver (tidy3d.plugins.mode.ModeSolver)",
+  "version": "2.12.0",
+  "what_it_is": "Tidy3D is Flexcompute's FDTD package; its ModeSolver plugin is a finite-difference frequency-domain (FDFD) eigenmode solver on a Yee grid that runs locally without an account. It is normally used to define mode sources/monitors for FDTD runs and to get n_eff, n_g and mode profiles of waveguide cross-sections.",
+  "used_for": "Full-vector modes of the 500x220 nm SOI strip (uniform 10 nm Yee grid on a 2.61x2.01 um plane, sized so the core edges fall mid-cell because the local solver has no subpixel averaging): n_eff, group index by its built-in frequency step, TE fraction, Poynting/energy confinement from its field arrays, the width and wavelength sweeps and the thermo-optic perturbation (re-solve with n_Si + 1.86e-4 K^-1 x 10 K).",
+  "result": "TE0 n_eff = 2.7134 (femwell 2.7119, spread +0.06 %; textbook 2.5 is -7.8 % off), TE = 0.993, Gamma_P = 0.853 (REF 0.85), n_g,wg = 3.964, n_g total = 4.158 (REF 4.2, -1.0 %), dn_eff/dT = 2.017e-04/K -> 63.6 pm/K (REF 50, +27 %).",
+  "how_to_observe": "cd experiments/08_soi_strip_mode_solvers && ../../.venv/bin/python run.py ; look at out/08_mode_fields.png (top row), out/08_width_sweep.png, out/08_wavelength_sweep.png, out/08_thermo_optic.png; numbers in out/results.json. Change TD_DL (grid) or TD_BOX in run.py, or the width/height/indices passed to solve_tidy3d in solvers.py, and re-run."
+ },
+ {
+  "tool": "femwell (FEM Maxwell mode solver on scikit-fem + gmsh)",
+  "version": "0.1.12 (scikit-fem 12.0.2, gmsh 4.15.2, shapely 2.1.2, meshio 5.3.5)",
+  "what_it_is": "femwell is an open-source finite-element photonics package built on scikit-fem: it meshes 2-D cross-sections with gmsh (triangles that conform to the material boundaries) and solves the vector Maxwell eigenproblem with Nedelec (transverse) and Lagrange (longitudinal) elements. Used for waveguide modes, coupling coefficients, thermal and electro-optic overlaps.",
+  "used_for": "The same strip on a boundary-conforming mesh (5674 triangles, 10 nm elements in the core, 2nd-order elements): n_eff, TE fraction, exact Poynting power fraction in Si (calculate_power on the core elements), the perturbation sensitivity dn_eff/dn_Si (its calculate_confinement_factor), group index by finite difference in wavelength, the width sweep (also feeds the video), the 0-115 K linearity check and the thermo-optic re-solve.",
+  "result": "TE0 n_eff = 2.7119 (converged to 1e-5 between 20 nm and 5 nm meshes), TE = 0.993, Gamma_P = 0.852 (REF 0.85, +0.2 %), S_Si = dn_eff/dn_Si = 1.077 (= direct re-solve 1.077), n_g,wg = 3.963, n_g total = 4.157 (REF 4.2, -1.0 %), dlambda_r/dT = 63.6 pm/K (REF 50, +27 %), TE1 cutoff width ~328 nm.",
+  "how_to_observe": "Same command; out/08_mode_fields.png (bottom row), out/08_mode_gallery.png, out/08_profile_cuts.png, out/08_mode_vs_width.mp4 and its frames PNG. Change FEM_RES_REF/FEM_RES_SWEEP or the box in femwell_mesh (solvers.py) and re-run; the mesh is rebuilt by gmsh each time."
+ },
+ {
+  "tool": "numpy / scipy / matplotlib",
+  "version": "numpy 2.4.6, scipy 1.18.1, matplotlib 3.11.2",
+  "what_it_is": "The scientific Python stack: arrays and linear algebra (numpy, also the ARPACK eigensolver femwell calls through scipy), plotting and FuncAnimation video (matplotlib).",
+  "used_for": "Sellmeier evaluation of n_Si(lambda), n_SiO2(lambda) and their bulk group indices (materials.py); finite-difference group indices; tail-decay fit; the all-pass ring comb T(lambda) of notes 28 for the n_eff-versus-n_g panel; every figure and the mp4.",
+  "result": "bulk n_g,Si = 3.677 at 1310 nm (adds +0.192 to the waveguide n_g); ring comb FSR = 10.33 nm with n_eff = 2.5 and 10.32 nm with n_eff = 2.713, both at n_g = 4.2; 10.43 nm at the solver n_g 4.157 (FSR is n_g's job, n_eff only slides the comb).",
+  "how_to_observe": "out/08_neff_vs_ng_comb.png, out/08_profile_cuts.png; python materials.py prints the bulk indices."
+ },
+ {
+  "tool": "ffmpeg",
+  "version": "9.0.1",
+  "what_it_is": "Command-line video encoder/decoder; matplotlib's FFMpegWriter pipes frames to it.",
+  "used_for": "Encoding out/08_mode_vs_width.mp4 (H.264, 30 fps, ~10 s).",
+  "result": "294 frames from 21 femwell solutions between 300 and 700 nm width.",
+  "how_to_observe": "open out/08_mode_vs_width.mp4; stills in out/08_mode_vs_width_frames.png; change HOLD or the widths array in run.py."
+ }
+]

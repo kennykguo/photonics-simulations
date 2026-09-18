@@ -1,0 +1,10 @@
+[sax] unitarity max |S†S - I| = 2.22e-16; 50/50 cross phase = -90.0 deg
+[sax] all power exits out0 at φ = 90 deg; P3+P4-1 max = 6.7e-16; MZI vs sin²/cos² err = 6.7e-16
+[sax] textbook_neff2p5: γ = 9.77/µm, L_eff = 2.01 µm, κ_c = 0.166/µm; κ² at gap -10/0/+10 nm = 0.129/0.107/0.089 (+21%, -17%); T_min = 0.010/1.5e-08/0.010; reference T_min = 0.016 <-> Δg = -12.7 / +12.8 nm
+[sax] slab2d_neff2p99: γ = 12.53/µm, L_eff = 1.78 µm, κ_c = 0.187/µm; κ² at gap -10/0/+10 nm = 0.136/0.107/0.084 (+27%, -22%); T_min = 0.016/1.5e-08/0.016; reference T_min = 0.016 <-> Δg = -9.9 / +10.0 nm
+[sax] ring notch at 1305.6 nm, FSR 10.33 nm (expect 10.32); T_min at Δg = -10/0/+10 nm = 0.010 / 3.64e-08 / 0.010; FWHM 368 pm (ref 374)
+[sax] wrote /Users/kennyg/photonics-simulations/experiments/11_directional_coupler/out/sax_results.json
+
+--- stderr ---
+findfont: Failed to find font weight medium for DejaVu Sans, now using 400.
+findfont: Failed to find font weight medium for DejaVu Sans, now using 400.

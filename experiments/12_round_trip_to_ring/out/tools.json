@@ -1,0 +1,58 @@
+[
+  {
+    "tool": "SAX (+JAX)",
+    "version": "sax 0.18.2, jax 0.9.2",
+    "what_it_is": "SAX is an S-parameter circuit simulator for photonics: you write each component as a small function returning an S-matrix and a netlist that connects ports, and it composes the frequency-domain response with JAX (differentiable, vectorised over wavelength). It is normally used to simulate photonic integrated circuits (rings, MZIs, filters) from component models.",
+    "used_for": "The all-pass ring as a two-element circuit: a 2x2 evanescent coupler (t, -j kappa) and one lossy dispersive waveguide of length L = 39.6 um closed on itself. Swept 1290-1332 nm in 1 pm steps for the doped (125 dB/cm) and passive (3 dB/cm) rings.",
+    "result": "FSR 10.318 nm / 1.803 THz at 1310 nm (analytic lambda^2/(n_g L): 10.318 nm; reference 10.3 nm / 1.8 THz), FWHM 374.0 pm (analytic 373.2, reference 374), Q 3503 (reference 3500), T_min 1.4e-05 at t = a (critical coupling). SAX and the closed form agree to 3.2e-06 (JAX float32 on a 2 pi x 76 rad round-trip phase).",
+    "how_to_observe": "cd experiments/12_round_trip_to_ring && ../../.venv/bin/python ring_sax.py -> out/A2_spectrum.png (notches every FSR, zoom with FWHM, phase), out/A3_coupling_regimes.png, out/A_log.txt. Change REF.loss_db_cm_doped or the coupling argument of ring_T() and re-run; or use the sliders in explore.ipynb."
+  },
+  {
+    "tool": "Meep (pymeep FDTD)",
+    "version": "meep 1.34.0",
+    "what_it_is": "Meep is a free finite-difference time-domain (FDTD) electromagnetic solver: it marches Maxwell's equations on a grid in time and gives fields, fluxes and spectra for arbitrary 2-D/3-D structures. It is the standard open-source tool for photonic device simulation (waveguides, rings, couplers, photonic crystals).",
+    "used_for": "A 2-D ring (R = 6.3 um, 500 nm wide, n 3.5 in 1.45) side-coupled to a bus with a 100 nm gap. (1) Eigenmode solver for the 2-D n_eff, n_g and decay length; (2) calibration of D_conductivity so the ring carries 125 dB/cm; (3) a lossless gap scan of the coupling Q; (4) a Gaussian pulse with Harminv resonances and a normalised flux transmission spectrum; (5) a CW drive on one resonance for the build-up movie.",
+    "result": "2-D n_eff 3.339, n_g 3.594 (3-D strip: 2.5-2.7 / 4.2). Loss calibrated to 125.0 dB/cm -> a = 0.9446. FSR 11.73 nm from the flux dips vs 12.06 nm from c/(n_g L) with the straight-guide n_g (97.2 % agreement; 11.98 nm with the bent-mode L_eff). Central notch at 1313.09 nm: T_min 0.656, FWHM 313 pm, Q 4201 (Harminv 4391, build-up fit 4509: tau = 6.3 ps vs Q lambda/(pi c) = 6.1 ps). Inverting the notch gives t = 0.9923, a = 0.9293: the 2-D ring at 100 nm gap is under-coupled and loses 0.087 dB/lap more than the straight guide (a_cal x a_excess = 0.9353, 99 % of the inverted a); critical coupling extrapolates to a 42 nm gap.",
+    "how_to_observe": "cd experiments/12_round_trip_to_ring && ../../.meep/bin/python ring_meep.py (about 7.5 min: 408 s this run) -> out/B4_spectrum.png (transmission with Harminv markers), out/B5_buildup.mp4 (field charging the ring), out/B5_buildup_energy.png, out/B3_gap_scan.png, out/B_log.txt. Change GAP, RES_MAIN or the B3 gaps list at the top of ring_meep.py and re-run; keep RES_CW = RES_MAIN (the resonance shifts by more than a linewidth between grids)."
+  },
+  {
+    "tool": "Meep Harminv",
+    "version": "bundled with meep 1.34.0",
+    "what_it_is": "Harminv is a harmonic-inversion filter-diagonalisation routine bundled with Meep: from a short time series of a field at one point it extracts the resonant frequencies, decay rates (hence Q) and amplitudes of the modes that were excited, far more accurately than a Fourier transform of the same record.",
+    "used_for": "Resonance wavelengths and Q of the ring modes from Ez at a point on the ring after a Gaussian pulse (lossless gap scan and the lossy main run).",
+    "result": "Fundamental-family resonances at 1337.0, 1324.9, 1313.1, 1301.5, 1290.1 nm with loaded Q 4391 near 1310 nm; the flux-notch Q is 4201 (95.7 % agreement). A second family of low-Q modes (the 2-D 500 nm guide is multimode for Ez: second mode n_eff 2.825) is flagged separately.",
+    "how_to_observe": "Dashed orange lines with Q labels in out/B4_spectrum.png; the full list is in out/B_results.json under harminv_all. Move RING_PT or the Harminv bandwidth (0.05) in ring_meep.py to hunt other modes."
+  },
+  {
+    "tool": "Meep eigenmode solver (MPB)",
+    "version": "bundled with meep 1.34.0",
+    "what_it_is": "Meep's get_eigenmode calls the MPB plane-wave eigensolver on a cross-section of the FDTD grid to find guided modes (propagation constant, group velocity, field profile). It is what EigenModeSource uses to launch a clean mode and what mode-decomposition uses at ports.",
+    "used_for": "n_eff, n_g and the transverse profile of the fundamental and second Ez modes of the 2-D 500 nm guide, and the evanescent decay length outside the core.",
+    "result": "n_eff = 3.3390, n_g = 3.5939 (finite-difference check 3.5941), decay length 1/gamma = 69 nm (fit 69 nm) vs 102 nm for the textbook 3-D n_eff 2.5; second mode n_eff 2.825 (multimode in 2-D).",
+    "how_to_observe": "out/B1_mode2d.png; section B1 of ring_meep.py. Change W or N_SI to see n_eff, n_g and the tail change (a lower core index makes the tail longer and the coupling stronger)."
+  },
+  {
+    "tool": "numpy / scipy (closed forms and fits)",
+    "version": "numpy 2.4.6 (.venv) / 2.5.3 (.meep), scipy 1.18.1",
+    "what_it_is": "numpy is the array library everything else is built on; scipy.optimize.curve_fit is a nonlinear least-squares fitter.",
+    "used_for": "The closed-form ring numbers (FSR, FWHM, Q, T_min, finesse, build-up), the inversion of Q and T_min back to t and a, the exponential fit of kappa^2(gap), the (1 - e^{-t/tau})^2 fit of the ring energy, and the finite-difference slope dT/dK at the bias point.",
+    "result": "Closed form vs SAX 3.2e-06; closed form vs reference FSR 10.318 nm, FWHM 373.2 pm, Q 3511; build-up tau = 6.3 ps (Harminv predicts 6.1 ps, 97.3 % agreement).",
+    "how_to_observe": "analytic_numbers(t, a) and analytic_T(wl, t, a) in ring_sax.py; t_from_Qc, ta_from_Q and the curve_fit call in section B5 of ring_meep.py."
+  },
+  {
+    "tool": "matplotlib (FuncAnimation + FFMpegWriter, ffmpeg 9.0.1)",
+    "version": "matplotlib 3.11.2",
+    "what_it_is": "matplotlib is the standard Python plotting library; FuncAnimation renders a sequence of frames and FFMpegWriter pipes them to ffmpeg to write an mp4.",
+    "used_for": "All figures; the two videos: A5 (notch sliding under the fixed laser as the ring ramps 10 -> 125 C) and B5 (FDTD Ez frames while the ring charges up on resonance), each with a PNG contact sheet.",
+    "result": "out/A5_notch_sliding.mp4 (10 s, 300 frames), out/B5_buildup.mp4 (10 s, 300 frames), contact sheets A5_notch_sliding_frames.png, B5_buildup_frames.png.",
+    "how_to_observe": "open out/A5_notch_sliding.mp4 and out/B5_buildup.mp4; frames, ramp range and capture times are set near the bottom of ring_sax.py and ring_meep.py."
+  },
+  {
+    "tool": "Jupyter notebook (nbformat + nbconvert, ipywidgets)",
+    "version": "nbformat 5.11.1, nbconvert 7.17.1, ipywidgets 8.1.9, kernel photonics-sims",
+    "what_it_is": "nbformat builds notebook files programmatically; nbconvert --execute runs them headlessly with a kernel and saves the outputs; ipywidgets.interact adds sliders in a live JupyterLab session.",
+    "used_for": "explore.ipynb: sliders for a, t, n_g and temperature on the closed-form ring, the SAX/closed-form check, T_min vs t, and an overlay of the FDTD notch.",
+    "result": "Executed notebook with saved outputs (static rendering of the default slider state).",
+    "how_to_observe": "../../.venv/bin/jupyter lab explore.ipynb (Restart & Run All), or re-execute headlessly with ../../.venv/bin/jupyter nbconvert --to notebook --execute --inplace explore.ipynb."
+  }
+]

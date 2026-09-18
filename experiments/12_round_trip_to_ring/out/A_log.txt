@@ -1,0 +1,20 @@
+findfont: Failed to find font weight medium for DejaVu Sans, now using 400.
+[A1] doped   125 dB/cm: alpha = 2.8782e-03 /um, a = 0.9446, a^2 = 0.8923, 0.495 dB/lap
+[A1] passive   3 dB/cm: alpha = 6.9077e-05 /um, a = 0.99863, a^2 = 0.99727, 0.0119 dB/lap
+[A2] mode order m = 76, n_eff nudged 2.5 -> 2.5141 so that a resonance sits at 1310 nm
+[A2] SAX vs closed-form |T| max abs difference: 3.17e-06
+[A2] time-domain Q: tau_amp = Q lambda/(pi c) = 4.87 ps, tau_E = tau/2 = 2.44 ps; linewidth f/Q = 1/(2 pi tau_E) = 65.3 GHz, f/(2Q) = 1/(2 pi tau) = 32.7 GHz
+[A2] resonances (nm): [1299.763 1310.    1320.4   1330.966]
+[A2] FSR spacings (nm): [10.237 10.4   10.566] (grows with λ²)
+[A2] FSR   SAX (local at 1310) 10.318 nm = 1.803 THz | analytic 10.318 nm / 1.803 THz | ref 10.3 nm / 1.8 THz
+[A2] FWHM  SAX 374.0 pm | analytic 373.2 pm | ref 374.0 pm
+[A2] Q     SAX 3503 | analytic 3511 | ref 3500;  T_min SAX 1.36e-05 (critical coupling: 0)
+[A2] finesse 27.6; intracavity build-up |E_ring/E_in|^2 = 9.28 on resonance
+[A2] passive ring, same coupler (t=0.945, a=0.9986): T_min = 0.908 (over-coupled, shallow notch), FWHM 190 pm
+[A2] passive ring at ITS critical coupling t = a = 0.9986: kappa^2 = 0.0027, FWHM 9.0 pm, Q = 145813
+[A3] T_min = 0.016 (18 dB) needs t = 0.9568 (under, κ² = 0.085) or t = 0.9291 (over, κ² = 0.137) with a = 0.945
+[A4] one FSR of thermal shift = 206.4 K; ambient 10..125 C = 5.75 nm = 0.56 FSR
+[A4] 0.1 K = 5.0 pm = 1.34 % of the FWHM; at the bias point dT/dK = -0.1739 per K -> -1.74 % transmission per 0.1 K
+[A4] heater: 50 pm/K x 8.8 K/mW = 0.440 nm/mW (ref 0.44); one FSR costs 23.5 mW
+[A4] laser on resonance when the ring is +2.16 K from the bias point, i.e. at 27.16 C (T = 1.4e-05); at 10 C T = 0.95
+[A] done in 18.6 s -> out/A_results.json

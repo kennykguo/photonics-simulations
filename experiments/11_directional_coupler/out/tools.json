@@ -1,0 +1,50 @@
+[
+  {
+    "tool": "Meep (pymeep) 2-D FDTD",
+    "version": "1.34.0",
+    "what_it_is": "Open-source finite-difference time-domain solver for Maxwell's equations (MIT). It steps E and H forward in time on a Yee grid, so any geometry and any source can be simulated without approximations beyond the grid.",
+    "used_for": "Two 220 nm silicon slabs in silica at 1310 nm with gaps 150/200/300 nm, launched with the single-slab eigenmode in guide 1 (guide 2 starts at z = 0). Steady-state DFT fields Ez, Hy give the time-averaged Poynting flux along the propagation axis, <S_x> = -1/2 Re(Ez Hy*) (Meep x = the notes' z), integrated over each half-plane to get P1(z), P2(z); the code records that this formula never needed a sign flip (poynting_sign_flipped = false). A pulse run gives the video of power hopping (Hilbert envelope energy per guide underneath).",
+    "result": "P2/P0 = sin\u00b2(\u03ba_c z) with \u03ba_c = 0.2362, 0.1266, 0.0364 rad/\u00b5m for 150/200/300 nm (102.4 %, 102.8 %, 103.6 % of the analytic (\u03b2+\u2212\u03b2\u2212)/2); L_c(200 nm) = 12.40 \u00b5m vs 12.76 \u00b5m analytic; P1 + P2 constant to 0.01 %.",
+    "how_to_observe": "cd experiments/11_directional_coupler && ../../.meep/bin/python run.py (about 2 to 3 min on this laptop; the measured value is timing_s.total_s in out/results.json); look at out/fdtd_fields.png (|E| maps, dashed lines every L_c), out/power_vs_z.png (P1, P2 with the sin\u00b2 fit), out/pulse_hopping.mp4 and out/cw_phase_zoom.mp4. Change GAPS_FDTD, RES or LAM at the top of run.py (K0 and fdtd_coupler follow LAM), SX/X_START in fdtd_coupler.py, or pass W2 to fc.run_cw for non-identical guides (the fitted rate is then sqrt(kappa^2 + dbeta^2/4)), and re-run."
+  },
+  {
+    "tool": "Meep eigenmode solver (MPB inside Meep)",
+    "version": "1.34.0",
+    "what_it_is": "Meep embeds the MPB plane-wave eigenmode solver: given a cross-section of the FDTD grid it returns the guided modes (\u03b2, field profile) at a fixed frequency. It is what EigenModeSource and mode decomposition use internally.",
+    "used_for": "\u03b2 of the single slab and \u03b2+ (even, EVEN_Y) and \u03b2\u2212 (odd, ODD_Y) of the coupled slabs at six gaps, on the same 40 px/\u00b5m grid as the FDTD, plus the two supermode profiles at 200 nm gap.",
+    "result": "Single slab n_eff = 2.9607 vs analytic 2.9879 (99.1 %, the grid under-resolves the 220 nm core); \u03ba_c = (\u03b2+\u2212\u03b2\u2212)/2 at 200 nm = 0.1248 rad/\u00b5m (101.3 % of analytic); the FDTD fit agrees with this same-grid value to 101.5 %.",
+    "how_to_observe": "Run run.py; see out/supermode_beat.png (left: profiles with Meep markers) and out/kappa_vs_gap.png (square markers). Edit GAPS_EIG in run.py; fdtd_coupler.eigen_supermodes() is the call."
+  },
+  {
+    "tool": "numpy/scipy transfer-matrix slab solver (slab_coupler.py)",
+    "version": "2.5.3",
+    "what_it_is": "Hand-written solver: the TE slab eigenvalue equation h tan(hd) = \u03b3 (notes \u00a719) with scipy.optimize.brentq, and a 2x2 transfer matrix for (F, F') across a stack of layers (notes \u00a718) whose bound-state condition gives all TE modes of any multilayer.",
+    "used_for": "Reference numbers: single-slab n_eff, \u03b3, decay length; even/odd supermodes of the two-slab stack at any gap; \u03ba_c = (\u03b2+\u2212\u03b2\u2212)/2; the Yariv coupled-mode closed form \u03ba_c = 2h\u00b2\u03b3e^{-\u03b3s}/[\u03b2(W+2/\u03b3)(h\u00b2+\u03b3\u00b2)]; the point-coupler length \u221a(2\u03c0R/\u03b3).",
+    "result": "n_eff = 2.9879, 1/\u03b3 = 79.8 nm; \u03ba_c(200 nm) = 0.1231 rad/\u00b5m, L_c = 12.76 \u00b5m; CMT within 0.41 % of the exact supermode splitting; ln \u03ba_c vs gap slope = 12.54/\u00b5m = 100.0 % of the single-slab \u03b3.",
+    "how_to_observe": "out/kappa_vs_gap.png (solid and dashed lines) and out/supermode_beat.png; import slab_coupler in either interpreter and call supermodes(gap) or cmt_kappa(gap)."
+  },
+  {
+    "tool": "SAX",
+    "version": "0.18.2",
+    "what_it_is": "JAX-based S-parameter circuit simulator from the gdsfactory ecosystem: photonic components are Python functions returning S-dictionaries, and sax.circuit connects them into a netlist and solves the composite S-matrix (differentiable, vectorised over wavelength or parameters).",
+    "used_for": "The 2x2 coupler model S = [[t, \u2212jK], [\u2212jK, t]] with t = cos(\u03ba_c L); unitarity and reciprocity check; |t|\u00b2, |K|\u00b2 vs length; the interference of two coherent inputs vs relative phase (directly and as a Mach-Zehnder circuit); the all-pass ring circuit (coupler + 39.6 \u00b5m doped waveguide) to show what a \u00b110 nm gap error does to the notch.",
+    "result": "max |S\u2020S \u2212 I| = 2e-16; cross-port phase \u221290\u00b0; two \u00bd W inputs give 0 to 1 W at either port depending on \u03c6, total always 1 W; ring FSR 10.33 nm (expect 10.3), FWHM 368 pm (expect 374); \u03ba\u00b2 = 0.107 \u2192 0.129 / 0.089 for \u221310 nm gap (textbook \u03b3), T_min from 0 to 0.0099 / 0.0098 (SAX circuit; closed form 0.0099 / 0.0098 with the same a = 0.9450).",
+    "how_to_observe": "../../.venv/bin/python sax_part.py (run.py also calls it); out/sax_coupler_vs_length.png, out/sax_interference.png, out/critical_coupling_lottery.png, out/sax_results.json. Change A_RT (one round-trip retention feeds both the closed form and the waveguide loss), the gap-error list dg, or REF.kappa2 usage in sax_part.py."
+  },
+  {
+    "tool": "gdsfactory",
+    "version": "9.51.0",
+    "what_it_is": "Python layout generator for photonic chips (built on KLayout): parametric components (rings, couplers, bends) with ports and cross-sections, exported to GDSII for fabrication.",
+    "used_for": "ring_single (R = 6.3 \u00b5m circular bends, 500 nm strips, 200 nm gap to a bus) and coupler (straight directional coupler, 200 nm gap, parallel length = L_c of the 200 nm gap) exported to GDS; polygons re-read to measure the gap and radius and to verify the parabola gap(z) = g0 + z\u00b2/2R used for the point-coupler length.",
+    "result": "Measured gap 200 nm, centreline R 6.31 \u00b5m; L_eff = \u221a(2\u03c0R/\u03b3) = 2.01 \u00b5m (textbook \u03b3) / 1.78 \u00b5m (2-D slab \u03b3), numeric integral over the exact circle agrees to 99.39 %.",
+    "how_to_observe": "../../.venv/bin/python gds_part.py; open out/ring_bus_coupler.gds / out/directional_coupler.gds in KLayout, or look at out/gds_layout.png and out/point_coupler_geometry.png. Change R, GAP in gds_part.py."
+  },
+  {
+    "tool": "matplotlib + ffmpeg",
+    "version": "3.11.2",
+    "what_it_is": "matplotlib draws every figure and, through FuncAnimation + FFMpegWriter, streams frames to ffmpeg (Homebrew) to encode H.264 mp4 videos.",
+    "used_for": "All PNG figures, the two videos pulse_hopping.mp4 (240 frames, 8 s) and cw_phase_zoom.mp4 (72 frames, 2.4 s) and their contact sheets.",
+    "result": "out/pulse_hopping.mp4, out/cw_phase_zoom.mp4, *_frames.png contact sheets.",
+    "how_to_observe": "open out/pulse_hopping.mp4; frame count and dt_frame are arguments of fc.run_pulse in run.py."
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "tool": "ngspice",
+    "version": "ngspice-47 : Circuit level simulation program",
+    "what_it_is": "Open-source SPICE circuit simulator (Berkeley SPICE3 lineage) used for analogue circuit design: DC, AC small-signal, transient and noise analyses of netlists.",
+    "used_for": "Solving the series RLC (L = 100 mH, R = 62.8 ohm, C = 253 nF, f0 = 1 kHz, Q = 10) that is term-for-term the Lorentz bound-electron ODE: an AC sweep (10 Hz-100 kHz, 4001 points) of the capacitor voltage (charge = C*v) and loop current, two more AC sweeps at Q = 2 and Q = 50 (peak |chi_hat| ~ Q check), and three transients at 100 Hz, 1 kHz, 3 kHz with instantaneous resistor power R*i^2 and source power V*i.",
+    "result": "AC: |chi| within 0.0001 % and phase within 0.0001 deg of chi = A/(w0^2-w^2+j*gamma*w); lag at f0 90.000 deg (expect 90); displacement peak 997.5 Hz vs f0*sqrt(1-Gamma^2/2) = 997.5 Hz; power FWHM 100.02 Hz vs gamma/2pi = 100.0 Hz. Peak |chi_hat| = 2.066 / 10.012 / 50.000 for Q = 2 / 10 / 50 vs analytic 1/(Gamma sqrt(1-Gamma^2/4)) = 2.066 / 10.013 / 50.003 (max |chi| error 0.0005 %). Transients: lags 0.58/90.02/177.85 deg vs analytic 0.58/90.00/177.85; mean resistor power at resonance 7.951 mW vs 1/2 V0^2/R = 7.958 mW.",
+    "how_to_observe": "cd experiments/03_driven_electron_rlc && ../../.venv/bin/python run.py  -> out/ac_sweep.png, out/transients.png, out/phasor_power.png; netlists out/rlc_ac.cir, out/rlc_ac_Q2.cir, out/rlc_ac_Q50.cir, out/rlc_tran_{low,res,high}.cir with raw tables out/*.txt and logs out/*.log (run one by hand: /opt/homebrew/bin/ngspice -b out/rlc_ac.cir). Change Q_FACTOR, F0 or DRIVES at the top of run.py to change the damping, resonance or drive frequencies."
+  },
+  {
+    "tool": "scipy / numpy",
+    "version": "scipy 1.18.1, numpy 2.4.6",
+    "what_it_is": "NumPy is the array library; SciPy adds scientific routines (signal processing, optimisation, special functions) on top of it.",
+    "used_for": "The analytic chi(w) and the complex index n = sqrt(1+chi) (lorentz.py), least-squares sinusoid fits that extract amplitude and phase from the SPICE transients, interpolated peak/FWHM extraction from the AC sweep, the Sellmeier-to-Lorentz conversion for silica with the per-resonance dn/dlambda split, and the Drude (free-carrier) estimate for silicon.",
+    "result": "n(1310 nm) from the 3-oscillator Lorentz sum = 1.4468 vs Malitson 1.4468 (textbook 1.4468, agreement to 0.000 %); single effective UV oscillator gives 1.4523; Omega_1310 = 0.0680 maps to 68.0 Hz in the 1 kHz circuit; the IR resonance supplies 76 % of dn/dlambda at 1310 nm; Drude dn = -8.46e-05 per 1e17 cm^-3 vs Soref-Bennett -6.20e-05.",
+    "how_to_observe": "out/refractive_index.png, out/silica_n_lambda.png, out/bound_vs_free.png, out/results.json; the functions live in lorentz.py and are reused by explore.ipynb."
+  },
+  {
+    "tool": "matplotlib (FuncAnimation + FFMpegWriter) with ffmpeg",
+    "version": "matplotlib 3.11.2, ffmpeg version 9.0.1",
+    "what_it_is": "The standard Python plotting library; its animation module writes frame sequences through ffmpeg to mp4.",
+    "used_for": "All figures and a 12 s video (360 frames at 30 fps) sweeping the drive frequency from Omega = 0.1 to 4 while showing the V, q and i phasor directions (unit arrows), the unclipped time traces of V/V0, q/(C V0) and V*i/(V0^2 w0 C) on an axis rescaled every frame, and the position on the stacked absorbed-power and phase-lag curves.",
+    "result": "out/frequency_sweep.mp4 (rendered in 41 s, most of the run time) and the contact sheet out/frequency_sweep_frames.png (five frames chosen at Omega = 0.1, 0.5, 1, 2, 4, drawn at full width, 150 dpi): the q phasor rotates from in-phase (power averages to ~0) to 90 deg behind at the resonance frame (|q| = 10x static, power always positive, mean 1/2 V0^2/R = 7.96 mW) to 180 deg (small and out of phase).",
+    "how_to_observe": "open out/frequency_sweep.mp4; edit Om_path, N_FR or GAMMA_HAT in run.py to change the sweep range, length or damping."
+  },
+  {
+    "tool": "Jupyter notebook (nbformat + nbconvert, ipywidgets)",
+    "version": "nbformat 5.11.1, ipywidgets 8.1.9, kernel photonics-sims",
+    "what_it_is": "Jupyter notebooks mix code, output and text; ipywidgets adds sliders that re-run a plotting function interactively; nbconvert executes a notebook headlessly and stores the outputs.",
+    "used_for": "explore.ipynb: sliders for the damping Gamma, the drive frequency Omega and the oscillator strength B = A/w0^2 that redraw the phasor diagram, time traces, chi(Omega) and n', n''; a cell that writes a netlist for any (f0, Q) and runs ngspice from the notebook (three dampings overlaid); and a wavelength slider for the silica mapping.",
+    "result": "Executed notebook with static outputs saved (default slider positions); the interactive cells work in JupyterLab. Its Q = 2 / 10 / 50 ngspice overlay reproduces the peak |chi_hat| values that run.py stores in results.json['ac_sweep_other_Q'] (2.07 / 10.01 / 50.00).",
+    "how_to_observe": "cd experiments/03_driven_electron_rlc && ../../.venv/bin/jupyter lab explore.ipynb ; move the sliders. Re-execute headlessly with ../../.venv/bin/jupyter nbconvert --to notebook --execute --inplace explore.ipynb (run.py does this at the end). Rebuild from source with ../../.venv/bin/python build_notebook.py."
+  }
+]

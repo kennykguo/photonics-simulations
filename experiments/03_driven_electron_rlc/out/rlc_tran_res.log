@@ -1,0 +1,25 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * series rlc: transient, drive 1000 hz (omega = 1)
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+in                                           0
+n1                                           0
+cap                                          0
+l1#branch                                    0
+v1#branch                                    0
+
+
+No. of Data Rows : 11797
+ngspice-47 done
+

@@ -1,0 +1,34 @@
+[
+  {
+    "tool": "Meep (pymeep) 2-D FDTD with EigenModeSource, add_dft_fields, add_flux, get_eigenmode_coefficients",
+    "version": "meep 1.34.0",
+    "what_it_is": "Meep is the open-source finite-difference time-domain (FDTD) Maxwell solver from MIT: it steps E and H on a Yee grid in time and needs no assumption about modes, so whatever field pattern the equations allow is what appears. It embeds the MPB eigenmode solver, which is used here to build mode sources and to project fields onto modes.",
+    "used_for": "A 2-D slab (n 3.50 core in n 1.45 cladding, 220 nm and 400 nm thick, 14 x 5 um cell, 1 um PML, 50 px/um). (A) a CW EigenModeSource launches TE0 (eig_band=1, EVEN_Y+ODD_Z); after 80 time units the complex phasors of Ez, Hx, Hy at 1310 nm are accumulated with add_dft_fields for 30 periods (Meep's DFT uses exp(-i omega t); the arrays are conjugated once to the notes' exp(+j omega t) convention) and 120 real-time snapshots, 8 time steps = 0.08 um/c = 0.061 period apart, are taken for the video. (B) the same with eig_band=2 in the 400 nm slab for TE1. (C) a Gaussian-profile pulsed Ez line source 50 nm outside the core edge, run until the fields decay; flux monitors at four z planes plus get_eigenmode_coefficients give the TE0/TE1 power at each plane; 190 real-time frames 0.4 um/c apart (to t = 96) give each mode's packet arrival time at z = 0 to 5 um, and the same launch at 30 and 80 px/um (recording only those six columns) checks how the group indices converge.",
+    "result": "TE0: n_eff from the phasor phase slope 3.0024 vs analytic 2.9879 (+0.48 %, resolution table in results.json: 30 px/um -> +0.88 %, 50 px/um -> +0.48 %, 80 px/um -> +0.11 %); crest spacing lambda_g 436.3 nm vs lambda0/n_eff 438.4 nm (-0.48 %); confinement 0.8584 vs 0.8623 (-0.46 %); tail decay length 79.9 nm vs 79.8 nm (+0.1 %); max transverse Poynting 8.8e-06 of the longitudinal peak. TE1 (400 nm): n_eff 2.5622 vs 2.5566 (+0.22 %), antisymmetry error max|F(x)+F(-x)|/max|F| = 1.1e-11. Off-centre launch, 400 nm slab, at z = 5 um: TE0 0.204 / TE1 0.231 of the launched forward power by overlap vs 0.207 / 0.233 from get_eigenmode_coefficients normalised by Meep's flux monitor at z = -4 um; 220 nm slab: TE0 0.407 / TE1 0.329 vs 0.413 / 0.325; beat length 1.806 +- 0.003 um (cosine fit to the core intensity centroid over z = 1 to 5.5 um) vs 2pi/(beta0-beta1) = 1.815 um (-0.5 %); group indices from the slope of each packet's arrival time vs z: n_g0 3.666 vs 3.617 (+1.4 %), n_g1 4.076 vs 4.051 (+0.6 %) (grid dispersion, converging: 30 px/um -> +3.6 / +1.8 %, 50 px/um -> +1.4 / +0.6 %, 80 px/um -> +0.6 / +0.2 %); the TE1 packet arrives 4.12 +- 0.03 time units after TE0 at z = 5 um vs (n_g1-n_g0)L = 4.35 (-5.3 %, the difference of two n_g each ~1 % high).",
+    "how_to_observe": "cd experiments/10_slab_mode_fdtd && ../../.meep/bin/python run.py  (about 1.5 to 2.5 min depending on what else the CPU is doing; this run took 111 s, see results.json runtime_s). Watch out/10_te0_travelling_mode.mp4 (top: E_y(x,z,t); bottom-left: the crest moving along z; bottom-right: the fixed shape across x scaling and flipping sign), out/10_offcentre_pulse.mp4 (the pulse breaking into a guided part and radiation), and the stills out/10_te0_field_snapshot.png, out/10_te1_mode.png, out/10_offcentre_decomposition.png. Change RES (30-80), THICK (0.15-0.30; below the 205.6 nm TE1 cutoff the slab is single-mode and the TE1 entries become null), THICK2, LAM, the source offset/waist in run_offcentre(), or STEADY_T/DFT_T at the top of run.py and re-run."
+  },
+  {
+    "tool": "numpy + scipy (analytic slab eigenvalue solver, overlap integrals, peak finding, least-squares fits)",
+    "version": "numpy 2.5.3, scipy 1.18.1",
+    "what_it_is": "numpy is the array library every scientific Python tool is built on; scipy adds numerical routines (root finding, signal processing, optimisation).",
+    "used_for": "slab_analytic.py solves h tan(hd) = gamma and -h cot(hd) = gamma with brentq (the roots from 07), builds F(x), and integrates F^2 in closed form for the confinement; run.py finds crests with scipy.signal.find_peaks (parabolic sub-pixel refinement), fits the unwrapped phase for beta, fits log|E| in the cladding for the decay length, integrates S_z(x) on an interpolated fine grid for Gamma, and projects the FDTD phasors onto the analytic F_m (orthogonality of the slab modes) to get a_m(z) and the modal powers along z; scipy.optimize.curve_fit fits c + A cos(K z + phi) to the core intensity centroid over z = 1 to 5.5 um for the beat length (1-sigma from the covariance), and numpy.polyfit of each packet's Hilbert-envelope peak time against z gives n_g as the slope.",
+    "result": "Analytic TE0 at 220 nm: n_eff 2.9879, lambda_g 438.4 nm, 1/gamma 79.8 nm, Gamma 0.8623 (the notes' rounded 2.97 / 441 nm / 80 nm, section 22-23). Overlap decomposition (projection and norm both over the 3 um window) agrees with Meep's own get_eigenmode_coefficients to within 0.006 (absolute, in units of the launched power; max over both modes and all eight monitored planes).",
+    "how_to_observe": "python slab_analytic.py prints the mode tables; the fits are in run.py functions neff_from_phase, lambda_g_from_peaks, core_fraction and decompose; their outputs are in out/results.json under te0_220nm, te1_400nm, offcentre_*."
+  },
+  {
+    "tool": "matplotlib (figures, FuncAnimation + FFMpegWriter videos)",
+    "version": "matplotlib 3.11.2",
+    "what_it_is": "The standard Python plotting library; its animation module writes frame sequences to video through ffmpeg.",
+    "used_for": "All PNG figures with the shared style (RdBu_r for signed fields centred on zero, Blues for |E|), the two MP4 videos (30 fps, 120 and 190 frames) and their contact sheets.",
+    "result": "out/10_te0_field_snapshot.png, 10_lambda_g_measurement.png, 10_te0_profile.png, 10_te1_mode.png, 10_offcentre_decomposition.png, 10_offcentre_beat.png, 10_offcentre_arrival.png, 10_te0_travelling_mode.mp4 (+_frames.png), 10_offcentre_pulse.mp4 (+_frames.png).",
+    "how_to_observe": "Open the files in out/. Frame spacing is FRAME_STEPS = 8 time steps = 0.08 um/c = 0.061 period for the mode video (the nearest whole number of 0.01 um/c steps to PERIOD/16) and PULSE_STEPS = 40 steps = 0.40 um/c for the pulse video; change n_frames / PULSE_FRAMES in run.py for longer clips."
+  },
+  {
+    "tool": "ffmpeg",
+    "version": "ffmpeg version 9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
+    "what_it_is": "The command-line video encoder/decoder that matplotlib's FFMpegWriter pipes frames into.",
+    "used_for": "Encoding the two MP4 (H.264) videos.",
+    "result": "out/10_te0_travelling_mode.mp4 (4 s) and out/10_offcentre_pulse.mp4 (6.3 s).",
+    "how_to_observe": "/opt/homebrew/bin/ffprobe out/10_te0_travelling_mode.mp4 shows the stream; FFMpegWriter(fps=30, bitrate=2500) in run.py sets the encoding."
+  }
+]

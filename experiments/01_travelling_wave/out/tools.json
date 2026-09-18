@@ -1,0 +1,50 @@
+[
+  {
+    "tool": "Manim Community",
+    "version": "0.21.0",
+    "what_it_is": "A programmatic animation engine (the 3Blue1Brown tool, community edition): scenes are Python classes, objects are vector graphics rendered frame by frame with Cairo and encoded with ffmpeg. Normally used for explanatory maths videos.",
+    "used_for": "Two videos. travelling_wave.mp4: a live snapshot E(z) with one crest tracked at v_p, the phasor at z0 rotating in the complex plane with its real-part projection, and the time trace E(z0,t) being drawn (NOTES 2, 3). sign_convention.mp4: cos(wt - bz) and cos(wt + bz) side by side with tracked crests moving in opposite directions. All labels are Text() with Unicode because there is no LaTeX on this machine; Axes use label_constructor=Text for the same reason.",
+    "result": "travelling_wave.mp4 (13.3 s, 1280x720 30 fps) and sign_convention.mp4 (9.0 s). The crest dot advances one guided wavelength (524 nm) per period (4.37 fs), i.e. v_p = 1.199e8 m/s = c/2.5; the aqua lambda_g bracket is anchored to the tracked crest so it spans crest to crest at every instant; the phasor turns once per 4.37 fs and its projection traces the violet time trace.",
+    "how_to_observe": "cd experiments/01_travelling_wave && ../../.venv/bin/python run.py, then open out/travelling_wave.mp4 and out/sign_convention.mp4 (stills: out/*_frames.png). Watch the orange crest dot, the violet phasor arrow and the violet trace grow together. To re-render one scene alone: ../../.venv/bin/manim -qm --disable_caching scene.py TravellingWaveScene (output under media/). Change n_eff or lambda in common/params.py, or Z_MAX_NM / z0_nm in scene.py, and re-run."
+  },
+  {
+    "tool": "numpy",
+    "version": "2.4.6",
+    "what_it_is": "The array library for numerical Python: vectorised arithmetic, complex numbers, linear least squares. Used everywhere numbers are crunched.",
+    "used_for": "Evaluating the one formula E = E0 cos(wt - bz) on (z,t) grids, the complex phasor E0 exp(-jbz) exp(jwt) and its real part, the crest-tracking loop (nearest local maximum per time step with parabolic sub-grid refinement), np.polyfit for the crest velocity, and the round-trip phase bL of the ring (twave.py).",
+    "result": "Phasor identity max error 1.9e-15; tracked crest velocity 1.19917e+08 m/s vs w/b = 1.19917e+08 m/s (100.0000 %); backward wave -1.19917e+08 m/s; round trip bL = 75.57 x 2pi, nearest resonance m = 76 at 1305.6 nm (0.43 turn = 0.43 FSR to the blue); resonance spacing 10.33 nm vs REF FSR 10.3 nm (99.7 %); dlambda/dT = 49.8 pm/K vs REF 50.",
+    "how_to_observe": "All numbers are printed by run.py and written to out/results.json and out/run_log.txt. The functions live in twave.py (wave_numbers, E_real, E_phasor, track_crest, fit_velocity, round_trip_phase); import them in the notebook or a REPL and change n, sign, lambda_nm."
+  },
+  {
+    "tool": "scipy",
+    "version": "1.18.1",
+    "what_it_is": "Scientific algorithms on top of numpy (signal processing, optimisation, integration).",
+    "used_for": "scipy.signal.find_peaks to locate the crests of a snapshot E(z) at fixed t and measure the guided wavelength from their mean spacing, independently of the formula lambda0/n_eff.",
+    "result": "crest spacing 524.00 nm vs lambda0/n_eff = 524.00 nm (100.000 %).",
+    "how_to_observe": "out/results.json keys lambda_g_measured_from_snapshot_nm; the snapshot itself is the middle panel of out/three_ways.png. Change REF.neff and the spacing changes as lambda0/n_eff."
+  },
+  {
+    "tool": "matplotlib",
+    "version": "3.11.2",
+    "what_it_is": "The standard Python plotting library (static figures, 3-D axes, image maps, animations via ffmpeg).",
+    "used_for": "All PNG figures: the three-ways panel (fixed z, fixed t, z-t map with crest lines), crest-tracking fit, three wavelengths, the phasor helix / clock / projection panel, the sign-convention z-t maps, the mode-keeps-its-shape maps, the capstone round-trip panel, and the contact sheets built from video frames.",
+    "result": "out/three_ways.png, crest_tracking.png, three_wavelengths.png, phasor.png, sign_convention.png, mode_keeps_shape.png, capstone_round_trip.png, travelling_wave_frames.png, sign_convention_frames.png.",
+    "how_to_observe": "Open the PNGs in out/. Signed fields use RdBu_r centred on zero. Edit the parameter lists near each figure block in run.py (e.g. the probe positions z = 0, lambda_g/4, lambda_g/2) and re-run."
+  },
+  {
+    "tool": "ffmpeg / ffprobe (via imageio-ffmpeg)",
+    "version": "9.0.1",
+    "what_it_is": "The standard command-line video encoder/decoder; Manim uses it to encode frames to H.264, imageio wraps it to read frames back into numpy.",
+    "used_for": "Encoding the Manim videos, measuring their duration (ffprobe), and reading six evenly spaced frames from each mp4 for the *_frames.png contact sheets.",
+    "result": "Durations: travelling_wave 13.3 s, sign_convention 9.0 s; two contact sheets.",
+    "how_to_observe": "/opt/homebrew/bin/ffprobe out/travelling_wave.mp4; the contact-sheet code is the loop at the end of the Manim section in run.py (change the number of picks)."
+  },
+  {
+    "tool": "Jupyter (nbformat / nbclient / ipywidgets)",
+    "version": "nbformat 5.11.1, nbclient 0.11.0, ipywidgets 8.1.9",
+    "what_it_is": "The notebook format and executor; ipywidgets adds sliders that re-run a Python function on every change.",
+    "used_for": "explore.ipynb is generated by make_notebook.py with nbformat and executed headlessly by nbconvert (kernel photonics-sims, per-cell timeout 60 s because the executor intermittently stalls for one timeout after the widget cell; nbclient in-process fallback if nbconvert fails). It has sliders for the index n, the propagation sign and the time t, plus static cells that recompute v_p by crest tracking and the ring round-trip phasor for a chosen temperature.",
+    "result": "explore.ipynb with saved outputs (figures for three parameter sets, tracked v_p, round-trip phase); executed in 4 s this run (no stall this run).",
+    "how_to_observe": "../../.venv/bin/jupyter lab explore.ipynb, run all, then drag the n / sign / t sliders. Rebuild+re-execute headlessly with run.py or ../../.venv/bin/jupyter nbconvert --to notebook --execute --inplace explore.ipynb."
+  }
+]

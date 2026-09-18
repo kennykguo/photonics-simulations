@@ -1,0 +1,82 @@
+[   0.0 s] Si/SiO2 at 1310 nm: theta_c = 24.47 deg; strip-mode angle for n_eff 2.5 = 45.58 deg
+[   0.0 s] A. 7 showcase phasor runs at 60 px/um on 6 workers ...
+
+Elapsed run time = 35.9162 s
+
+Elapsed run time = 35.9162 s
+
+Elapsed run time = 35.9164 s
+
+Elapsed run time = 35.9164 s
+
+Elapsed run time = 35.9164 s
+
+Elapsed run time = 35.9164 s
+[  37.0 s]    done; incident powers: {15.0: 94.78, 24.5: 94.46, 40.0: 93.45} ; beam waist fits (um): {15.0: 2.002, 24.5: 2.003, 40.0: 1.996}
+[  37.0 s]    theta =  15.0 deg: T_fdtd = 0.7516  T_beam = 0.7484  T_pw = 0.7518  R+T = 1.0000  beta +0.22 %
+[  37.0 s]    theta =  24.5 deg: T_fdtd = 0.2029  T_beam = 0.1982  T_pw = 0  R+T = 0.9970  beta -0.64 %
+[  37.0 s]    theta =  40.0 deg: T_fdtd = 7.593e-05  T_beam = 1.177e-24  T_pw = 0  R+T = 0.9991  beta -0.67 %
+[  37.0 s] B. 24 angle-sweep runs at 50 px/um + 12 flux-only resolution checks at [30, 40, 80] px/um ...
+
+Elapsed run time = 116.6708 s
+
+Elapsed run time = 116.6708 s
+
+Elapsed run time = 116.6710 s
+
+Elapsed run time = 116.6710 s
+
+Elapsed run time = 116.6710 s
+
+Elapsed run time = 116.6710 s
+[ 154.7 s]    theta = 15.00: T = 7.530e-01 (beam 7.484e-01, pw 7.518e-01)
+[ 154.7 s]    theta = 20.00: T = 6.263e-01 (beam 6.205e-01, pw 6.381e-01)
+[ 154.7 s]    theta = 22.00: T = 4.929e-01 (beam 4.865e-01, pw 5.383e-01)
+[ 154.7 s]    theta = 23.50: T = 3.261e-01 (beam 3.200e-01, pw 3.890e-01)
+[ 154.7 s]    theta = 24.50: T = 2.042e-01 (beam 1.982e-01, pw 0.000e+00)
+[ 154.7 s]    theta = 25.50: T = 1.041e-01 (beam 9.899e-02, pw 0.000e+00)
+[ 154.7 s]    theta = 27.00: T = 2.360e-02 (beam 2.135e-02, pw 0.000e+00)  1/gamma fit 420 nm vs 321 nm
+[ 154.7 s]    theta = 30.00: T = 2.008e-04 (beam 1.153e-04, pw 0.000e+00)  1/gamma fit 245 nm vs 213 nm
+[ 154.7 s]    theta = 35.00: T = 3.132e-05 (beam 6.871e-12, pw 0.000e+00)  1/gamma fit 156 nm vs 150 nm
+[ 154.8 s]    theta = 40.00: T = 7.636e-05 (beam 1.177e-24, pw 0.000e+00)  1/gamma fit 124 nm vs 121 nm
+[ 154.8 s]    theta = 45.58: T = 1.939e-04 (beam 0.000e+00, pw 0.000e+00)  1/gamma fit 105 nm vs 102 nm
+[ 154.8 s]    theta = 50.00: T = 3.722e-04 (beam 0.000e+00, pw 0.000e+00)  1/gamma fit 94 nm vs 92 nm
+[ 154.8 s]    resolution check 24.5_deg: 30 px/um: +6.70 %, 40 px/um: +4.15 %, 50 px/um: +3.00 %, 60 px/um: +2.39 %, 80 px/um: +1.78 %
+[ 154.8 s]    resolution check 45.5847_deg_gap200nm: 30 px/um: +6.57 %, 40 px/um: +3.88 %, 80 px/um: +1.32 %
+[ 154.8 s] C. 12 frustrated-TIR runs at 50 px/um ...
+
+Elapsed run time = 23.8074 s
+
+Elapsed run time = 23.8074 s
+
+Elapsed run time = 23.8074 s
+
+Elapsed run time = 23.8074 s
+
+Elapsed run time = 23.8075 s
+
+Elapsed run time = 23.8075 s
+[ 179.8 s]    FTIR theta = 40.00: 1/gamma = 121 nm, slope fit over gaps [200.0, 300.0, 400.0] nm: 15.86/um vs 2 gamma 16.50/um (closed form over the same gaps 16.27/um); T(gap) = 100 nm: 0.497, 150 nm: 0.251, 200 nm: 0.119, 300 nm: 0.0246, 400 nm: 0.00501
+[ 179.8 s]    FTIR theta = 45.58: 1/gamma = 102 nm, slope fit over gaps [200.0, 300.0, 400.0] nm: 18.59/um vs 2 gamma 19.54/um (closed form over the same gaps 19.35/um); T(gap) = 100 nm: 0.431, 150 nm: 0.19, 200 nm: 0.0776, 300 nm: 0.0119, 400 nm: 0.00189
+[ 179.8 s]    resolution check 24.5_deg: excess ~ resolution^-1.35; extrapolated to infinite resolution -1.5 % (1st order) / +1.0 % (2nd order)
+[ 179.8 s]    resolution check 45.5847_deg_gap200nm: excess ~ resolution^-1.63; extrapolated to infinite resolution -2.1 % (1st order) / +0.5 % (2nd order)
+[ 179.8 s] figures ...
+findfont: Failed to find font weight medium for DejaVu Sans, now using 400.
+findfont: Failed to find font weight medium for DejaVu Sans, now using 400.
+[ 181.3 s] videos: CW runs at 40 px/um ...
+
+Elapsed run time = 2.8362 s
+
+Elapsed run time = 2.8363 s
+
+Elapsed run time = 2.8363 s
+
+Elapsed run time = 2.8364 s
+
+Elapsed run time = 2.8364 s
+
+Elapsed run time = 2.8364 s
+findfont: Failed to find font weight medium for DejaVu Sans, now using 400.
+[ 270.4 s] done in 270 s
+
+Elapsed run time = 270.3786 s

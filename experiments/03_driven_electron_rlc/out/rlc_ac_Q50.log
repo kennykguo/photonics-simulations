@@ -1,0 +1,13 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * series rlc: ac sweep at q = 50 (r = 12.57 ohm)
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 4001
+ngspice-47 done
+

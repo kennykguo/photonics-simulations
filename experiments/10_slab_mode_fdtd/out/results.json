@@ -1,0 +1,415 @@
+{
+  "inputs": {
+    "lambda_nm": 1310.0,
+    "n1_si": 3.5,
+    "n2_sio2": 1.45,
+    "thickness_nm": 220.0,
+    "thickness2_nm": 400.0,
+    "resolution_px_per_um": 50,
+    "time_step_um_per_c": 0.01,
+    "cell_um": [
+      14.0,
+      5.0
+    ],
+    "pml_um": 1.0,
+    "steady_state_time_units": 80.0,
+    "dft_window_time_units": 40.0,
+    "phasor_convention": "notes' exp(+j omega t): Meep DFT arrays (exp(-i omega t)) are conjugated in phasors()"
+  },
+  "analytic": {
+    "ng_220nm": [
+      3.6323153092190297,
+      2.467302048585033
+    ],
+    "ng_400nm": [
+      3.6166840051579747,
+      4.051433406388231
+    ],
+    "slab_220nm": [
+      {
+        "m": 0,
+        "parity": "even",
+        "neff": 2.987949062321531,
+        "beta_rad_per_um": 14.331173776320355,
+        "lambda_g_nm": 438.42782212029283,
+        "decay_len_nm": 79.80485169731608,
+        "confinement": 0.862347684024677,
+        "F_edge_over_F_peak": 0.5721774905197604
+      },
+      {
+        "m": 1,
+        "parity": "odd",
+        "neff": 1.4853248772036012,
+        "beta_rad_per_um": 7.124100339567931,
+        "lambda_g_nm": 881.9619331134595,
+        "decay_len_nm": 647.4750073635798,
+        "confinement": 0.15395370069794717,
+        "F_edge_over_F_peak": 0.9948777415030168
+      }
+    ],
+    "slab_400nm": [
+      {
+        "m": 0,
+        "parity": "even",
+        "neff": 3.278344090159499,
+        "beta_rad_per_um": 15.724002610052821,
+        "lambda_g_nm": 399.59197813682374,
+        "decay_len_nm": 70.91007168758472,
+        "confinement": 0.9612450983133106
+      },
+      {
+        "m": 1,
+        "parity": "odd",
+        "neff": 2.556620806412328,
+        "beta_rad_per_um": 12.262383425098905,
+        "lambda_g_nm": 512.3951102620906,
+        "decay_len_nm": 99.01543290218724,
+        "confinement": 0.8135480608800143
+      }
+    ],
+    "notes_sec22_neff": 2.97,
+    "notes_sec22_lambda_g_nm": 441.0,
+    "notes_sec23_decay_len_nm": 80.0,
+    "beat_length_400nm_um": 1.815100093762403,
+    "experiments_to_try": {
+      "220nm_at_1550nm": {
+        "n_modes": 1,
+        "te0_neff": 2.8721077656542713,
+        "te0_lambda_g_nm": 539.6733432273936,
+        "te0_decay_len_nm": 99.50336781452626,
+        "te0_confinement": 0.8127352930343665
+      },
+      "150nm_at_1310nm": {
+        "n_modes": 1,
+        "te0_confinement": 0.7329938556683908,
+        "te0_decay_len_nm": 91.31811289700994
+      },
+      "300nm_at_1310nm": {
+        "n_modes": 2,
+        "te0_confinement": 0.9264911467218356,
+        "te0_decay_len_nm": 74.2076984228458,
+        "te1_neff": 2.0479057926008433,
+        "beat_length_um": 1.1761712621795792
+      },
+      "te1_cutoff_thickness_nm_at_1310": 205.61830274863152,
+      "te1_cutoff_thickness_nm_at_1550": 243.2888314964724,
+      "te1_cutoff_wavelength_nm_for_220nm": 1401.6261983852899
+    }
+  },
+  "te0_220nm": {
+    "neff_fdtd_phase_slope": 3.002428054463141,
+    "neff_analytic": 2.987949062321531,
+    "neff_diff_pct": 0.48457961764450314,
+    "beta_fdtd_rad_per_um": 14.40061972340962,
+    "beta_analytic_rad_per_um": 14.331173776320355,
+    "lambda_g_crest_spacing_nm": 436.31201243957355,
+    "lambda_g_crest_spacing_std_nm": 0.020939479967414732,
+    "n_crests": 21,
+    "lambda_g_phase_slope_nm": 436.3135356574726,
+    "lambda_g_analytic_nm": 438.42782212029283,
+    "lambda_g_crest_vs_analytic_pct": -0.4825901947752671,
+    "lambda_g_phase_vs_analytic_pct": -0.4822427674857148,
+    "lambda_g_crest_vs_notes_441nm_pct": -1.063035727987857,
+    "confinement_fdtd": 0.8583934705162285,
+    "confinement_analytic": 0.862347684024677,
+    "confinement_analytic_sampled_on_grid": 0.8592265710821814,
+    "confinement_diff_pct": -0.45854051465572626,
+    "confinement_ref_strip_textbook": 0.85,
+    "decay_length_fit_nm": 79.86809905036522,
+    "decay_length_analytic_nm": 79.80485169731608,
+    "decay_length_diff_pct": 0.07925251623675705,
+    "profile_rms_deviation_of_normalised_intensity": 0.0005008782904805476,
+    "F_edge_over_F_peak_fdtd": 0.5765713105909255,
+    "F_edge_over_F_peak_analytic": 0.5721774905197604,
+    "max_transverse_over_max_longitudinal_poynting": 8.800076603042854e-06,
+    "phase_slope_rad_per_um": -14.40061972340962,
+    "phase_slope_note": "d(phase)/dz of the conjugated (notes-convention) phasor = -beta",
+    "video_frame_spacing_time_units": 0.0799999999999983,
+    "video_frame_spacing_periods": 0.06106870229007503,
+    "resolution_convergence": [
+      {
+        "resolution": 30,
+        "neff": 3.0141591371799765,
+        "diff_pct": 0.8771928273128327
+      },
+      {
+        "resolution": 50,
+        "neff": 3.002428054463141,
+        "diff_pct": 0.48457961764450314
+      },
+      {
+        "resolution": 80,
+        "neff": 2.9912337777570572,
+        "diff_pct": 0.10993210951776104
+      }
+    ]
+  },
+  "te1_400nm": {
+    "eig_band": 2,
+    "neff_fdtd_phase_slope": 2.5621942983441324,
+    "neff_analytic": 2.556620806412328,
+    "neff_diff_pct": 0.21800229106425204,
+    "lambda_g_crest_spacing_nm": 511.27867333033186,
+    "lambda_g_analytic_nm": 512.3951102620906,
+    "lambda_g_diff_pct": -0.2178859457085219,
+    "confinement_fdtd": 0.8087142846473082,
+    "confinement_analytic": 0.8135480608800143,
+    "confinement_diff_pct": -0.594159886199888,
+    "node_position_nm": -4.82925865899144e-10,
+    "node_note": "x = 0 to machine precision by construction (symmetric geometry, grid and source); see antisymmetry_error instead",
+    "antisymmetry_error_max_abs_F(x)+F(-x)_over_peak": 1.1108697295370007e-11,
+    "profile_rms_deviation_from_analytic_F1": 0.001163493573288093,
+    "te0_400nm_neff_analytic": 3.278344090159499
+  },
+  "offcentre_220nm": {
+    "source": {
+      "type": "Gaussian-profile Ez line source, pulse fcen=1/1.31, fwidth=0.2 fcen",
+      "centre_x_um": 0.16,
+      "waist_um": 0.25,
+      "z_um": -5.0
+    },
+    "normalisation": "overlap powers divided by the DFT-integrated flux through the window at z = -4.0 um; Meep coefficients |alpha_m|^2 divided by Meep's own flux monitor at the same plane (independent of the overlap code); modal powers are the part flowing inside the |x| < 1.5 um window",
+    "meep_flux_monitor_over_dft_window_poynting_integral_at_reference_plane": 1.9945460918562847,
+    "meep_flux_monitor_note": "Meep's add_flux integrates Re(E x H*) without the 1/2 of the time average used in poynting(), so this ratio is ~2; every power here is a ratio at fixed convention, so it cancels",
+    "n_guided_modes": 2,
+    "mode_power_fraction_inside_window": [
+      0.9999821151440117,
+      0.988792854024958
+    ],
+    "planes": [
+      {
+        "z_um": -4.0,
+        "P_total_window": 1.0,
+        "P_total_meep_flux": 1.0,
+        "P_te0_overlap": 0.40647059458162316,
+        "P_te0_meep_coeff": 0.4126575955068705,
+        "P_te1_overlap": 0.33472569950580217,
+        "P_te1_meep_coeff": 0.32974819722553156,
+        "radiation_remainder": 0.25880370591257473
+      },
+      {
+        "z_um": -1.0,
+        "P_total_window": 0.7905116073428039,
+        "P_total_meep_flux": 0.7915674900319147,
+        "P_te0_overlap": 0.40693136209371394,
+        "P_te0_meep_coeff": 0.41289719417972054,
+        "P_te1_overlap": 0.34839957483762213,
+        "P_te1_meep_coeff": 0.34755837912922877,
+        "radiation_remainder": 0.03518067041146776
+      },
+      {
+        "z_um": 2.0,
+        "P_total_window": 0.7509819457837263,
+        "P_total_meep_flux": 0.752504130702789,
+        "P_te0_overlap": 0.4068693534622302,
+        "P_te0_meep_coeff": 0.4128612292538555,
+        "P_te1_overlap": 0.3314972131236314,
+        "P_te1_meep_coeff": 0.3275738861944148,
+        "radiation_remainder": 0.012615379197864839
+      },
+      {
+        "z_um": 5.0,
+        "P_total_window": 0.7448899674098071,
+        "P_total_meep_flux": 0.7466536317750725,
+        "P_te0_overlap": 0.40688481951090527,
+        "P_te0_meep_coeff": 0.4128716272061746,
+        "P_te1_overlap": 0.3290163521786181,
+        "P_te1_meep_coeff": 0.3250908971307722,
+        "radiation_remainder": 0.00898879572028372
+      }
+    ],
+    "meep_time_at_end": 136.02,
+    "runtime_s": 5.8999409675598145,
+    "P_te0_mean_z_0_to_5": 0.4068816627340254,
+    "P_te0_std_z_0_to_5": 1.7217787405446317e-05,
+    "P_te1_mean_z_0_to_5": 0.3318561580942351,
+    "P_te1_std_z_0_to_5": 0.0035005833444949463
+  },
+  "offcentre_400nm": {
+    "source": {
+      "type": "Gaussian-profile Ez line source, pulse fcen=1/1.31, fwidth=0.2 fcen",
+      "centre_x_um": 0.25,
+      "waist_um": 0.25,
+      "z_um": -5.0
+    },
+    "normalisation": "overlap powers divided by the DFT-integrated flux through the window at z = -4.0 um; Meep coefficients |alpha_m|^2 divided by Meep's own flux monitor at the same plane (independent of the overlap code); modal powers are the part flowing inside the |x| < 1.5 um window",
+    "meep_flux_monitor_over_dft_window_poynting_integral_at_reference_plane": 1.9939605873006727,
+    "meep_flux_monitor_note": "Meep's add_flux integrates Re(E x H*) without the 1/2 of the time average used in poynting(), so this ratio is ~2; every power here is a ratio at fixed convention, so it cancels",
+    "n_guided_modes": 2,
+    "mode_power_fraction_inside_window": [
+      1.0000055591408552,
+      1.0000138293745156
+    ],
+    "planes": [
+      {
+        "z_um": -4.0,
+        "P_total_window": 1.0,
+        "P_total_meep_flux": 1.0,
+        "P_te0_overlap": 0.2025973793536506,
+        "P_te0_meep_coeff": 0.20851214519066055,
+        "P_te1_overlap": 0.23104705834703335,
+        "P_te1_meep_coeff": 0.23359676032153925,
+        "radiation_remainder": 0.566355562299316
+      },
+      {
+        "z_um": -1.0,
+        "P_total_window": 0.6574095690478323,
+        "P_total_meep_flux": 0.6569947272693091,
+        "P_te0_overlap": 0.20446703835259758,
+        "P_te0_meep_coeff": 0.20713724927815505,
+        "P_te1_overlap": 0.23092811266526886,
+        "P_te1_meep_coeff": 0.233335198696016,
+        "radiation_remainder": 0.22201441802996585
+      },
+      {
+        "z_um": 2.0,
+        "P_total_window": 0.5370880775470879,
+        "P_total_meep_flux": 0.5374439220685336,
+        "P_te0_overlap": 0.20456906011023676,
+        "P_te0_meep_coeff": 0.20710957978940675,
+        "P_te1_overlap": 0.23092295544891098,
+        "P_te1_meep_coeff": 0.23333059274685164,
+        "radiation_remainder": 0.1015960619879401
+      },
+      {
+        "z_um": 5.0,
+        "P_total_window": 0.490864827444801,
+        "P_total_meep_flux": 0.4916366643181304,
+        "P_te0_overlap": 0.2041528974237035,
+        "P_te0_meep_coeff": 0.20741658609906377,
+        "P_te1_overlap": 0.230932068978416,
+        "P_te1_meep_coeff": 0.2333462539305099,
+        "radiation_remainder": 0.05577986104268145
+      }
+    ],
+    "meep_time_at_end": 156.03,
+    "runtime_s": 6.699667930603027,
+    "P_te0_mean_z_0_to_5": 0.20421290280913862,
+    "P_te0_std_z_0_to_5": 0.0002595239417946879,
+    "P_te1_mean_z_0_to_5": 0.23092816159060023,
+    "P_te1_std_z_0_to_5": 9.56232185272537e-06,
+    "beat_length_measured_um": 1.8063090124438341,
+    "beat_length_measured_1sigma_um": 0.003412221902940829,
+    "beat_length_method": "c + A cos(K z + phi) fitted to the core intensity centroid <x>(z) over z in (1.0, 5.5) um (field modal there); L = 2 pi / K",
+    "beat_length_fit_rms_residual_um": 0.007983929073933551,
+    "beat_length_centroid_amplitude_um": 0.08928434601613844,
+    "beat_length_analytic_um": 1.815100093762403,
+    "beat_length_diff_pct": -0.48433038755160446,
+    "beat_length_peaks_from_z_minus3p5_um": 1.765,
+    "beat_length_peaks_from_z_minus3p5_spacing_std_um": 0.20316249653910046,
+    "beat_length_peaks_from_z_minus3p5_diff_pct": -2.7601835256673906,
+    "beat_length_peaks_from_z_minus3p5_note": "diagnostic only: find_peaks on the centroid from z = -3.5 um, where radiation still distorts it; the spread of the spacings is the size of that contamination",
+    "group_index_from_arrival_slope": {
+      "packet_spectrum_centre_wavelength_nm": [
+        1309.2443704964105,
+        1310.2856260978447
+      ],
+      "packet_spectrum_weighted_ng_analytic": [
+        3.6166337623390175,
+        4.051345312891517
+      ],
+      "packet_spectrum_note": "n_g(lambda) of each mode weighted by |a_m(f)|^2 of its packet at z = 5 um; equal to n_g(1310 nm) means the pulse bandwidth does not bias the comparison",
+      "method": "peak time of each mode's Hilbert envelope at z = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0] um, straight-line fit: slope dt/dz = n_g (t in um/c)",
+      "ng_te0_fdtd": 3.665835992139869,
+      "ng_te0_analytic": 3.6166840051579747,
+      "ng_te0_diff_pct": 1.3590345994229935,
+      "ng_te1_fdtd": 4.0762771746061635,
+      "ng_te1_analytic": 4.051433406388231,
+      "ng_te1_diff_pct": 0.613209344099284,
+      "ng_difference_fdtd": 0.4104411824662946,
+      "ng_difference_analytic": 0.4347494012302562,
+      "ng_difference_diff_pct": -5.591317364710355,
+      "fit_rms_residual_time_units": [
+        0.03357936463117111,
+        0.0003245844626149373
+      ],
+      "arrival_time_vs_z": {
+        "z_um": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "te0": [
+          50.97972337324693,
+          54.70245814350253,
+          58.294726190335034,
+          62.0279440474149,
+          65.61359649813271,
+          69.34724873403194
+        ],
+        "te1": [
+          53.08461755181596,
+          57.161842980406185,
+          61.23805262804456,
+          65.31403876272881,
+          69.39026366548376,
+          73.4663081360757
+        ]
+      },
+      "extrapolated_launch_time_at_source_plane": [
+        32.6671795567283,
+        32.70377514454624
+      ],
+      "resolution_convergence": [
+        {
+          "resolution": 30,
+          "ng_te0": 3.748268657571993,
+          "ng_te0_diff_pct": 3.638267878154606,
+          "ng_te1": 4.123132297476919,
+          "ng_te1_diff_pct": 1.769716638452805,
+          "ng_difference_diff_pct": -13.77477718333027
+        },
+        {
+          "resolution": 50,
+          "ng_te0": 3.665835992139869,
+          "ng_te0_diff_pct": 1.3590345994229935,
+          "ng_te1": 4.0762771746061635,
+          "ng_te1_diff_pct": 0.613209344099284,
+          "ng_difference_diff_pct": -5.591317364710355
+        },
+        {
+          "resolution": 80,
+          "ng_te0": 3.6382653191440997,
+          "ng_te0_diff_pct": 0.5967154983776994,
+          "ng_te1": 4.060836318673274,
+          "ng_te1_diff_pct": 0.23208853119037823,
+          "ng_difference_diff_pct": -2.8012463425181706
+        }
+      ]
+    },
+    "arrival_time_te0_at_z5um": 69.34724873403194,
+    "arrival_time_te1_at_z5um": 73.4663081360757,
+    "arrival_delay_te1_minus_te0_measured": 4.11905940204376,
+    "arrival_delay_te1_minus_te0_energy_centroid": 4.1322234026524,
+    "arrival_delay_analytic_(ng1-ng0)L": 4.347494012302562,
+    "arrival_delay_diff_pct": -5.254397351954396,
+    "arrival_delay_energy_centroid_diff_pct": -4.951602211319621,
+    "arrival_delay_uncertainty_time_units": 0.03357936463117111,
+    "arrival_delay_note": "the delay is (n_g1 - n_g0) L with both n_g slightly high from grid dispersion (see group_index_from_arrival_slope and its resolution table): the difference inherits a larger relative error",
+    "arrival_envelope_at_end_of_record_over_peak": [
+      0.0002973768718026567,
+      0.0031775013716604746
+    ],
+    "arrival_record_end_time_units": 95.60000000000001,
+    "frame_spacing_time_units": 0.40000000000000213
+  },
+  "overlap_vs_meep_coeff_max_abs_difference": 0.006187000925247321,
+  "capstone": {
+    "dlambda_dT_pm_per_K_from_fdtd_confinement": 50.240761562433725,
+    "dlambda_dT_pm_per_K_textbook_Gamma_0p85": 49.78,
+    "dlambda_dT_pm_per_K_reference": 50.0,
+    "dlambda_dT_vs_reference_pct": 0.48152312486745075,
+    "formula": "Gamma-weighted textbook heuristic: dlambda_r/dT = (lambda/n_g) [Gamma dn_Si/dT + (1-Gamma) dn_SiO2/dT], lambda 1310 nm, n_g 4.2, dn_Si/dT 1.86e-4, dn_SiO2/dT 1e-5",
+    "dneff_dT_perturbation_theory_per_K": 0.00018680462406079774,
+    "dlambda_dT_pm_per_K_perturbation_theory_slab": 58.26525179039167,
+    "perturbation_formula": "dn_eff/dT = (n_Si/n_eff) Gamma dn_Si/dT + (n_SiO2/n_eff) (1-Gamma) dn_SiO2/dT (first-order, TE slab, FDTD n_eff and Gamma); this is the proper weighting, done for the strip in 08",
+    "coupling_kappa_change_for_10nm_gap_error_pct": -11.76852573874938,
+    "coupling_kappa2_change_for_10nm_gap_error_pct": -22.15206949686269,
+    "coupling_note": "kappa is proportional to the evanescent tail e^(-gamma gap): a 10 nm gap error changes kappa by e^(-10/delta) - 1 with delta the fitted decay length",
+    "one_kelvin_in_fwhm_fractions": 0.13368983957219252
+  },
+  "runtime_s": 111.44984722137451
+}

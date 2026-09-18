@@ -1,0 +1,176 @@
+{
+  "circuit": {
+    "L_H": 0.1,
+    "R_ohm": 62.831853071795855,
+    "C_F": 2.5330295910584445e-07,
+    "f0_Hz": 1000.0,
+    "w0_rad_s": 6283.185307179586,
+    "gamma_1_s": 628.3185307179585,
+    "Gamma_dimensionless": 0.09999999999999999,
+    "Q": 10.0,
+    "V0_V": 1.0
+  },
+  "ac_sweep": {
+    "points": 4001,
+    "max_rel_error_magnitude_pct": 0.00014056368526077308,
+    "max_phase_error_deg": 9.7822052410379e-05,
+    "f_peak_displacement_spice_Hz": 997.4919402896434,
+    "f_peak_displacement_analytic_Hz": 997.4968671630002,
+    "phase_lag_at_f0_spice_deg": 90.00009250019355,
+    "phase_lag_at_f0_expected_deg": 90.0,
+    "power_half_points_spice_Hz": [
+      951.2392646420443,
+      1051.261197874095
+    ],
+    "power_half_points_analytic_Hz": [
+      951.2492197250392,
+      1051.2492197250392
+    ],
+    "power_fwhm_spice_Hz": 100.02193323205063,
+    "power_fwhm_analytic_Hz": 99.99999999999999,
+    "static_chi_hat_spice": 1.0000995101503152,
+    "static_chi_hat_analytic": 1.0000995098513454,
+    "peak_chi_hat_spice": 10.012432681459181,
+    "peak_chi_hat_analytic": 10.012523486435178
+  },
+  "ac_sweep_other_Q": {
+    "Q2": {
+      "Q": 2.0,
+      "R_ohm": 314.1592653589793,
+      "points": 4001,
+      "peak_chi_hat_spice": 2.0655925847910552,
+      "peak_chi_hat_analytic": 2.065591117977289,
+      "peak_rel_error_pct": 7.101181611623986e-05,
+      "max_rel_error_magnitude_pct": 7.172784610607003e-05
+    },
+    "Q50": {
+      "Q": 50.0,
+      "R_ohm": 12.566370614359172,
+      "points": 4001,
+      "peak_chi_hat_spice": 49.999875001628986,
+      "peak_chi_hat_analytic": 50.00250018751562,
+      "peak_rel_error_pct": -0.005250109248122747,
+      "max_rel_error_magnitude_pct": 0.0005439860110551184
+    }
+  },
+  "stage_completed": "done",
+  "runtime_s": 49.46650695800781,
+  "transients": {
+    "low": {
+      "f_drive_Hz": 100.0,
+      "Omega": 0.1,
+      "spice_points": 2633,
+      "phase_lag_spice_deg": 0.5787478357386533,
+      "phase_lag_analytic_deg": 0.5787255656077621,
+      "current_lead_spice_deg": 89.42146768975397,
+      "current_lead_analytic_deg": 89.42127443439223,
+      "q_amplitude_spice_C": 2.558436561850735e-07,
+      "q_amplitude_analytic_C": 2.5584852302308164e-07,
+      "mean_resistor_power_spice_W": 8.123109005781692e-07,
+      "mean_source_power_spice_W": 8.388530482893946e-07,
+      "mean_power_analytic_W": 8.11849332237785e-07
+    },
+    "res": {
+      "f_drive_Hz": 1000.0,
+      "Omega": 1.0,
+      "spice_points": 11797,
+      "phase_lag_spice_deg": 90.0177186468286,
+      "phase_lag_analytic_deg": 90.0,
+      "current_lead_spice_deg": -0.021518916199624982,
+      "current_lead_analytic_deg": 0.0,
+      "q_amplitude_spice_C": 2.532397925575037e-06,
+      "q_amplitude_analytic_C": 2.533029591058445e-06,
+      "mean_resistor_power_spice_W": 0.007950526811236903,
+      "mean_source_power_spice_W": 0.00795198852581947,
+      "mean_power_analytic_W": 0.007957747154594769
+    },
+    "high": {
+      "f_drive_Hz": 3000.0,
+      "Omega": 3.0,
+      "spice_points": 32174,
+      "phase_lag_spice_deg": 177.84785897722475,
+      "phase_lag_analytic_deg": 177.8524145717015,
+      "current_lead_spice_deg": -87.85069882806816,
+      "current_lead_analytic_deg": -87.8524145717015,
+      "q_amplitude_spice_C": 3.164082644370433e-08,
+      "q_amplitude_analytic_C": 3.16406303858188e-08,
+      "mean_resistor_power_spice_W": 1.1176247054675558e-05,
+      "mean_source_power_spice_W": 1.1362295210048066e-05,
+      "mean_power_analytic_W": 1.1174867279037745e-05
+    }
+  },
+  "silica_mapping": {
+    "B_u": 1.1041089,
+    "lambda_u_nm": 89.12185575600056,
+    "w_u_rad_s": 2.1135686093273784e+16,
+    "w_1310_rad_s": 1437901959777750.2,
+    "Omega_1310": 0.06803195095877904,
+    "circuit_frequency_for_1310_Hz": 68.03195095877903,
+    "n_1310_single_uv_oscillator": 1.4523232629633143,
+    "n_1310_three_oscillator_lorentz": 1.4468043175527274,
+    "n_1310_malitson_sellmeier": 1.4468043175527276,
+    "n_1310_textbook": 1.4468,
+    "chi_over_chi_static_at_1310": 1.004649867548761,
+    "dn_dlambda_sellmeier_per_um": -0.011324942130267447,
+    "dn_dlambda_uv_terms_per_um": -0.002728718166737941,
+    "dn_dlambda_ir_term_per_um": -0.008596223963529506,
+    "ir_share_of_slope_pct": 75.90523522901658,
+    "dn_dlambda_single_per_um": -0.0027110994072556496,
+    "ng_1310_sellmeier": 1.461639991743378,
+    "ng_1310_single_uv": 1.4558748031868192,
+    "n_double_prime_silica_1310_from_0p3dB_km": 7.201000763886124e-12,
+    "n_double_prime_if_Gamma_0p1": 0.0026100291325895464,
+    "alpha_db_cm_if_Gamma_0p1": 1087.3610008538617,
+    "phase_lag_at_1310_with_circuit_Gamma_deg": 0.39160076058602517,
+    "Gamma_equivalent_to_silica_n_double_prime": 2.758873881834559e-10,
+    "phase_lag_at_1310_with_silica_damping_deg": 1.080393933509732e-09,
+    "refractive_index_dampings": [
+      0.09999999999999999,
+      0.019999999999999997,
+      0.004999999999999999
+    ],
+    "max_abs_diff_three_osc_vs_sellmeier": 2.220446049250313e-16
+  },
+  "video": {
+    "frames": 360,
+    "fps": 30,
+    "duration_s": 12.0,
+    "render_s": 41.313758850097656,
+    "still_frames": [
+      0,
+      157,
+      224,
+      292,
+      359
+    ],
+    "still_Omegas": [
+      0.1,
+      0.5019059405799736,
+      1.0,
+      2.0094087718050164,
+      4.0
+    ]
+  },
+  "capstone": {
+    "dN_cm3": 1e+17,
+    "tau_e_s_assumed": 2e-13,
+    "drude_dn": -8.457614230056934e-05,
+    "soref_bennett_dn_1300nm": -6.2e-05,
+    "drude_over_soref_dn": 1.3641313274285378,
+    "drude_dalpha_per_cm": 0.02821156438183957,
+    "soref_bennett_dalpha_per_cm": 0.6,
+    "soref_over_drude_dalpha": 21.267874119956062,
+    "ring_shift_pm_for_uniform_1e17": -16.437380952380952,
+    "ring_shift_1e17_in_K_equiv": -0.32874761904761907,
+    "modulator_swing_pm": 65.0,
+    "dneff_for_swing": 0.00020839694656488546,
+    "equivalent_uniform_dN_cm3": 3.954401263090806e+17,
+    "modulator_swing_in_K_equiv": 1.3,
+    "dw0_over_w0_per_K_for_dn_dT": -5.7866666666666666e-05,
+    "varshni_dE_over_E_per_K_E1": -7.941176470588236e-05,
+    "thermal_shift_pm_per_K": 50.0,
+    "fwhm_pm": 374.0
+  },
+  "runtime_s_before_notebook": 43.76048922538757,
+  "notebook_executed": true
+}

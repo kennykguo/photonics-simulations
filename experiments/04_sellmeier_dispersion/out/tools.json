@@ -1,0 +1,34 @@
+[
+  {
+    "tool": "sympy",
+    "version": "1.14.0",
+    "what_it_is": "A Python computer-algebra system: symbolic differentiation, simplification, series expansion and pretty-printing of equations. Normally used to derive and check formulas before they are coded numerically.",
+    "used_for": "Deriving n_g = c dk/dω = n − λ dn/dλ and D = d(n_g/c)/dλ = −(λ/c) d²n/dλ² from k(ω) = n(λ(ω)) ω/c, the chain rule dn/dλ = S'/(2n), d²n/dλ² = S''/(2n) − S'²/(4n³), the UV/IR series of a single Sellmeier term (notes §10), and then lambdifying the exact Sellmeier n(λ), dn/dλ, d²n/dλ² so every number in this experiment is the evaluated symbolic derivation.",
+    "result": "out/derivation.txt: both identities are checked to simplify to 0. Series: d²S_u/dλ² ≈ 6B_uλ_u²/λ⁴ > 0 (UV bends up), d²S_ir/dλ² ≈ −2B_ir/λ_ir² < 0 (IR bends down). Lambdified silica n(1310 nm) = 1.44680 vs Malitson 1.4468 (100.00 %).",
+    "how_to_observe": "cd experiments/04_sellmeier_dispersion && ../../.venv/bin/python run.py ; read out/derivation.txt (section 1 of the log) and out/equations.png. To try another material, add a Sellmeier n_expr in sellmeier.py and wrap it in Material(); the derivatives are generated automatically."
+  },
+  {
+    "tool": "numpy + scipy",
+    "version": "numpy 2.4.6, scipy 1.18.1",
+    "what_it_is": "numpy is the array library every scientific Python code is built on; scipy adds numerical algorithms (root finding, optimisation, integration). Used here for evaluating the lambdified expressions on wavelength grids and for the root finder scipy.optimize.brentq.",
+    "used_for": "Evaluating n, n_g, D on 0.6–2.0 µm (silica) and 1.2–2.0 µm (silicon), finite-difference cross-checks of the sympy derivatives, brentq root of d²n/dλ² for the zero-dispersion wavelength, the term-by-term decomposition of d²n/dλ² at the ZDW, the small-change rule and the ring FSR / thermal-shift numbers.",
+    "result": "ZDW(silica) = 1272.8 nm (expected ≈1270, 99.78 %); D(1550) = 21.91 ps/(nm·km) (bulk 20–22); D(1310) = 3.582 ps/(nm·km) vs the independent ω-route 3.582 (100.00 %); n_g(1310, silica) = 1.4616; small-change rule 174.69 GHz/nm (174.7); FSR = 1.803 THz / 10.32 nm with n_g = 4.2 (1.8 / 10.3); 2 km delay spread across ±0.75×baud 3.3 ps at 1310 nm vs 28.0 ps at 1550 nm (experiment 05: 3.3 / 28.0). Finite-difference vs symbolic: max|Δn_g| = 1.1e-09.",
+    "how_to_observe": "out/results.json (all numbers), out/results.txt (the printed log), out/silica_dispersion_table.csv and out/silicon_dispersion_table.csv (λ, n, n_g, D, β₂ tables). Change L0 / REF.ng in run.py or the bracket of brentq to explore."
+  },
+  {
+    "tool": "matplotlib (+ ffmpeg)",
+    "version": "matplotlib 3.11.2, ffmpeg 9.0.1",
+    "what_it_is": "The standard Python plotting library; FuncAnimation + FFMpegWriter drive the ffmpeg encoder to turn a sequence of frames into an mp4. Also used here to render the equations with mathtext because there is no LaTeX on this machine.",
+    "used_for": "Eleven PNG files: ten figures (equations, n and n_g, two tangent-intercept constructions, D vs λ, term-by-term curvature, the Sellmeier poles on a log axis, the small-change rule, the ring-FSR-by-index bar chart, the 2 km spread vs λ) plus the contact sheet of the 8 s video tangent_sliding.mp4.",
+    "result": "out/*.png (11 files), out/tangent_sliding.mp4 (240 frames at 30 fps, 8.0 s), out/tangent_sliding_frames.png. In the video the square (the λ = 0 intercept of the tangent) is n_g and is lowest exactly where D crosses zero.",
+    "how_to_observe": "open out/tangent_sliding.mp4; the figures are embedded in README.md. Edit lam_anim in run.py to change the sweep range or fps in FFMpegWriter(fps=30)."
+  },
+  {
+    "tool": "Jupyter notebook + ipywidgets",
+    "version": "nbformat 5.11.1, ipywidgets 8.1.9, kernel photonics-sims",
+    "what_it_is": "Jupyter notebooks mix code, output and text; ipywidgets adds sliders that re-run a Python function when moved. Used for interactive exploration where a script would need a re-run per parameter.",
+    "used_for": "explore.ipynb (built by make_notebook.py, executed and saved with outputs): sliders that (1) slide the tangent along n(λ) for silica or silicon and read n_g from the intercept, (2) move the IR Sellmeier pole (λ_ir, B_ir) and scale the UV strengths and watch the zero-dispersion wavelength move, (3) compute the ring FSR from n_g and L and draw the eight 200 GHz channels inside one FSR, (4) convert pm ↔ GHz with the small-change rule. A fifth cell asserts the notebook's evaluation of the same Material objects equals out/results.json to 1e-12.",
+    "result": "Executed outputs saved in explore.ipynb (static figures for the default slider values). Moving λ_ir from 9.9 µm to 6 µm pulls the ZDW from 1273 nm to 978 nm (to 14 µm: 1523 nm); doubling B_ir to 1.4 pulls it to 1145 nm; scaling the UV strengths by 1.1 pushes it to 1302 nm. Increasing n_g from 3.7 (bulk Si) to 4.2 (strip) moves the FSR from 2.05 THz to 1.80 THz; the eight 200 GHz channels span 8.01 nm and fit inside the 10.32 nm FSR.",
+    "how_to_observe": "cd experiments/04_sellmeier_dispersion && ../../.venv/bin/jupyter lab explore.ipynb and drag the sliders. run.py rebuilds and re-executes the notebook headless at the end of every run (make_notebook.py + jupyter nbconvert --execute --inplace --ExecutePreprocessor.kernel_name=photonics-sims), so it never goes stale. The step is load-sensitive (kernel start + 11 cells: ≈ 35 s on an idle laptop, many minutes when other solver runs saturate the CPU); the per-cell timeout is 60 s, a stalled attempt is retried once, and a third attempt skips the four slider cells (tag widgets); set SKIP_NOTEBOOK=1 to skip it and keep the headless part alone at ≈ 1 min. By hand: ../../.venv/bin/python make_notebook.py && ../../.venv/bin/jupyter nbconvert --to notebook --execute --inplace explore.ipynb."
+  }
+]

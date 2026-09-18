@@ -1,0 +1,34 @@
+[
+  {
+    "tool": "numpy (FFT)",
+    "version": "2.4.6",
+    "what_it_is": "The array library of scientific Python; numpy.fft is its fast Fourier transform, used everywhere a signal is moved between time and frequency.",
+    "used_for": "The split-into-frequencies propagation of notes section 12: FFT the input field, multiply each frequency component by exp(-j beta(omega) L) with the exact Sellmeier beta(omega), inverse FFT. Also the NRZ transmitter/receiver filtering (all in the frequency domain) and the eye-diagram folding.",
+    "result": "Gaussian FWHM after 2 km: 1550 nm 20.39 ps vs analytic 20.39 ps (99.999 %), 1310 nm 8.60 ps vs 8.60 ps; group delay at 1310 nm 9.7510 us vs beta1 L = n_g L/c 9.7510 us (100.0000 %); chirp-free NRZ eye opening after 2 km: 1310 nm 100 %, 1550 nm 71 % of back-to-back; with a chirped Tx (alpha = 3): 1310 nm 75 %, 1550 nm 0 % (closed).",
+    "how_to_observe": "cd experiments/05_pulse_dispersion && ../../.venv/bin/python run.py; look at out/gaussian_broadening.png, out/group_delay.png, out/eye_diagrams.png, out/eye_diagrams_chirped.png, out/eye_vs_length.png. Change L_LINK, T0_GAUSS, TX_F3DB, ALPHA_CHIRP or BAUD at the top of run.py and re-run."
+  },
+  {
+    "tool": "sympy",
+    "version": "1.14.0",
+    "what_it_is": "A symbolic mathematics library: exact algebra, differentiation and integration on expressions, with lambdify to turn the result into fast numpy functions.",
+    "used_for": "Differentiating the Sellmeier n(lambda) exactly to get n_g = n - lambda dn/dlambda, D = -(lambda/c) d2n/dlambda2 and beta1, beta2, beta3 = d^k beta/d omega^k of beta(omega) = n(omega) omega/c, so no finite-difference error enters the propagator (silica.py).",
+    "result": "n(1310) = 1.4468 (notes: 1.4468), n_g(1310) = 1.4616, D(1310) = 3.58, D(1550) = 21.91 ps/(nm km) (bulk expectation 20-22), beta2(1550) = -27.95 ps^2/km equal to -lambda^2 D/(2 pi c) to 100.000000 %; zero-dispersion wavelength 1273 nm.",
+    "how_to_observe": "out/silica_dispersion.png and the first block of out/results.txt; `../../.venv/bin/python -c \"import silica; print(silica.symbolic_summary())\"`. Edit B_SELL / C_SELL_UM2 in silica.py to try another glass."
+  },
+  {
+    "tool": "scipy (signal + optimize)",
+    "version": "1.18.1",
+    "what_it_is": "SciPy's signal-processing module: filter design (Bessel, Butterworth), frequency responses, and test sequences such as maximal-length PRBS; scipy.optimize holds the root finders.",
+    "used_for": "signal.max_len_seq(9) for the 511-bit PRBS, signal.bessel(4, ...) + signal.freqs() for the receiver's 4th-order Bessel low-pass (0.75 x baud) evaluated on the FFT grid (the same response gives the filter's DC group delay, which the waveform figure removes so it is not mistaken for a dispersion delay); optimize.brentq for the zero-dispersion wavelength of the Sellmeier fit and for the exact length at which the eye opening crosses 50 % (bracketed by the 250 m sweep, solved to 1 m).",
+    "result": "Back-to-back eye height 0.830 (of P1 = 1); Rx Bessel DC group delay 8.44 ps = 0.45 UI; length at which the eye is half closed (brentq, 1 m tolerance): 1310 nm > 10 km chirp-free / 4.01 km chirped, 1550 nm 2.69 km chirp-free / 0.47 km chirped; zero-dispersion wavelength 1272.8 nm (bulk silica, expected ~1270 nm).",
+    "how_to_observe": "out/nrz_waveforms.png, out/nrz_spectrum_delay.png, out/eye_diagrams.png, out/eye_vs_length.png. Change RX_F3DB, EXT_RATIO_DB or PRBS_ORDER in run.py and re-run."
+  },
+  {
+    "tool": "matplotlib (+ FFMpegWriter / ffmpeg 9.0.1)",
+    "version": "3.11.2",
+    "what_it_is": "The standard Python plotting library; its animation module drives ffmpeg to encode a sequence of redrawn frames into an mp4.",
+    "used_for": "All figures, the eye diagrams (LineCollection of folded traces), and two videos: the Gaussian envelope and its chirp evolving along z, and the NRZ waveform plus eye diagram evolving along z.",
+    "result": "out/gaussian_envelope.mp4 (8 s, 240 frames) and out/nrz_eye_closing.mp4 (6.7 s, 200 frames) with contact sheets out/gaussian_envelope_frames.png and out/nrz_eye_closing_frames.png; 10 PNG figures in total.",
+    "how_to_observe": "open out/gaussian_envelope.mp4: watch the orange (1550 nm) pulse widen while the blue (1310 nm) pulse keeps its shape, and the lower panel show the linear chirp growing; open out/nrz_eye_closing.mp4: the right column eye at 1550 nm shrinks along the 2 km while the 1310 nm eye does not move. N_FR / N_FR2 set the frame counts, FPS the frame rate."
+  }
+]

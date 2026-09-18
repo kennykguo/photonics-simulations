@@ -1,0 +1,21 @@
+[   0.0s] B1 2-D guide: n_eff = 3.3390 (2nd mode 2.825: multimode!), n_g = 3.5939 (finite diff 3.5941); 1/γ = 69 nm (fit 69 nm) vs textbook 3-D 102 nm
+[   0.0s] B1 predicted FSR with straight n_g and L = 2πR: 12.06 nm = 2.107 THz
+findfont: Failed to find font weight medium for DejaVu Sans, now using 400.
+[  11.6s] B2 loss: σ_D = α/n = 8.223e-04 gives 130.5 dB/cm; calibrated σ_D = 7.875e-04 gives 125.0 dB/cm (target 125.0); a = e^(−αL/2) = 0.9446; predicted intrinsic Q = 2π n_g/(α λ) = 5989
+[  23.1s] B3 gap 0.10 µm (lossless): first-pass κ²(1310) = 0.0221 (t = 0.9889); Harminv Q_c ≈ 16148 -> κ² = 1−t² = 0.0414; resonances [1328.6 1317.1 1305.9 1294.8 1283.9]
+[  34.7s] B3 gap 0.15 µm (lossless): first-pass κ²(1310) = 0.0054 (t = 0.9973); Harminv Q_c ≈ 48379 -> κ² = 1−t² = 0.0140; resonances [1317.1 1305.8 1294.8 1283.9]
+[  54.6s] B3 gap 0.20 µm (lossless): first-pass κ²(1310) = 0.0014 (t = 0.9993); Harminv Q_c ≈ 110629 -> κ² = 1−t² = 0.0061; resonances [1317.1 1305.8 1294.8]
+[  54.6s] B3 ln κ² slope = -27.6 /µm (expected ≈ −2γ = -28.9 /µm); critical coupling (κ² = 1−a² = 0.108) extrapolates to gap ≈ 42 nm (κ² at zero gap would be 0.348)
+[  62.5s] B4 normalisation run done (t_end = 250)
+[ 271.8s] B4 ring run done (t_end = 7000 µm/c = 7000 time units, ≈ 5344 optical periods)
+[ 271.8s] B4 flux dips (nm): [1290.06 1301.48 1313.09 1324.92 1336.97]; T_min: [0.699 0.67  0.656 0.64  0.623]; FWHM (pm): [307. 302. 313. 315. 330.]; Q: [4204. 4315. 4201. 4208. 4056.]
+[ 271.8s] B4 Harminv fundamental family (nm / Q): [(np.float64(1336.97), 3362), (np.float64(1324.92), 4214), (np.float64(1313.11), 4391), (np.float64(1301.48), 4341), (np.float64(1290.06), 4248)]
+[ 271.8s] B4 FSR: flux 11.73 nm, Harminv 11.73 nm; predicted c/(n_g L) with straight n_g 3.594, L = 2πR: 12.06 nm -> n_g L_eff from FSR = 147.0 µm (geometric n_g L = 142.3 µm)
+[ 271.8s] B4 central dip 1313.09 nm: T_min = 0.656 (-1.8 dB), FWHM = 313 pm (interpolated; raw grid width 328 pm on a 17.2 pm grid), Q_flux = 4201 (grid 4007), Q_harminv = 4391; record = 7000 µm/c = 3.8 amplitude lifetimes
+[ 271.8s] B4 inversion: ta = 0.9222 -> t = 0.9923 (κ² = 0.015), a = 0.9293  [calibrated a = 0.9446, first-pass κ² = 0.0197 -> t = 0.9901]
+[ 271.8s] B4 forward prediction from first-pass t and calibrated a: T_min = 0.494, Q = 5099, FWHM = 257 pm
+[ 387.3s] B5 CW at 1313.11 nm: bent-mode radius peak 6.35 µm, mean 6.34 µm -> L_eff = 39.85 µm, bend-corrected FSR 11.98 nm
+[ 387.3s] B5 build-up: τ_amp fit 1885 µm/c = 6.3 ps (Harminv Q predicts 1835) -> Q_buildup = 4509; |E_ring|²/|E_bus|² = 2.39 at t = 4000 (formula (1−t²)/(1−ta)² = 2.52 steady state × 0.79 charged = 1.98); energy at the end = 77 % of the fitted steady state
+[ 408.3s] B done -> out/B_results.json
+
+Elapsed run time = 408.2881 s

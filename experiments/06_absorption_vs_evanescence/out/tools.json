@@ -1,0 +1,34 @@
+[
+  {
+    "tool": "Meep (pymeep, FDTD)",
+    "version": "1.34.0",
+    "what_it_is": "Meep is MIT's open-source finite-difference time-domain solver: it steps Maxwell's curl equations on a Yee grid in real time and is the standard free tool for photonic-device simulation (waveguides, resonators, scattering, absorption).",
+    "used_for": "Two tiny problems. (1) A 1-D cell filled with n = n' - j n'' (loss entered as Meep's D_conductivity, sigma_D = omega*eps''/eps_inf), a Gaussian pulse and a DFT monitor giving the steady-state phasors E_x(z), H_y(z), for a visual case n'' = 0.05, a sweep n'' = 0.01..0.10, and the doped ring's own n'' = 3.0e-4 over exactly one round trip of 39.6 um. (2) A 2-D cell, Bloch-periodic along the interface with k_z = n_eff k0, a Si/SiO2 boundary, a plane-wave line source in the silicon; run beyond the critical angle (n_eff 2.5 and 2.7) and below it (n_eff 1.0). The E and H phasors give <S> = 1/2 Re{E x H*}.",
+    "result": "Absorber: alpha = 0.4813 /um vs 4 pi n''/lambda = 0.4796 (+0.35 %); -dSz/dz / p_abs = 1.007; one lap at 125 dB/cm: a = 0.9444 vs 0.9446 (-0.02 %). Interface: 1/gamma = 102.6 nm vs 102.4 nm (+0.20 %); cladding <Sx>/<Sz> = 1e-08; H_z/E_y phase -90.0 deg; Bloch consistency (imposed, not physics): |E| varies along z by 1e-10, phase slope beta = 11.990812 vs imposed 11.990812 rad/um (+2e-13 %).",
+    "how_to_observe": "cd experiments/06_absorption_vs_evanescence && ../../.meep/bin/python run.py (about 100 s on this laptop, 75 to 130 s depending on load). Look at out/fig1_absorption_vs_evanescence.png (the two decays), out/fig2_poynting.png (S arrows and profiles), out/fig3_alpha_and_one_lap.png, out/absorption_vs_evanescence.mp4. Change N_IM_VIS, the n_eff list in section 3 of run.py, or RES_1D/RES_2D and re-run; the fitted numbers are reprinted and rewritten to out/results.json."
+  },
+  {
+    "tool": "NumPy (analytic layer and fits)",
+    "version": "2.5.3",
+    "what_it_is": "NumPy is the array library every Python simulation is built on; here it is also the 'pen and paper' half of the experiment (the notes' formulas evaluated numerically) and does the fits of the FDTD data (polyfit of ln|E|).",
+    "used_for": "alpha = loss_dB/cm / 4.343, n'' = alpha*lambda/(4 pi), a = e^{-alpha L/2}, gamma = k0 sqrt(n_eff^2 - n2^2), the self-heating bound, and least-squares slopes of ln|E|^2 vs z and ln|E| vs x, the unwrapped phase slope for beta (1-D absorber and 2-D Bloch check), the dips of |E_y|(x) in the silicon (standing-wave node spacing, parabolic sub-grid refinement), the numerical divergence of <S> (consistency row only).",
+    "result": "125 dB/cm -> alpha = 28.78 /cm, n'' = 3.00e-04, a = 0.9446 (REF 0.945, -0.04 %); 1/gamma = 102.4 nm for n_eff 2.5 (91.5 nm for 2.7); the absorptive field length 2/alpha = 695 um is 6788x the evanescent one; Si node spacing lambda0/(2 n1 cos theta) = 267.4 nm (FDTD 266.5 nm); absorbed at delta_opt 1.853 mW.",
+    "how_to_observe": "Section 1 of run.py prints them (also in out/results.txt and out/results.json). Edit REF.loss_db_cm_doped indirectly by passing a different dB/cm to db_per_cm_to_alpha_per_um, or change REF.neff in the gamma line, and re-run."
+  },
+  {
+    "tool": "matplotlib (figures + FuncAnimation/FFMpegWriter)",
+    "version": "3.11.2",
+    "what_it_is": "The standard Python plotting library; its animation module writes frame sequences to video through ffmpeg.",
+    "used_for": "Four figures (RdBu_r for the signed field maps with a colorbar centred on zero, Blues for |S|, quiver for the Poynting arrows with length proportional to sqrt|S|) and a 6 s two-panel animation of the physical field Re{E e^{j omega t}} for the absorber and for the TIR interface, plus a contact sheet of six stills.",
+    "result": "out/fig1..fig4 png, out/absorption_vs_evanescence.mp4 (6 s, 30 fps, three optical periods of 4.37 fs), out/absorption_vs_evanescence_frames.png.",
+    "how_to_observe": "open out/absorption_vs_evanescence.mp4: on the left the crests move to the right inside an envelope that does not move; on the right the crests slide along the interface while the amplitude profile across it stays frozen. Change N_PERIODS or N_FRAMES in section 5 of run.py."
+  },
+  {
+    "tool": "ffmpeg / ffprobe",
+    "version": "9.0.1",
+    "what_it_is": "The universal command-line video encoder; matplotlib pipes rendered frames into it, ffprobe reads the metadata back.",
+    "used_for": "Encoding the mp4 (H.264) and checking its duration.",
+    "result": "absorption_vs_evanescence.mp4, 6.000000 s.",
+    "how_to_observe": "/opt/homebrew/bin/ffprobe out/absorption_vs_evanescence.mp4"
+  }
+]

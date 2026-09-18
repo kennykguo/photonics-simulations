@@ -1,0 +1,82 @@
+{
+  "versions": {
+    "gdsfactory": "9.51.0"
+  },
+  "ring_bus": {
+    "gds": "/Users/kennyg/photonics-simulations/experiments/11_directional_coupler/out/ring_bus_coupler.gds",
+    "n_polygons": 7,
+    "gap_nm_measured": 200.0,
+    "gap_nm_requested": 200.0,
+    "radius_um_centreline": 6.306355176566634,
+    "width_um": 0.5027062243148155,
+    "bbox_um": [
+      -9.31,
+      -0.25,
+      9.3,
+      13.56
+    ]
+  },
+  "directional_coupler": {
+    "gds": "/Users/kennyg/photonics-simulations/experiments/11_directional_coupler/out/directional_coupler.gds",
+    "n_polygons": 2,
+    "gap_nm": 200.0,
+    "straight_length_um": 12.76,
+    "ports": {
+      "o1": [
+        -6.0,
+        -1.1500000000000001
+      ],
+      "o2": [
+        -6.0,
+        1.85
+      ],
+      "o3": [
+        18.76,
+        1.85
+      ],
+      "o4": [
+        18.76,
+        -1.1500000000000001
+      ]
+    }
+  },
+  "point_coupler": {
+    "textbook_neff2p5": {
+      "gamma_per_um": 9.76791271284958,
+      "decay_length_nm": 102.37601721036177,
+      "L_eff_formula_um": 2.0130720724816014,
+      "L_eff_numeric_exact_circle_um": 2.000741590580085,
+      "L_eff_numeric_parabola_um": 2.0130720724815925,
+      "agreement_pct": 99.3874793620123,
+      "z_1_over_e_um": 1.1357542942250134,
+      "gap_at_z_1_over_e_nm": 302.3760172103618
+    },
+    "slab2d_neff2p99": {
+      "gamma_per_um": 12.530566484764623,
+      "decay_length_nm": 79.80485169731608,
+      "L_eff_formula_um": 1.7773577668115106,
+      "L_eff_numeric_exact_circle_um": 1.7688810048249963,
+      "L_eff_numeric_parabola_um": 1.7773577668115106,
+      "agreement_pct": 99.52306946047665,
+      "z_1_over_e_um": 1.0027667382727563,
+      "gap_at_z_1_over_e_nm": 279.80485169731605
+    }
+  },
+  "parabola_check": {
+    "compared_with": "ring centreline circle (GDS lower vertices scaled radially to R), i.e. the mode-centre separation",
+    "centreline_radius_um": 6.306355176566634,
+    "max_dev_nm_within_2p5um": 14.404387120723838,
+    "z_of_max_dev_um": 2.29500825199991,
+    "expected_z4_over_8R3_at_that_z_nm": 13.868368420543726,
+    "expected_z4_over_8R3_at_2p5um_nm": 19.52757881518275,
+    "max_dev_nm_within_z_1_over_e": 0.5099353486408553,
+    "z_1_over_e_um": 1.1357542942250134,
+    "expected_z4_over_8R3_at_z_1_over_e_nm": 0.8318134047504991,
+    "note": "the outer polygon edge (radius R + w/2) happens to lie within 7 nm of the R-parabola out to 2.5 \u00b5m; that is a coincidence of the two radii, not a validation, so the check is done on the centreline",
+    "outer_edge_vs_R_parabola_max_dev_nm_within_2p5um": 6.7203250000001375
+  },
+  "figures": [
+    "gds_layout.png",
+    "point_coupler_geometry.png"
+  ]
+}

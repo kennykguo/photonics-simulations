@@ -1,0 +1,496 @@
+{
+  "inputs": {
+    "lambda_nm": 1310.0,
+    "n1_si": 3.5,
+    "n2_sio2": 1.45,
+    "beam_waist_um": 2.0,
+    "cell_um": [
+      10.0,
+      12.0
+    ],
+    "pml_um": 1.0,
+    "source_x_um": -2.0,
+    "resolution_show": 60,
+    "resolution_sweep": 50,
+    "resolution_video": 40,
+    "meep_time_unit_fs": 3.3356409519815204,
+    "fdtd_module_default_lambda_um": 1.31,
+    "note": "LAM_NM in run.py is the one wavelength: K0, the analytic curves and the lam= argument of every Meep run follow it"
+  },
+  "critical_angle_deg": 24.474342562847227,
+  "critical_angle_formula": "sin(theta_c) = n2/n1 (notes 24)",
+  "theta_ref_deg": 45.58469140280703,
+  "theta_ref_formula": "n_eff = n1 sin(theta): the strip mode's plane-wave angle for n_eff = 2.5 (notes 21, 22)",
+  "run_counts": {
+    "showcase_phasor": 7,
+    "angle_sweep_phasor": 24,
+    "resolution_check_phasor": 12,
+    "ftir_phasor": 12,
+    "cw_video": 6,
+    "total_meep_runs": 61
+  },
+  "beam_waist_check": {
+    "15_deg": {
+      "w_fit_um": 2.001829937821237,
+      "w0_requested_um": 2.0,
+      "agreement_pct": 0.09149689106184855,
+      "centre_y_um": 0.5067171045865004,
+      "focus_y_requested_um": 0.5
+    },
+    "24.5_deg": {
+      "w_fit_um": 2.0026590392252435,
+      "w0_requested_um": 2.0,
+      "agreement_pct": 0.13295196126217323,
+      "centre_y_um": 0.509028995762883,
+      "focus_y_requested_um": 0.5
+    },
+    "40_deg": {
+      "w_fit_um": 1.9964166917074817,
+      "w0_requested_um": 2.0,
+      "agreement_pct": -0.17916541462591473,
+      "centre_y_um": 0.5072159459770537,
+      "focus_y_requested_um": 0.5
+    }
+  },
+  "showcase": {
+    "15_deg": {
+      "T_fdtd": 0.751611865736726,
+      "T_beam_analytic": 0.7483914267477201,
+      "T_plane_wave_fresnel": 0.7517582397319246,
+      "T_fdtd_vs_beam_pct": 0.4303147890136749,
+      "R_plus_T_fdtd": 0.9999885584876932,
+      "beta_fit_rad_per_um": 4.354309924722507,
+      "beta_expected_rad_per_um": 4.3448305915438405,
+      "poynting_from_fields_over_flux_monitor": 0.5000005662631708,
+      "beta_agreement_pct": 0.21817497780272088,
+      "poynting_vs_flux_monitor_agreement_pct": 0.00011325263415962183,
+      "net_Sx_over_net_Sy_at_x0p1um": 1.2357084473788857,
+      "net_normal_power_in_silica_over_incident": 0.7516190316562827,
+      "net_normal_power_in_silica_over_incident_at_x2um": 0.7490831569558921,
+      "transmitted_direction_from_poynting_deg": 38.970967322082906,
+      "snell_angle_deg": 38.66278574307323,
+      "direction_agreement_pct": 0.797101329060057
+    },
+    "24.5_deg": {
+      "T_fdtd": 0.2029407236814859,
+      "T_beam_analytic": 0.19820778968579703,
+      "T_plane_wave_fresnel": 0.0,
+      "T_fdtd_vs_beam_pct": 2.387864777258053,
+      "R_plus_T_fdtd": 0.9969846221056105,
+      "beta_fit_rad_per_um": 6.916751234374514,
+      "beta_expected_rad_per_um": 6.961511994164267,
+      "poynting_from_fields_over_flux_monitor": 0.5003992190558761,
+      "beta_agreement_pct": -0.6429746846270623,
+      "poynting_vs_flux_monitor_agreement_pct": 0.07984381117522865,
+      "net_Sx_over_net_Sy_at_x0p1um": 0.15408149058655216,
+      "net_normal_power_in_silica_over_incident": 0.2052146895740477,
+      "net_normal_power_in_silica_over_incident_at_x2um": 0.0641391427599704
+    },
+    "40_deg": {
+      "T_fdtd": 7.592813991537751e-05,
+      "T_beam_analytic": 1.1771977911987514e-24,
+      "T_plane_wave_fresnel": 0.0,
+      "T_fdtd_vs_beam_pct": null,
+      "R_plus_T_fdtd": 0.999084380855716,
+      "beta_fit_rad_per_um": 10.718098952357533,
+      "beta_expected_rad_per_um": 10.790563226617119,
+      "poynting_from_fields_over_flux_monitor": null,
+      "beta_agreement_pct": -0.6715522882145608,
+      "net_Sx_over_net_Sy_at_x0p1um": 0.00020058342234034325,
+      "net_normal_power_in_silica_over_incident": 0.0001075979572058334,
+      "net_normal_power_in_silica_over_incident_at_x2um": 7.340533036750536e-05,
+      "decay_length_fdtd_nm": 123.49817657253858,
+      "decay_length_plane_wave_nm": 121.20650344234637,
+      "decay_length_beam_analytic_nm": 123.32424671451152,
+      "fit_window_um": [
+        0.05,
+        0.35301625860586594
+      ],
+      "decay_vs_plane_wave_pct": 1.8907179607588365,
+      "decay_vs_beam_pct": 0.14103459997587553,
+      "max_local_Sx_over_max_Sy_at_x0p1um": 0.030880566711724802,
+      "parallel_power_in_silica_over_incident_at_x0p1um": 0.5347021572486212
+    }
+  },
+  "angle_sweep": [
+    {
+      "theta_deg": 15.0,
+      "T_fdtd": 0.7529982204819043,
+      "R_plus_T": 0.9999883024916779,
+      "T_beam": 0.7483914267477201,
+      "T_plane_wave": 0.7517582397319246
+    },
+    {
+      "theta_deg": 20.0,
+      "T_fdtd": 0.6262806454318026,
+      "R_plus_T": 0.9999761696159776,
+      "T_beam": 0.6205196666975661,
+      "T_plane_wave": 0.6381334479181218
+    },
+    {
+      "theta_deg": 22.0,
+      "T_fdtd": 0.492893928427462,
+      "R_plus_T": 0.9991840479830945,
+      "T_beam": 0.4865148825143264,
+      "T_plane_wave": 0.5382595334296435
+    },
+    {
+      "theta_deg": 23.5,
+      "T_fdtd": 0.326092340046513,
+      "R_plus_T": 0.9974400861563302,
+      "T_beam": 0.31996919425870435,
+      "T_plane_wave": 0.38902649762121844
+    },
+    {
+      "theta_deg": 24.5,
+      "T_fdtd": 0.20416238178259022,
+      "R_plus_T": 0.9969619593369494,
+      "T_beam": 0.19820778968579703,
+      "T_plane_wave": 0.0
+    },
+    {
+      "theta_deg": 25.5,
+      "T_fdtd": 0.10406804788543184,
+      "R_plus_T": 0.9976995276919127,
+      "T_beam": 0.09898900175190625,
+      "T_plane_wave": 0.0
+    },
+    {
+      "theta_deg": 27.0,
+      "T_fdtd": 0.02360106326184191,
+      "R_plus_T": 0.9994124605468097,
+      "T_beam": 0.02135217657772233,
+      "T_plane_wave": 0.0,
+      "decay_fdtd_nm": 420.14141941936816,
+      "decay_plane_wave_nm": 320.8285468192393,
+      "decay_beam_nm": 397.8788858971183,
+      "gamma_per_um": 3.11692961837158,
+      "fit_window_um": [
+        0.05,
+        0.5
+      ],
+      "vs_plane_wave_pct": 30.955123409290497,
+      "vs_beam_pct": 5.59530407652904
+    },
+    {
+      "theta_deg": 30.0,
+      "T_fdtd": 0.00020078150051704128,
+      "R_plus_T": 0.9998183247394942,
+      "T_beam": 0.00011525218534739898,
+      "T_plane_wave": 0.0,
+      "decay_fdtd_nm": 245.31749762717516,
+      "decay_plane_wave_nm": 212.7922520033576,
+      "decay_beam_nm": 240.51171904062917,
+      "gamma_per_um": 4.699419225020567,
+      "fit_window_um": [
+        0.05,
+        0.5
+      ],
+      "vs_plane_wave_pct": 15.284976458308442,
+      "vs_beam_pct": 1.9981473691658813
+    },
+    {
+      "theta_deg": 35.0,
+      "T_fdtd": 3.131540987279215e-05,
+      "R_plus_T": 0.9996158821906428,
+      "T_beam": 6.8705049643928355e-12,
+      "T_plane_wave": 0.0,
+      "decay_fdtd_nm": 156.42299907354803,
+      "decay_plane_wave_nm": 150.16888960766354,
+      "decay_beam_nm": 155.5848441244283,
+      "gamma_per_um": 6.6591689038430975,
+      "fit_window_um": [
+        0.05,
+        0.42542222401915886
+      ],
+      "vs_plane_wave_pct": 4.164717127644857,
+      "vs_beam_pct": 0.5387124651096586
+    },
+    {
+      "theta_deg": 40.0,
+      "T_fdtd": 7.635507966810795e-05,
+      "R_plus_T": 0.9990914183902398,
+      "T_beam": 1.1771977911987514e-24,
+      "T_plane_wave": 0.0,
+      "decay_fdtd_nm": 123.69445993356157,
+      "decay_plane_wave_nm": 121.20650344234637,
+      "decay_beam_nm": 123.32424671451152,
+      "gamma_per_um": 8.250382377177182,
+      "fit_window_um": [
+        0.05,
+        0.35301625860586594
+      ],
+      "vs_plane_wave_pct": 2.052659239030552,
+      "vs_beam_pct": 0.3001949972636586
+    },
+    {
+      "theta_deg": 45.58469140280703,
+      "T_fdtd": 0.00019386895908566932,
+      "R_plus_T": 0.9977534712225408,
+      "T_beam": 0.0,
+      "T_plane_wave": 0.0,
+      "decay_fdtd_nm": 105.03206368418951,
+      "decay_plane_wave_nm": 102.37601721036178,
+      "decay_beam_nm": 103.42483918788889,
+      "gamma_per_um": 9.767912712849578,
+      "fit_window_um": [
+        0.05,
+        0.30594004302590444
+      ],
+      "vs_plane_wave_pct": 2.594403011762103,
+      "vs_beam_pct": 1.5540024126900587
+    },
+    {
+      "theta_deg": 50.0,
+      "T_fdtd": 0.00037217781345909296,
+      "R_plus_T": 0.9951074097548804,
+      "T_beam": 0.0,
+      "T_plane_wave": 0.0,
+      "decay_fdtd_nm": 94.03186775779406,
+      "decay_plane_wave_nm": 92.44835537584746,
+      "decay_beam_nm": 93.13628196667874,
+      "gamma_per_um": 10.81685007737038,
+      "fit_window_um": [
+        0.05,
+        0.28112088843961863
+      ],
+      "vs_plane_wave_pct": 1.712861603117588,
+      "vs_beam_pct": 0.9615863680662473
+    }
+  ],
+  "angle_sweep_note": "T_fdtd = power flux through x = +0.3 um in silica / incident beam power (uniform-silicon normalisation run). T_beam = plane-wave Fresnel T averaged over the beam's angular spectrum (analytic.GaussianBeamSpectrum). Beyond critical the FDTD value is a numerical floor set by the truncation of the source line, not physics.",
+  "decay_fit_window_rule": "ln|E_z| vs x fitted from 50 nm to min(500 nm, 50 nm + 2.5/gamma) on the beam centre line",
+  "tir_floor_T_fdtd": 0.00037217781345909296,
+  "tir_floor_angles_deg": [
+    35.0,
+    40.0,
+    45.58469140280703,
+    50.0
+  ],
+  "resolution_check": {
+    "24.5_deg": {
+      "theta_deg": 24.5,
+      "gap_nm": null,
+      "T_beam_analytic": 0.19820778968579703,
+      "T_fdtd_by_resolution": {
+        "30": 0.21148057355872846,
+        "40": 0.2064385305657563,
+        "80": 0.20173598234519713,
+        "50": 0.20416238178259022,
+        "60": 0.2029407236814859
+      },
+      "T_fdtd_vs_beam_pct_by_resolution": {
+        "30": 6.696398710651952,
+        "40": 4.152581940904954,
+        "50": 3.0042169917905426,
+        "60": 2.387864777258053,
+        "80": 1.780047426487652
+      },
+      "excess_vs_resolution_power_law_exponent": 1.3547449501029165,
+      "extrapolated_excess_pct_first_order": -1.5203436782925899,
+      "extrapolated_excess_pct_second_order": 0.9547065246953016
+    },
+    "45.5847_deg_gap200nm": {
+      "theta_deg": 45.58469140280703,
+      "gap_nm": 200.0,
+      "T_beam_analytic": 0.07563370964937417,
+      "T_fdtd_by_resolution": {
+        "30": 0.08060029770005067,
+        "40": 0.07857151148743721,
+        "80": 0.07663452887708104,
+        "50": 0.07763940184028723
+      },
+      "T_fdtd_vs_beam_pct_by_resolution": {
+        "30": 6.566632885919277,
+        "40": 3.8842493005859735,
+        "50": 2.6518495525488905,
+        "80": 1.323244929207501
+      },
+      "excess_vs_resolution_power_law_exponent": 1.6256456094410425,
+      "extrapolated_excess_pct_first_order": -2.1259331083255235,
+      "extrapolated_excess_pct_second_order": 0.45831101842296
+    }
+  },
+  "ftir": {
+    "40_deg": {
+      "rows": [
+        {
+          "gap_nm": 100.0,
+          "T_fdtd": 0.49711785356117144,
+          "R_plus_T": 0.9992804232799706,
+          "T_plane_wave": 0.4929619963284946,
+          "T_beam": 0.49281798467133303
+        },
+        {
+          "gap_nm": 150.0,
+          "T_fdtd": 0.2514123095679606,
+          "R_plus_T": 0.9991908674783281,
+          "T_plane_wave": 0.24901863847860375,
+          "T_beam": 0.24951649633526066
+        },
+        {
+          "gap_nm": 200.0,
+          "T_fdtd": 0.11949427174431497,
+          "R_plus_T": 0.9991347979507511,
+          "T_plane_wave": 0.11613463508979396,
+          "T_beam": 0.1170103445876532
+        },
+        {
+          "gap_nm": 300.0,
+          "T_fdtd": 0.024646139538628303,
+          "R_plus_T": 0.9990968842220392,
+          "T_plane_wave": 0.02319010228452885,
+          "T_beam": 0.023849759539126106
+        },
+        {
+          "gap_nm": 400.0,
+          "T_fdtd": 0.0050141472711276655,
+          "R_plus_T": 0.9990916556952032,
+          "T_plane_wave": 0.00448672611597047,
+          "T_beam": 0.004762740721647513
+        }
+      ],
+      "gamma_per_um": 8.250382377177182,
+      "decay_length_nm": 121.20650344234637,
+      "two_gamma_per_um": 16.500764754354364,
+      "slope_fit_gaps_nm": [
+        200.0,
+        300.0,
+        400.0
+      ],
+      "slope_fit_in_asymptotic_region": true,
+      "fitted_slope_per_um": 15.85502531869945,
+      "slope_agreement_pct": -3.9133909565283065,
+      "plane_wave_slope_same_gaps_per_um": 16.268134398623975,
+      "slope_vs_plane_wave_same_gaps_pct": -2.5393758731146576,
+      "T_fdtd_vs_beam_pct": [
+        0.8725064879087308,
+        0.7597947472589794,
+        2.122826973474168,
+        3.3391531608346625,
+        5.278610870784228
+      ],
+      "dT_over_T_per_10nm_pct_fdtd": -14.661992235525911,
+      "dT_over_T_per_10nm_pct_analytic": -15.211278019131214,
+      "factor_per_10nm_fdtd_over_analytic_pct": 0.6478288276703159,
+      "dT_over_T_per_10nm_difference_percentage_points": 0.5492857836053022
+    },
+    "45.5847_deg": {
+      "rows": [
+        {
+          "gap_nm": 100.0,
+          "T_fdtd": 0.4306693647328125,
+          "R_plus_T": 0.9980091488046926,
+          "T_plane_wave": 0.4266755141245036,
+          "T_beam": 0.4267169455211407
+        },
+        {
+          "gap_nm": 150.0,
+          "T_fdtd": 0.19046277038879555,
+          "R_plus_T": 0.997859629875822,
+          "T_plane_wave": 0.18720635936918756,
+          "T_beam": 0.187889789517302
+        },
+        {
+          "gap_nm": 200.0,
+          "T_fdtd": 0.07763940184028723,
+          "R_plus_T": 0.9977873251078437,
+          "T_plane_wave": 0.07487133621000372,
+          "T_beam": 0.07563370964937417
+        },
+        {
+          "gap_nm": 300.0,
+          "T_fdtd": 0.011870737244437424,
+          "R_plus_T": 0.9977541478405189,
+          "T_plane_wave": 0.010958270307995224,
+          "T_beam": 0.011287982637559204
+        },
+        {
+          "gap_nm": 400.0,
+          "T_fdtd": 0.0018851187357605994,
+          "R_plus_T": 0.9977507299539315,
+          "T_plane_wave": 0.0015606001493084813,
+          "T_beam": 0.0016513406760747956
+        }
+      ],
+      "gamma_per_um": 9.767912712849578,
+      "decay_length_nm": 102.37601721036178,
+      "two_gamma_per_um": 19.535825425699155,
+      "slope_fit_gaps_nm": [
+        200.0,
+        300.0,
+        400.0
+      ],
+      "slope_fit_in_asymptotic_region": true,
+      "fitted_slope_per_um": 18.59042122644531,
+      "slope_agreement_pct": -4.839335828677993,
+      "plane_wave_slope_same_gaps_per_um": 19.353503323886756,
+      "slope_vs_plane_wave_same_gaps_pct": -3.9428628743387373,
+      "T_fdtd_vs_beam_pct": [
+        0.9262391037329731,
+        1.3694096300302716,
+        2.6518495525488905,
+        5.1626107657110065,
+        14.15686436317245
+      ],
+      "dT_over_T_per_10nm_pct_fdtd": -16.964687118139732,
+      "dT_over_T_per_10nm_pct_analytic": -17.74600731655207,
+      "factor_per_10nm_fdtd_over_analytic_pct": 0.9498872613019849,
+      "dT_over_T_per_10nm_difference_percentage_points": 0.7813201984123386
+    }
+  },
+  "ftir_showcase_gap200nm_40deg": {
+    "T_fdtd": 0.11879747621526976,
+    "T_plane_wave": 0.11613463508979396,
+    "T_beam": 0.1170103445876532
+  },
+  "capstone": {
+    "strip_neff": 2.5,
+    "strip_theta_deg": 45.58469140280703,
+    "tail_decay_length_nm_neff2p5": 102.37601721036177,
+    "tail_decay_length_nm_neff2p7_solver": 91.54030865343982,
+    "kappa2_change_per_10nm_gap_pct_neff2p5": -17.74600731655207,
+    "kappa2_change_per_10nm_gap_pct_neff2p7": -19.626284611632418,
+    "kappa_field_change_per_10nm_gap_pct_neff2p5": -9.30601305298795,
+    "ftir_measured_power_change_per_10nm_gap_pct_at_theta_ref": -16.964687118139732,
+    "ref_kappa2": 0.107,
+    "ref_gap_nm_textbook": 200.0,
+    "statement": "kappa^2 of the ring-bus coupler scales like the tunnelled power here: e^{-2 gamma gap}. With 1/gamma ~ 100 nm a 10 nm gap error is ~20 % in kappa^2, and anything (a heater, a metal via) placed inside a few decay lengths of the core loads the tail."
+  },
+  "experiments_to_try": {
+    "item1_snell_angle_at_22deg": 64.71881143471326,
+    "item1_decay_length_nm_at_27deg": 320.8285468192393,
+    "item1_net_Sx_over_net_Sy_at_x0p1um_by_showcase_angle": {
+      "15_deg": 1.2357084473788857,
+      "24.5_deg": 0.15408149058655216,
+      "40_deg": 0.00020058342234034325
+    },
+    "item2_angular_spread_deg_by_w0": {
+      "1_um": 6.826152886532356,
+      "2_um": 3.413076443266178,
+      "4_um": 1.706538221633089
+    },
+    "item3_cladding": {
+      "n2_1": {
+        "n2": 1.0,
+        "critical_angle_deg": 16.601549599020235,
+        "decay_length_nm_at_40deg": 103.45542816625377
+      },
+      "n2_1.45": {
+        "n2": 1.45,
+        "critical_angle_deg": 24.474342562847227,
+        "decay_length_nm_at_40deg": 121.20650344234637
+      },
+      "n2_2": {
+        "n2": 2.0,
+        "critical_angle_deg": 34.84990457904648,
+        "decay_length_nm_at_40deg": 202.37221296360724
+      }
+    },
+    "item4_gamma_gap_at_40deg_for_150nm": 1.2375573565765772,
+    "item5_decay_length_ratio_1550_over_1310": 1.183206106870229,
+    "item5_decay_length_nm_at_theta_ref_1550nm": 121.13192876035168,
+    "item5_ftir_T_200nm_theta_ref_1550_over_1310_closed_form": 1.7762241616656218
+  },
+  "runtime_s": 270.36789298057556
+}

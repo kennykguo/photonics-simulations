@@ -1,0 +1,143 @@
+==============================================================================
+1. SYMBOLIC DERIVATION (sympy)
+==============================================================================
+
+(a) k(ω) = n(λ(ω)) ω / c with λ = 2πc/ω.  n_g ≡ c dk/dω =
+    d              
+- λ⋅──(n(λ)) + n(λ)
+    dλ             
+   which is exactly  n_g = n − λ dn/dλ   (checked: difference simplifies to 0)
+
+(b) D = d(τ_g/L)/dλ = d(n_g/c)/dλ =
+    2        
+   d         
+-λ⋅───(n(λ)) 
+     2       
+   dλ        
+─────────────
+      c      
+   which is exactly  D = −(λ/c) d²n/dλ²   (the dn/dλ terms cancel; only curvature survives)
+
+(c) With n = √(1+S), S = Σ B_i λ²/(λ² − C_i):
+    dn/dλ   =    d          
+                 ──(S(λ))   
+                 dλ         
+              ──────────────
+                  __________
+              2⋅╲╱ S(λ) + 1 
+    d²n/dλ² =               2                    2
+                           d           ⎛d       ⎞ 
+              2⋅(S(λ) + 1)⋅───(S(λ)) - ⎜──(S(λ))⎟ 
+                             2         ⎝dλ      ⎠ 
+                           dλ                     
+              ────────────────────────────────────
+                                    3/2           
+                        4⋅(S(λ) + 1)              
+    matches S''/(2n) − S'²/(4n³) after S → n² − 1: True
+
+(d) Generic Sellmeier n(λ) = √(1 + Σ B_i λ²/(λ² − C_i)):
+    n_g(λ) =
+  ⎛      3                      3                      3             ⎞         ↪
+  ⎜  B₁⋅λ        B₁⋅λ       B₂⋅λ        B₂⋅λ       B₃⋅λ        B₃⋅λ  ⎟         ↪
+λ⋅⎜────────── + ─────── + ────────── + ─────── + ────────── + ───────⎟         ↪
+  ⎜         2         2            2         2            2         2⎟         ↪
+  ⎜⎛      2⎞    C₁ - λ    ⎛      2⎞    C₂ - λ    ⎛      2⎞    C₃ - λ ⎟         ↪
+  ⎝⎝C₁ - λ ⎠              ⎝C₂ - λ ⎠              ⎝C₃ - λ ⎠           ⎠       ╱ ↪
+────────────────────────────────────────────────────────────────────── +    ╱  ↪
+                    ___________________________________                    ╱   ↪
+                   ╱        2         2         2                        ╲╱    ↪
+                  ╱     B₁⋅λ      B₂⋅λ      B₃⋅λ                               ↪
+                 ╱   - ─────── - ─────── - ─────── + 1                         ↪
+                ╱            2         2         2                             ↪
+              ╲╱       C₁ - λ    C₂ - λ    C₃ - λ                              ↪
+
+↪                                     
+↪                                     
+↪                                     
+↪  ___________________________________
+↪ ╱        2         2         2      
+↪      B₁⋅λ      B₂⋅λ      B₃⋅λ       
+↪   - ─────── - ─────── - ─────── + 1 
+↪           2         2         2     
+↪     C₁ - λ    C₂ - λ    C₃ - λ      
+↪                                     
+↪                                     
+↪                                     
+↪                                     
+
+(e) One UV term for λ ≫ λ_u:   S_u ≈           2        4
+     Bᵤ⋅λᵤ    Bᵤ⋅λᵤ 
+Bᵤ + ────── + ──────
+        2        4  
+       λ        λ   
+        d²S_u/dλ² ≈        2           4
+6⋅Bᵤ⋅λᵤ    20⋅Bᵤ⋅λᵤ 
+──────── + ─────────
+    4          6    
+   λ          λ       > 0  (bends UP)
+    One IR term for λ ≪ λ_ir:  S_ir ≈        4        2
+  Bᵢᵣ⋅λ    Bᵢᵣ⋅λ 
+- ────── - ──────
+      4        2 
+   λᵢᵣ      λᵢᵣ  
+        d²S_ir/dλ² ≈           2        
+  12⋅Bᵢᵣ⋅λ    2⋅Bᵢᵣ
+- ───────── - ─────
+       4         2 
+    λᵢᵣ       λᵢᵣ    < 0  (bends DOWN)
+    Both slopes are negative (n falls with λ everywhere in the window); only the CURVATURES have opposite sign,
+    so the zero-dispersion wavelength is where the curvatures cancel, not the slopes.
+
+==============================================================================
+2. NUMERIC EVALUATION
+==============================================================================
+Finite-difference cross-check (silica, h = 0.0001 µm): max|Δn_g| = 1.06e-09, max|ΔD| = 3.97e-04 ps/(nm·km)
+silica   λ = 1310 nm: n = 1.44680, dn/dλ = -0.01132 /µm, n_g = 1.46164, D = +3.582 ps/(nm·km), β₂ = -3.263 ps²/km
+silica   λ = 1550 nm: n = 1.44402, dn/dλ = -0.01198 /µm, n_g = 1.46260, D = +21.912 ps/(nm·km), β₂ = -27.947 ps²/km
+silicon  λ = 1310 nm: n = 3.50053, dn/dλ = -0.13488 /µm, n_g = 3.67722, D = -1842.410 ps/(nm·km), β₂ = +1678.527 ps²/km
+silicon  λ = 1550 nm: n = 3.47641, dn/dλ = -0.07579 /µm, n_g = 3.59389, D = -794.368 ps/(nm·km), β₂ = +1013.176 ps²/km
+Zero-dispersion wavelength of bulk silica: 1272.75 nm (finite-difference root 1272.76 nm); slope S0 = 0.1000 ps/(nm²·km)
+D(1310) by the independent ω-route (β₂ = d²β/dω² by finite differences, D = −2πc β₂/λ²): +3.5819 ps/(nm·km) vs λ-route +3.5818; D(1550): +21.9118 vs +21.9118
+D(1310) Taylor cross-checks from the ZDW: linear S0·Δλ = 0.1000 × 37.25 nm = +3.723 ps/(nm·km) (+4.0 % vs exact: the linearisation error); second order with S0' = -2.15e-04 ps/(nm³·km): +3.574
+At the ZDW, d²n/dλ² contributions (1/µm²): UV terms +0.00707, IR term -0.00699, −S'²/(4n³) -0.00009  → total -5.8e-06
+Small-change rule at 1310 nm: c/λ² = 174.69 GHz/nm (exact 1 nm step: 174.56 GHz; common.units helper: 174.69 GHz); at 1550 nm: 124.78 GHz/nm
+   fsr_10.3nm_in_thz: 1.799
+   thermal_50pm_per_K_in_ghz_per_K: 8.735
+   fwhm_374pm_in_ghz: 65.34
+   channel_spacing_200ghz_in_nm: 1.145
+   delta_opt_108pm_in_ghz: 18.87
+   one_pm_in_mhz: 174.7
+FSR with n_eff textbook 2.5         (2.500): 3.028 THz = 17.33 nm
+FSR with n_eff solver ~2.7          (2.700): 2.804 THz = 16.05 nm
+FSR with bulk-Si n_g (this run)     (3.677): 2.059 THz = 11.78 nm
+FSR with waveguide n_g 4.2 (REF)    (4.200): 1.803 THz = 10.32 nm
+Thermal shift dλ_r/dT = (λ/n_g)·(Γ dn_si/dT + (1−Γ) dn_sio2/dT) = 49.8 pm/K (REF says 50.0); with n_eff in the denominator it would wrongly be 83.6 pm/K
+Over 2 km at 1310 nm: |D|·L·Δλ with Δλ ↔ ±0.75×baud = 79.7 GHz two-sided ↔ 0.456 nm → 3.27 ps; crude one-sided Δλ ↔ 53.1 GHz ↔ 0.304 nm → 2.2 ps (bit period 18.8 ps)
+Over 2 km at 1550 nm: |D|·L·Δλ with Δλ ↔ ±0.75×baud = 79.7 GHz two-sided ↔ 0.639 nm → 27.99 ps; crude one-sided Δλ ↔ 53.1 GHz ↔ 0.426 nm → 18.7 ps (bit period 18.8 ps)
+
+==============================================================================
+3. FIGURES
+==============================================================================
+figures written
+rendering video ...
+video written
+
+HEADLINE NUMBERS
+  n_silica_1310                    =      1.44680   expected     1.4468   agreement  100.00 %
+  ng_silica_1310                   =      1.46164   expected     1.4620   agreement   99.98 %
+  zdw_silica_um                    =      1.27275   expected     1.2700   agreement   99.78 %
+  D_silica_1310_ps_nm_km           =      3.58182   expected     3.5819   agreement  100.00 %
+  D_silica_1550_ps_nm_km           =     21.91180   expected    21.0000   agreement   95.66 %
+  small_change_ghz_per_nm_1310     =    174.69405   expected   174.7000   agreement  100.00 %
+  fsr_thz_ng42                     =      1.80250   expected     1.8000   agreement   99.86 %
+  fsr_nm_ng42                      =     10.31806   expected    10.3000   agreement   99.82 %
+  n_silicon_1310                   =      3.50053   expected     3.5000   agreement   99.98 %
+  ng_silicon_1310                  =      3.67722   expected     3.7000   agreement   99.38 %
+  dlambda_dT_pm_per_K_from_ng      =     49.78000   expected    50.0000   agreement   99.56 %
+
+figures, video, tables and JSON finished in 49.0 s
+
+rebuilding and executing explore.ipynb ...
+explore.ipynb rebuilt and executed in 32.5 s (attempt 1: all cells)
+
+run.py finished in 82.2 s total

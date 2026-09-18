@@ -1,0 +1,18 @@
+* series RLC: transient, drive 100 Hz (Omega = 0.1)
+* Lorentz map: m<->L, m*gamma<->R, m*w0^2<->1/C, -qE<->V, x<->q_C=C*v(cap)
+V1 in 0 dc 0 ac 1.0 sin(0 1.0 100)
+L1 in n1 0.1
+R1 n1 cap 62.8319
+C1 cap 0 2.53303e-07
+.control
+set filetype=ascii
+set wr_vecnames
+set wr_singlescale
+tran 2.5e-05 0.06546 0 2.5e-05
+let i_loop = -i(v1)
+let p_r = (v(n1)-v(cap))*i_loop
+let p_src = v(in)*i_loop
+wrdata /Users/kennyg/photonics-simulations/experiments/03_driven_electron_rlc/out/rlc_tran_low.txt v(in) v(cap) i_loop p_r p_src
+quit
+.endc
+.end

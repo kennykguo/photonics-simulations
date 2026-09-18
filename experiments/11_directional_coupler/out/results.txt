@@ -1,0 +1,17 @@
+Experiment 11: directional coupler, headline numbers
+single 220 nm slab (analytic): n_eff = 2.9879, γ = 12.531/µm, 1/γ = 79.8 nm; Meep eigenmode n_eff = 2.9607
+gap 200 nm: n+ = 3.0130, n- = 2.9616 (analytic); Meep eigen n+ = 2.9875, n- = 2.9355
+gap 200 nm: κ_c analytic 0.1231/µm, CMT 0.1230/µm, Meep eigen 0.1248/µm, FDTD fit 0.1266/µm (102.8 % of analytic)
+gap 200 nm: L_c analytic 12.76 µm, FDTD 12.40 µm
+gap 150nm: κ_fdtd = 0.2362/µm vs analytic 0.2305 (102.4 %), L_c = 6.65 µm, max P2/P0 = 0.989
+gap 200nm: κ_fdtd = 0.1266/µm vs analytic 0.1231 (102.8 %), L_c = 12.40 µm, max P2/P0 = 0.994
+gap 300nm: κ_fdtd = 0.0364/µm vs analytic 0.0352 (103.6 %), L_c = 43.15 µm, max P2/P0 = 0.902
+κ_c vs gap: ln-slope γ = 12.536/µm vs single-slab γ 12.531/µm (100.0 %)
+SAX: max |S†S − I| = 2.2e-16; cross phase -90°
+point coupler L_eff = √(2πR/γ): 2.01 µm (textbook γ), 1.78 µm (2-D slab γ)
+κ² = 10.7 % ±10 nm gap: +21 % / -17 % (textbook γ; small-signal 2γΔg = 20 %)
+SAX ring: FSR 10.33 nm (expect 10.3), FWHM 368 pm (expect 374)
+capstone κ₀ = 0.1655 rad/µm = κ_c of a 176 nm gap in the 2-D slab model (exponential estimate 176 nm)
+reference T_min = 0.016 corresponds to a gap error of -12.7 / +12.8 nm (textbook γ)
+FDTD n̄ (200 nm) exceeds the same-grid eigenmode n̄ by 1.31 %; Yee dispersion estimate 0.51 %
+total run time 105 s

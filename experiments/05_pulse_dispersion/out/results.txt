@@ -1,0 +1,52 @@
+== 1. Bulk silica material dispersion (Malitson Sellmeier, notes 9-11) ==
+n^2(lambda) - 1 = sum_i B_i lambda^2 / (lambda^2 - C_i)   [Malitson fused silica, lambda in um]
+  B = (0.6961663, 0.4079426, 0.8974794)
+  C = (0.004679, 0.013512, 97.934003) um^2
+beta(omega)  = n(omega) omega / c,  omega = 2 pi c / lambda
+beta1 = d beta / d omega = n_g / c,          n_g = n - lambda dn/dlambda
+beta2 = d^2 beta / d omega^2 = -lambda^2 D / (2 pi c),   D = -(lambda/c) d^2 n / d lambda^2
+beta3 = d^3 beta / d omega^3   (kept in the exact propagator, shown to be negligible)
+1310 nm: n = 1.44680, n_g = 1.46164, D = +3.582 ps/(nm km), beta1 = 4875.5062 ps/m (= n_g/c: 4875.5062), beta2 = -3.263 ps^2/km (formula -lam^2 D/2pi c: -3.263), beta3 = +0.0814 ps^3/km
+1550 nm: n = 1.44402, n_g = 1.46260, D = +21.912 ps/(nm km), beta1 = 4878.6967 ps/m (= n_g/c: 4878.6967), beta2 = -27.947 ps^2/km (formula -lam^2 D/2pi c: -27.947), beta3 = +0.1513 ps^3/km
+zero-dispersion wavelength of bulk silica = 1272.8 nm (fibre: ~1310 nm once waveguide dispersion is added)
+
+== 2. Gaussian pulse, T0 = 5.0 ps, L = 2000 m (notes 12) ==
+1310 nm: L_D = T0^2/|beta2| = 7661 m; FWHM in 8.33 ps -> out 8.60 ps (analytic T0 sqrt(1+(L/L_D)^2): 8.60 ps, agreement 100.00 %); peak 0.968 (analytic 0.968); energy conserved to 1.000000; max |P_exact - P_beta2only| = 4.00e-04 (beta3 negligible)
+1550 nm: L_D = T0^2/|beta2| = 895 m; FWHM in 8.33 ps -> out 20.39 ps (analytic T0 sqrt(1+(L/L_D)^2): 20.39 ps, agreement 100.00 %); peak 0.408 (analytic 0.408); energy conserved to 1.000000; max |P_exact - P_beta2only| = 7.57e-05 (beta3 negligible)
+
+== 3. Group delay t_g = beta1 L measured in the absolute frame (long pulse) ==
+1310 nm: measured arrival 9.75101 us; t_g = beta1 L = n_g L/c = 9.75101 us (agreement 100.0000 %); phase delay n L/c = 9.65204 us (differs by 99.0 ns: it is n_g, not n, that sets the delay)
+1550 nm: measured arrival 9.75739 us; t_g = beta1 L = n_g L/c = 9.75739 us (agreement 100.0000 %); phase delay n L/c = 9.63349 us (differs by 123.9 ns: it is n_g, not n, that sets the delay)
+1550 arrives 6.38 ns after 1310 (analytic (n_g1550 - n_g1310) L/c = 6.38 ns)
+
+== 4. 53.125 Gbaud NRZ PRBS through 2 km (eye diagrams) ==
+bit period T_b = 18.82 ps; Tx Gaussian LPF 39.8 GHz; Rx Bessel-4 39.8 GHz; ER 10.0 dB; PRBS-9
+back-to-back eye height = 0.830 (of P1 = 1); Rx Bessel filter DC group delay 8.44 ps (= 0.45 UI; removed from the 'after Rx filter' trace in nrz_waveforms.png only)
+1310 nm: delay spread |beta2| L 2pi(2 f3dB) = 3.3 ps (= D L dlam with dlam = 0.456 nm: 3.3 ps); |beta2| L (2pi f3dB)^2/2 = 0.20 rad; eye height 0.831 -> opening 100.1 % of back-to-back
+1550 nm: delay spread |beta2| L 2pi(2 f3dB) = 28.0 ps (= D L dlam with dlam = 0.639 nm: 28.0 ps); |beta2| L (2pi f3dB)^2/2 = 1.75 rad; eye height 0.590 -> opening 71.0 % of back-to-back
+chirp-free Tx: rms optical bandwidth 6.8 GHz; DML-like Tx (alpha = 3.0): 21.6 GHz (same power waveform, back-to-back eye 0.830)
+1310 nm, alpha = 3.0: eye height +0.626 -> opening 75.5 % of back-to-back
+1550 nm, alpha = 3.0: eye height -0.048 -> opening -5.8 % of back-to-back  (CLOSED: the worst 1 sample is below the best 0 sample)
+1310 nm chirp-free: eye opening falls to 50 % at L = > 10 km (never within the sweep)
+1550 nm chirp-free: eye opening falls to 50 % at L = 2687 m (brentq between the 250 m sweep points, tolerance 1 m)
+1310 nm chirped: eye opening falls to 50 % at L = 4008 m (brentq between the 250 m sweep points, tolerance 1 m)
+1550 nm chirped: eye opening falls to 50 % at L = 468 m (brentq between the 250 m sweep points, tolerance 1 m)
+
+== 4b. Checks and 'experiments to try' numbers (written to results.json) ==
+NRZ spectral energy excluding the carrier line (which holds 83.2 % of the total): 77.6 % within +/-20 GHz, 90.3 % within +/-27 GHz, 98.6 % within +/-40 GHz  (including the carrier line: 96.2 % / 98.4 % / 99.8 %)
+B^2 |beta2| L = 0.25 reach: 1310 nm 27.15 km, 1550 nm 3.17 km  (half-eye reach from the sweep, chirp-free: 1310 nm > 10 km, 1550 nm 2.69 km)
+experiment 1: chirp-free eye at 10 km: 1310 nm 95 %, 1550 nm 0 %; 1310 nm chirp-free at 20 km 60 %, 23 km 50 %, 30 km 21 %, 40 km 0 %
+experiment 2: T0 = 1 ps: 1310 nm: L_D = 306 m, FWHM 1.67 -> 11.0 ps after 2 km; 1550 nm: L_D = 36 m, FWHM 1.67 -> 93.1 ps after 2 km
+experiment 3: alpha = -3 at 1550 nm: 0.5 km 108 %, 1.0 km 108 %, 2.0 km 107 %, 3.0 km 52 %, 4.0 km 4 %
+experiment 4: Tx = Rx = 79.7 GHz (1.5 x baud): back-to-back eye height 0.900 (vs 0.830 at 0.75 x baud); rms optical bandwidth 9.7 GHz (vs 6.8); 1310 nm: 2 km eye 100.0 % of its own back-to-back, delay spread across +/-80 GHz 6.5 ps; 1550 nm: 2 km eye 71.2 % of its own back-to-back, delay spread across +/-80 GHz 56.0 ps
+experiment 5: carrier at the ZDW 1272.8 nm: beta2 = -5.0e-06 ps^2/km, beta3 = 0.074 ps^3/km; Gaussian FWHM 8.3256 -> 8.3256 ps at 2 km, 8.3257 ps at 10 km; chirp-free eye at 10 km 100.0 %
+
+== 5. Videos ==
+gaussian_envelope.mp4 written (240 frames)
+nrz_eye_closing.mp4 written (200 frames)
+
+== 6. Capstone connection numbers ==
+ring photon lifetime Q/omega = 2.43 ps; ring FWHM 374.0 pm = 65.3 GHz
+NRZ optical bandwidth at 1310 nm: 456 pm double-sided vs ring FWHM 374.0 pm and thermal drift 50.0 pm/K
+the whole 2 km of silica at 1310 gives a delay spread of 3.3 ps; the ring's own lifetime 2.4 ps is the same order
+8-channel grid, 200 GHz spacing: lambda 1306.0..1314.0 nm, D 3.21..3.95 ps/(nm km), worst-channel delay spread over 2 km 3.6 ps (19 % of a bit), channel-to-channel arrival skew 57 ps

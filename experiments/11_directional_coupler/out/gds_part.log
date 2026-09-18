@@ -1,0 +1,9 @@
+[gds] ring_single: 7 polygons; measured gap 200.0 nm, centreline R 6.306 µm, width 0.503 µm
+[gds] coupler: straight section 12.76 µm (= L_c of the 200 nm gap), ports ['o1', 'o2', 'o3', 'o4']
+[gds] point coupler (textbook_neff2p5): γ = 9.77/µm -> L_eff = √(2πR/γ) = 2.013 µm; numeric (exact circle) 2.001 µm (99.39 %)
+[gds] point coupler (slab2d_neff2p99): γ = 12.53/µm -> L_eff = √(2πR/γ) = 1.777 µm; numeric (exact circle) 1.769 µm (99.52 %)
+[gds] parabola z²/(2R) vs centreline circle: max |dev| = 14.4 nm at |z| = 2.30 µm (expected z⁴/8R³ = 13.9 nm there), 0.51 nm inside |z| < √(2R/γ) = 1.14 µm
+[gds] wrote /Users/kennyg/photonics-simulations/experiments/11_directional_coupler/out/gds_results.json
+
+--- stderr ---
+findfont: Failed to find font weight medium for DejaVu Sans, now using 400.

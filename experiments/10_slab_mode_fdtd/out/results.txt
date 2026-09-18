@@ -1,0 +1,15 @@
+10_slab_mode_fdtd headline numbers (Meep 2-D FDTD, resolution 50 px/um)
+TE0 220 nm slab: n_eff 3.0024 vs analytic 2.9879 (+0.48 %)
+  lambda_g crest spacing 436.3 nm, phase slope 436.3 nm, analytic 438.4 nm, notes 441 nm
+  confinement 0.8584 vs analytic 0.8623 (-0.46 %)
+  decay length 79.9 nm vs analytic 79.8 nm (+0.08 %)
+  max|S_x|/max S_z = 8.80e-06
+TE1 400 nm slab: n_eff 2.5622 vs 2.5566 (+0.22 %), antisymmetry error 1.1e-11, Gamma 0.809 vs 0.814
+offcentre_220nm: at z = 5.0 um P_TE0 0.407 (Meep 0.413), P_TE1 0.329 (Meep 0.325), radiation remainder 0.009
+offcentre_400nm: at z = 5.0 um P_TE0 0.204 (Meep 0.207), P_TE1 0.231 (Meep 0.233), radiation remainder 0.056
+overlap vs get_eigenmode_coefficients: max |difference| 0.0062 (all planes, both modes)
+400 nm group indices from arrival-time slopes: n_g0 3.6658 vs 3.6167 (+1.36 %), n_g1 4.0763 vs 4.0514 (+0.61 %)
+400 nm TE1-TE0 arrival delay at z=5 um 4.12 +- 0.03 vs (ng1-ng0)L 4.35 time units (-5.3 %, difference of two grid-dispersed n_g)
+400 nm beat length 1.806 +- 0.003 um (cosine fit, z > 1 um) vs 1.815 um (-0.5 %)
+capstone: dlambda/dT from FDTD Gamma (textbook Gamma-weighted heuristic) = 50.2 pm/K (reference 50); first-order perturbation weighting = 58.3 pm/K
+runtime 111 s
