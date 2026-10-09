@@ -9,3 +9,4 @@ __pycache__/
 experiments/*/out/*.h5
 experiments/*/out/partial_movie_files/
 experiments/*/media/
+visuals/*/out/cache/

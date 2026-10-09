@@ -1,0 +1,15 @@
+{
+  "resolution_px_per_um": 20,
+  "runtime_s": 2153.2892961502075,
+  "cell_um": [
+    76.6,
+    4.15,
+    3.02
+  ],
+  "coupled_length_um": 72.0,
+  "n_iso_mpb_same_grid": 2.5811006892537165,
+  "n_plus_mpb": 2.5880276949018213,
+  "n_minus_mpb": 2.5759483008601407,
+  "kappa_mpb_same_grid": 0.028968347771877855,
+  "total_power_spread": 0.000128777052931263
+}

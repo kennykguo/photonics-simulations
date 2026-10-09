@@ -31,6 +31,8 @@ common/style.py      matplotlib style, SERIES colours, RdBu_r / Blues convention
 common/units.py      dB, alpha, small-change-rule helpers
 docs/NOTES.md        Kenny's notes, sections 1 to 28
 docs/BRIEF.md        the authoring brief and README contract
+visuals/             one folder per later visual request (n_eff/n_g, TE vs TM, coupled modes);
+                     see visuals/README.md
 experiments/NN_name/ run.py (headless entry point), README.md, optional explore.ipynb,
                      helper modules, out/ (png, mp4, json, txt, csv, cir, gds, logs),
                      .uses_meep marker when run.py must use the Meep interpreter
